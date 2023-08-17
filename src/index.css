@@ -1,13 +1,141 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.App {
+  text-align: center;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;}
+
+body {
+  line-height: 1;
+}
+
+.image-container {
+  max-width: 960px;
+  max-height: 540px;
+  padding: 10px;
+  display: inline-block;
+}
+
+.game-image-container img {
+  max-width: 960px;
+  max-height: 540px;
+  padding: 10px;
+  display: block;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+#image-element {
+  max-width: 640px;
+  max-height: 360px;
+}
+
+#header h1 {
+  font-size: 1.25em;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  font-family: "Toppan Bunkyu Midashi Gothic"
+}
+
+.main-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px; /* Adjust padding as needed */
+}
+
+
+.main-game p1 {
+  font-size: 1.25em;
+  margin-bottom: 0.5em;
+  padding-left: 100px;
+  padding-right: 100px;
+  justify-content: center;
+  font-family: "Toppan Bunkyu Midashi Gothic"
+}
+body {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #282c34;
+  color: #e0e0e0;
+  font-family: "Toppan Bunkyu Midashi Gothic";
+}
+
+.btn-grid {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 10px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.btn {
+  background-color: hsl(200, 100%, 50%);
+  border: 3px solid hsl(200, 100%, 30%);
+  border-radius: 10px;
+  padding: 5px 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 15px;
+  color: white;
+  outline: none;
+  min-width: 150px; /* Set the minimum width for the button */
+  min-height: 30px; /* Set the minimum height for the button */
+}
+
+.btn:hover {
+  border-color: whitesmoke;
+}
+
+#one {
+  position: absolute;
+  top: 100%; /* Set the element below the body, adjust as needed */
+  left: 0; /* Align the element to the left of the body */
+  width: 100%; /* Make the element occupy the full width of the body */
+  /* Add other styles as needed */
+}
+
+
