@@ -1,4 +1,4 @@
-# Pokémon Text Adventure
+# Pokémon Text Adventure WebApp
 
 Welcome to the Pokémon Text Adventure! Embark on an exciting journey in the world of Pokémon, where you'll make tactical decisions, encounter wild Pokémon, and engage in fun battles.
 
