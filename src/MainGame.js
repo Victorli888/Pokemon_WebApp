@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import githubLogo from './media/github-mark/github-mark-white.png';
 import './index.css';
 
 function MainGame() {
@@ -238,12 +239,9 @@ function MainGame() {
     // }, []);
 
     function startGame() {
+        console.log("STARTING GAME!")
         setState({});
         showTextNode(1);
-    }
-
-    function showOption(option) {
-        return option.requiredState == null || option.requiredState(state);
     }
 
     function selectOption(option) {
@@ -260,39 +258,99 @@ function MainGame() {
         setCurrentNode(currentNode);
     }
 
-    useEffect(() => {
-        console.log("starting game....")
-        startGame();
-    }, []);
+
+    const [appDetailsVisible, setAppDetailsVisible] = useState(false);
+
+    function toggleAppDetails() {
+        setAppDetailsVisible(!appDetailsVisible);
+    }
 
     return (
-        <div className="main-game">
-            <div className="game-image-container">
-                <img
-                    src={
-                        currentNode.image && typeof currentNode.image === 'string'
-                            ? currentNode.image
-                            : typeof currentNode.image === 'function'
-                                ? currentNode.image(state)
-                                : null
-                    }
-                    alt="Image"
-                />
+        <div>
+            <div className="main-game">
+                <div className="game-image-container">
+                    <img
+                        src={
+                            currentNode.image && typeof currentNode.image === 'string'
+                                ? currentNode.image
+                                : typeof currentNode.image === 'function'
+                                    ? currentNode.image(state)
+                                    : null
+                        }
+                        alt="Image"
+                    />
+                </div>
+                <p1 id="content">{currentNode.text}</p1>
+                <div id="option-buttons">
+                    {currentNode.options &&
+                        currentNode.options.map((option, index) => (
+                            <button
+                                key={index}
+                                className="btn"
+                                onClick={() => selectOption(option)}
+                            >
+                                {option.text}
+                            </button>
+                        ))}
+                </div>
             </div>
-            <p1 id="content">{currentNode.text}</p1>
-            <div id="option-buttons">
-                {currentNode.options &&
-                    currentNode.options.map((option, index) => (
-                        <button
-                            key={index}
-                            className="btn"
-                            onClick={() => selectOption(option)}
-                        >
-                            {option.text}
-                        </button>
-                    ))}
+            <div className= "details-toggle-btn-container">
+                <div>
+                    <button className={"details-toggle-btn"} onClick={toggleAppDetails}> Show Details </button>
+                </div>
             </div>
+            <div className={`app-details ${appDetailsVisible ? 'visible' : 'hidden'}`}>
+                <section id="one" className="wrapper style2 special">
+                    <header className="major">
+                        <h2 id="details-header">
+                            <div className="github-link-container">
+                            <a
+                                href="https://github.com/Victorli888/Pokemon_WebApp"
+                                className="github-link"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <img
+                                    src={githubLogo}
+                                    alt="See on GitHub"
+                                    className="github-logo"
+                                />
+                                See on GitHub
+                            </a>
+                        </div>
+                        </h2>
 
+                        <p1>
+                            Embark on a nostalgic text-based adventure reminiscent of a cherished childhood classic. Immerse
+                            yourself in
+                            a captivating journey shaped by your decisions. Choose your path, make meaningful choices, and
+                            experience the excitement of a dynamic storyline.
+                        </p1>
+                        <p1>
+                            In "Pokemon Text and Adventure," you'll encounter a world filled with iconic characters, challenging
+                            puzzles, and captivating narratives. Engage in exciting battles, capture Pokemon, and unravel
+                            mysteries as you progress through the game.
+                        </p1>
+                        <p1>
+                            Features:
+                        </p1>
+                        <ul>
+                            <li>Choose Your Adventure: Make choices that impact the storyline and shape your character's
+                                journey.
+                            </li>
+                            <li>Captivating Narrative: Immerse yourself in a rich and engaging storyline filled with twists and
+                                turns.
+                            </li>
+                            <li>Dynamic Gameplay: Engage in Pokemon battles, solve puzzles, and interact with memorable
+                                characters.
+                            </li>
+                            <li>Nostalgic Experience: Relive the excitement of a classic text adventure with a Pokemon twist.
+                            </li>
+                            <li>Responsive Design: Enjoy a seamless experience on various devices, from desktop to mobile.</li>
+                        </ul>
+                    </header>
+                </section>
+            </div>
         </div>
     );
 }

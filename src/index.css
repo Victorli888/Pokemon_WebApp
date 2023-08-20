@@ -1,3 +1,4 @@
+/* General styling */
 .App {
   text-align: center;
 }
@@ -14,7 +15,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #39414f;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -39,10 +40,7 @@
 
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
-  display: block;}
-
-body {
-  line-height: 1;
+  display: block;
 }
 
 .image-container {
@@ -70,7 +68,7 @@ body {
   font-size: 1.25em;
   font-weight: bold;
   margin-bottom: 0.5em;
-  font-family: "Toppan Bunkyu Midashi Gothic"
+  font-family: "Toppan Bunkyu Midashi Gothic";
 }
 
 .main-game {
@@ -82,28 +80,129 @@ body {
   padding: 20px; /* Adjust padding as needed */
 }
 
-
 .main-game p1 {
   font-size: 1.25em;
   margin-bottom: 0.5em;
   padding-left: 100px;
   padding-right: 100px;
   justify-content: center;
-  font-family: "Toppan Bunkyu Midashi Gothic"
+  font-family: "Toppan Bunkyu Midashi Gothic";
 }
+
 body {
-  padding: 0;
   margin: 0;
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-color: #282c34;
+  background-color: #39414f;
   color: #e0e0e0;
   font-family: "Toppan Bunkyu Midashi Gothic";
 }
 
+.app-details{
+  border-top: 2px dashed #505560;
+  padding-top: 20px;
+}
+
+/* App details section */
+.app-details.visible {
+  font-size: smaller;
+  margin-top: 1em;
+  padding: 0 100px;
+  display: block; /* Hide the section initially */
+  opacity: 1; /* Start with opacity set to 0 */
+  transform: translateY(0); /* Start with a small translateY to push the section down */
+  transition: opacity 0.5s ease, transform 0.5s ease; /* Add transition for smooth animation */
+}
+
+.app-details.hidden {
+  display: none; /* Hide the section by adding the "hidden" class */
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.details-toggle-btn-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  margin-top: 20px;
+}
+
+.details-toggle-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #282c34;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.details-toggle-btn:hover {
+  background-color: #505560;
+}
+
+/* GitHub Button */
+.github-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #282c34;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+/* GitHub Button on hover */
+.github-btn:hover {
+  background-color: #fff; /* Change to white on hover */
+}
+
+/* GitHub Hyperlink */
+.github-link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.github-link:hover {
+  text-decoration: underline;
+}
+
+/* GitHub Logo */
+.github-logo {
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+#details-header {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   text-align: center;
+ }
+
+/* GitHub Link Container */
+.github-link-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+
+/* GitHub Logo highlight on hover */
+.github-link:hover .github-logo::before {
+  opacity: 1; /* Show the circular highlight on hover */
+}
+
+
+/* Button grid */
 .btn-grid {
   display: grid;
   grid-template-columns: repeat(2, auto);
@@ -129,13 +228,3 @@ body {
 .btn:hover {
   border-color: whitesmoke;
 }
-
-#one {
-  position: absolute;
-  top: 100%; /* Set the element below the body, adjust as needed */
-  left: 0; /* Align the element to the left of the body */
-  width: 100%; /* Make the element occupy the full width of the body */
-  /* Add other styles as needed */
-}
-
-
