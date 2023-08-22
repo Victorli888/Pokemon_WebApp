@@ -59,6 +59,35 @@ footer, header, hgroup, menu, nav, section {
   justify-content: center;
 }
 
+/* ... (your existing styles) */
+
+.game-image-container {
+  /* Your existing styles */
+  /* Add a higher z-index to make sure game-image-container appears behind pokedex-container */
+  z-index: 1;
+}
+
+.pokedex-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .90); /* Semi-transparent black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0; /* Start with opacity 0, so it's hidden */
+  pointer-events: none; /* Prevent interactions when not open */
+  z-index: 2; /* Higher z-index to make sure pokedex-container appears above game-image-container */
+}
+
+.pokedex-container.open {
+  opacity: 1; /* Show the Pokedex when it's open */
+  pointer-events: auto; /* Allow interactions when open */
+}
+
 #image-element {
   max-width: 640px;
   max-height: 360px;
@@ -201,6 +230,42 @@ body {
   opacity: 1; /* Show the circular highlight on hover */
 }
 
+.player-utility-panel {
+  position: fixed;
+  top: 0;
+  left: -200px; /* Initially off the screen on the left */
+  width: 200px;
+  height: 100%;
+  background-color: #282c34;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  transition: left 0.3s ease-in-out;
+  z-index: 3; /* Higher z-index to make sure it appears above other content */
+}
+
+.player-utility-panel.open {
+  left: 0; /* Slide in from the left when open */
+}
+.pokedex-close {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+}
+
+.pokedex-open {
+  background-color: hsl(200, 100%, 50%);
+  border: 3px solid hsl(200, 100%, 30%);
+  border-radius: 10px;
+  padding: 5px 10px;
+  margin-top: 10px;
+  font-size: 15px;
+  color: white;
+  outline: none;
+  min-width: 150px; /* Set the minimum width for the button */
+  min-height: 30px; /* Set the minimum height for the button */
+}
 
 /* Button grid */
 .btn-grid {

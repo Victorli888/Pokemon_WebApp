@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import githubLogo from './media/github-mark/github-mark-white.png';
 import './index.css';
+import Pokedex from "./pokeDex";
 
 function MainGame() {
 
@@ -260,6 +261,8 @@ function MainGame() {
 
 
     const [appDetailsVisible, setAppDetailsVisible] = useState(false);
+    const [showPokeDex, setShowPokeDex] = useState(false);
+    const [showPlayerUtility, setShowPlayerUtility] = useState(false);
 
     function toggleAppDetails() {
         setAppDetailsVisible(!appDetailsVisible);
@@ -268,7 +271,7 @@ function MainGame() {
     return (
         <div>
             <div className="main-game">
-                <div className="game-image-container">
+                <div className={`game-image-container ${showPokeDex ? 'hidden': ''}"}`}>
                     <img
                         src={
                             currentNode.image && typeof currentNode.image === 'string'
@@ -293,6 +296,18 @@ function MainGame() {
                             </button>
                         ))}
                 </div>
+            </div>
+            <div
+                className={`player-utility-panel ${showPlayerUtility ? 'open' : ''}`}
+                onMouseEnter={() => setShowPlayerUtility(true)}
+                onMouseLeave={() => setShowPlayerUtility(false)}
+            >
+                <button className={'btn pokedex-open'} onClick={() => setShowPokeDex((prev) => !prev)}>
+                    {showPokeDex ? 'Close Pokédex' : 'Open Pokédex'}
+                </button>
+            </div>
+            <div className={`pokedex-container ${showPokeDex ? 'open' : ''}`}>
+                {showPokeDex && <Pokedex />}
             </div>
             <div className= "details-toggle-btn-container">
                 <div>
