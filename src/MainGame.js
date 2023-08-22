@@ -137,12 +137,12 @@ function MainGame() {
             text: 'you picked Totodile! From here on out this pokemon will be your partner on your journey! ',
             options: [
                 {
-                    // text: 'Continue',
-                    // // requiredState: (currentState) => currentState.blueGoo,
-                    // nextText: 12
-
                     text: 'Restart',
                     nextText: -1
+                },
+                {
+                    text: 'Continue...',
+                    nextText: "pokeDex-acquired"
                 }
             ]
         },
@@ -154,6 +154,10 @@ function MainGame() {
                 {
                     text: 'Restart',
                     nextText: -1
+                },
+                {
+                    text: 'Continue...',
+                    nextText: "pokeDex-acquired"
                 }
             ]
         },
@@ -165,6 +169,23 @@ function MainGame() {
             options: [
                 {
                     text: 'Restart',
+                    nextText: -1
+                },
+                {
+                    text: 'Continue...',
+                    nextText: "pokeDex-acquired"
+                }
+            ]
+        },
+        {
+            //TODO: Create lock for PokeDex up until this point, ping a notification that Pokedex is unlocked
+            id: "pokeDex-acquired",
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWHVUxJitukcWUmzKy2VhCimz4Bg1DLfHjug&usqp=CAU",
+            text: `Oh and before you go, I want you to have this.... It's a pokeDex it contains data for all the known pokemon we've discovered so far.
+            ... Oh and also be careful out there.`,
+            options: [
+                {
+                    text: 'Continue...',
                     nextText: -1
                 }
             ]
@@ -182,11 +203,11 @@ function MainGame() {
             ]
         },
 
-        /// Create a Grass maze for Pokemon battles and catching Pokemon
+        /// TODO: Create a Grass maze for Pokemon battles and catching Pokemon
 
         /// Grass loop
         {
-            id: 12,
+            id: 120,
             image: "https://www.nintendo.com/sg/switch/aw7k/img/screenshot01.png",
             text: 'You find yourself in tall grass where would you like to go from here?',
             options: [
@@ -205,7 +226,7 @@ function MainGame() {
             ]
         },
         {
-            id: 13,
+            id: 130,
             image: "https://cdn.wallpapersafari.com/30/6/a4mrs3.png",
             text: 'You find yourself in some tall grass where should you go next?',
             options: [
