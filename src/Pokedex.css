@@ -9,8 +9,7 @@
     height: 540px;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    font-family: "PokemonDSFont";
+    font-family: "PokemonDSFont", serif;
     color: #e0e0e0;
 }
 
@@ -24,7 +23,7 @@
 
 #name-genus-container {
     position: absolute;
-    padding-top: 0px;
+    padding-top: 0;
     top: 100px;
     right: 50px;
     width: 30%;
@@ -45,7 +44,7 @@
     border-radius: 5px;
     text-align: center;
     font-size: 36px;
-    margin: 0 0 0px;
+    margin: 0 0 0;
     width: 145px;
 }
 
@@ -104,7 +103,7 @@ h3 {
     width: 300%;
     color: #282c34;
     font-size: 24px;
-    margin-top: 0px;
+    margin-top: 0;
 }
 
 #pokedex-search {
@@ -119,7 +118,7 @@ h3 {
     margin-right: 10px;
     border: 2px solid #888888;
     border-radius: 5px;
-    font-family: "PokemonDSFont";
+    font-family: "PokemonDSFont", serif;
     font-size: 24px;
 }
 
@@ -130,6 +129,6 @@ h3 {
     border-radius: 5px;
     padding: 5px 10px;
     cursor: pointer;
-    font-family: "PokemonDSFont";
+    font-family: "PokemonDSFont", serif;
     font-size: 24px;
 }
