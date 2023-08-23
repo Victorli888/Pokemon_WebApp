@@ -95,9 +95,15 @@
     color: #282c34;
 }
 
+#pokeID{
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
 h3 {
     font-size: 24px;
     margin: 5px;
+    color: #282c34;
 }
 
 #pokedex-description p {
