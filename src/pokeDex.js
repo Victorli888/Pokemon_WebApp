@@ -10,6 +10,7 @@ const Pokedex = () => {
     const [pokeWeight, setPokeWeight] = useState("");
     const [genus, setGenus] = useState("");
     const [searchID, setSearchID] = useState("");
+    const [pokeID, setPokeID] = useState("")
 
     const handleSearch = () => {
         fetch(`https://pokeapi.co/api/v2/pokemon/${searchID}`)
@@ -35,6 +36,9 @@ const Pokedex = () => {
 
                 const weight = data.weight;
                 setPokeWeight(weight / 10);
+
+                const idNumber = data.id;
+                setPokeID(idNumber);
             })
 
             fetch(`https://pokeapi.co/api/v2/pokemon-species/${searchID}`)
@@ -66,6 +70,9 @@ const Pokedex = () => {
         <div className="pokedex">
             <div id="pokedex-frame">
                 <div id="pokedex-screen">
+                    <div id ="pokeID">
+                        <h3>#{pokeID}</h3>
+                    </div>
                     <img src={spriteUrl} alt={name} />
                     <div id="pokedex-pokemon-details">
                         <h3>Type: {types.join(", ")}</h3>
