@@ -3,6 +3,7 @@ import githubLogo from './media/github-mark/github-mark-white.png';
 import './index.css';
 import Pokedex from "./pokeDex";
 import PokeBag from "./pokeBag";
+import PlayerPoke from "./playerPoke";
 
 function MainGame() {
     const textNodes = [
@@ -244,6 +245,7 @@ function MainGame() {
     const [showPlayerUtility, setShowPlayerUtility] = useState(false);
     const [showPokeDex, setShowPokeDex] = useState(false);
     const [showPokeBag,setShowPokeBag] = useState(false);
+    const [showPlayerPokemon, setShowPlayerPokemon] = useState(false);
 
 
     //TODO: fully implement preloading for urls
@@ -327,6 +329,9 @@ function MainGame() {
                 <button className={'btn pokebag-open'} onClick={() =>setShowPokeBag((prev)=>!prev)}>
                     {showPokeBag ? 'Close PokeBag' : `Open PokeBag`}
                 </button>
+                <button className={'btn playerPokemon-open'} onClick={()=>setShowPlayerPokemon((prev)=>!prev)}>
+                    {showPlayerPokemon ? 'Hide Pokemon': 'View Pokemon'}
+                </button>
 
             </div>
             <div className={`pokeUtilities-container ${showPokeDex ? 'open' : ''}`}>
@@ -334,6 +339,9 @@ function MainGame() {
             </div>
             <div className={`pokeUtilities-container ${showPokeBag ? 'open' : ''}`}>
                 {showPokeBag && <PokeBag/>}
+            </div>
+            <div className={`pokeUtilities-container ${showPlayerPokemon ? 'open' : ''}`}>
+                {showPlayerPokemon && <PlayerPoke/>}
             </div>
             <div className= "details-toggle-btn-container">
                 <div>
