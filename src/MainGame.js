@@ -239,10 +239,11 @@ function MainGame() {
         }
     ]
     const [state, setState] = useState();
-    const [currentNode, setCurrentNode] = useState(textNodes[0]);
-
-
-
+    const [currentStoryNode, setCurrentStoryNode] = useState(textNodes[0]);
+    const [appDetailsVisible, setAppDetailsVisible] = useState(false);
+    const [showPokeDex, setShowPokeDex] = useState(false);
+    const [showPlayerUtility, setShowPlayerUtility] = useState(false);
+    
     //TODO: fully implement preloading for urls
     // useEffect(() => {
     //     // Preload images in useEffect
@@ -277,14 +278,10 @@ function MainGame() {
 
     function showTextNode(textNodeIndex) {
         const currentNode = textNodes.find((node) => node.id === textNodeIndex);
-        setCurrentNode(currentNode);
+        setCurrentStoryNode(currentNode);
     }
 
-
-    const [appDetailsVisible, setAppDetailsVisible] = useState(false);
-    const [showPokeDex, setShowPokeDex] = useState(false);
-    const [showPlayerUtility, setShowPlayerUtility] = useState(false);
-
+    
     function toggleAppDetails() {
         setAppDetailsVisible(!appDetailsVisible);
     }
@@ -295,19 +292,19 @@ function MainGame() {
                 <div className={`game-image-container ${showPokeDex ? 'hidden': ''}"}`}>
                     <img
                         src={
-                            currentNode.image && typeof currentNode.image === 'string'
-                                ? currentNode.image
-                                : typeof currentNode.image === 'function'
-                                    ? currentNode.image(state)
+                            currentStoryNode.image && typeof currentStoryNode.image === 'string'
+                                ? currentStoryNode.image
+                                : typeof currentStoryNode.image === 'function'
+                                    ? currentStoryNode.image(state)
                                     : null
                         }
                         alt="Image"
                     />
                 </div>
-                <p1 id="content">{currentNode.text}</p1>
+                <p1 id="content">{currentStoryNode.text}</p1>
                 <div id="option-buttons">
-                    {currentNode.options &&
-                        currentNode.options.map((option, index) => (
+                    {currentStoryNode.options &&
+                        currentStoryNode.options.map((option, index) => (
                             <button
                                 key={index}
                                 className="btn"
