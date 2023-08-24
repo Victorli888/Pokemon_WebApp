@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import githubLogo from './media/github-mark/github-mark-white.png';
 import './index.css';
 import Pokedex from "./pokeDex";
+import PokeBag from "./pokeBag";
 
 function MainGame() {
-
     const textNodes = [
         {
             id: 1,
@@ -240,7 +240,10 @@ function MainGame() {
     ]
     const [state, setState] = useState();
     const [currentNode, setCurrentNode] = useState(textNodes[0]);
-
+    const [appDetailsVisible, setAppDetailsVisible] = useState(false);
+    const [showPlayerUtility, setShowPlayerUtility] = useState(false);
+    const [showPokeDex, setShowPokeDex] = useState(false);
+    const [showPokeBag,setShowPokeBag] = useState(false);
 
 
     //TODO: fully implement preloading for urls
@@ -279,11 +282,6 @@ function MainGame() {
         const currentNode = textNodes.find((node) => node.id === textNodeIndex);
         setCurrentNode(currentNode);
     }
-
-
-    const [appDetailsVisible, setAppDetailsVisible] = useState(false);
-    const [showPokeDex, setShowPokeDex] = useState(false);
-    const [showPlayerUtility, setShowPlayerUtility] = useState(false);
 
     function toggleAppDetails() {
         setAppDetailsVisible(!appDetailsVisible);
@@ -326,9 +324,16 @@ function MainGame() {
                 <button className={'btn pokedex-open'} onClick={() => setShowPokeDex((prev) => !prev)}>
                     {showPokeDex ? 'Close Pokédex' : 'Open Pokédex'}
                 </button>
+                <button className={'btn pokebag-open'} onClick={() =>setShowPokeBag((prev)=>!prev)}>
+                    {showPokeBag ? 'Close PokeBag' : `Open PokeBag`}
+                </button>
+
             </div>
-            <div className={`pokedex-container ${showPokeDex ? 'open' : ''}`}>
+            <div className={`pokeUtilities-container ${showPokeDex ? 'open' : ''}`}>
                 {showPokeDex && <Pokedex />}
+            </div>
+            <div className={`pokeUtilities-container ${showPokeBag ? 'open' : ''}`}>
+                {showPokeBag && <PokeBag/>}
             </div>
             <div className= "details-toggle-btn-container">
                 <div>

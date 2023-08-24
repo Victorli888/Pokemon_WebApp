@@ -1,0 +1,38 @@
+/* pokeBag.css */
+
+#poke-bag {
+    margin-top: 20px;
+    font-family: "PokemonDSFont", serif;
+    color: #e0e0e0;
+}
+
+#poke-bag h3 {
+    font-size: 24px;
+    margin: 5px;
+    color: #282c34;
+}
+
+#poke-bag ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#poke-bag li {
+    margin-bottom: 10px;
+}
+
+#poke-bag button {
+    background-color: #888888;
+    color: #e0e0e0;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-family: "PokemonDSFont", serif;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+#poke-bag button:hover {
+    background-color: #606060;
+}
