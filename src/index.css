@@ -61,9 +61,8 @@ footer, header, hgroup, menu, nav, section {
 
 /* ... (your existing styles) */
 
-.game-image-container {
-  /* Your existing styles */
-  /* Add a higher z-index to make sure game-image-container appears behind pokedex-container */
+.pokebattle-background-container{
+  position: relative;
   z-index: 1;
 }
 
@@ -97,7 +96,7 @@ footer, header, hgroup, menu, nav, section {
   font-size: 1.25em;
   font-weight: bold;
   margin-bottom: 0.5em;
-  font-family: "Toppan Bunkyu Midashi Gothic";
+  font-family: "Toppan Bunkyu Midashi Gothic", serif;
 }
 
 .main-game {
@@ -115,7 +114,7 @@ footer, header, hgroup, menu, nav, section {
   padding-left: 100px;
   padding-right: 100px;
   justify-content: center;
-  font-family: "Toppan Bunkyu Midashi Gothic";
+  font-family: "Toppan Bunkyu Midashi Gothic", serif;
 }
 
 body {
@@ -128,7 +127,7 @@ body {
   height: 100vh;
   background-color: #39414f;
   color: #e0e0e0;
-  font-family: "Toppan Bunkyu Midashi Gothic";
+  font-family: "Toppan Bunkyu Midashi Gothic", serif;
 }
 
 .app-details{

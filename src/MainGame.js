@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import githubLogo from './media/github-mark/github-mark-white.png';
+import imagePaths from "./imagePaths";
 import './index.css';
 import Pokedex from "./pokeDex";
+import PokemonBattle from "./pokeBattle";
+import PokeBattle from "./pokeBattle";
+
 
 function MainGame() {
 
@@ -33,7 +36,7 @@ function MainGame() {
             ]
         },
         {
-            id: 3,
+            id: 3233,
             image: "https://d1lss44hh2trtw.cloudfront.net/assets/editorial/2018/11/profoakbig.jpg",
             text: "You must be Ash! I'm glad you made it! Welcome to the world of Pokemon! I'm excited to introduce you to" +
                 " to the world of Pokemon. Obviously my name isn't professor, call me Oak instead! ",
@@ -236,14 +239,43 @@ function MainGame() {
                     nextText: -1
                 }
             ]
-        }
+        },
+
+        {
+            id: 3,
+            image: imagePaths.grassyBattleBG,
+            text: 'You Find a wild pokemon in the grass! What do you do next?',
+            options: [
+                {
+                    text: 'Fight',
+                    nextText: -1
+                },
+                {
+                    text: 'Bag',
+                    nextText: "open-bag"
+                },
+                {
+                    text: 'Pokemon',
+                    nextText: "open-player-pokemon"
+                },                {
+                    text: 'Run',
+                    nextText: 'running-from-battle'
+                }
+            ]
+        },
+
     ]
     const [state, setState] = useState();
     const [currentStoryNode, setCurrentStoryNode] = useState(textNodes[0]);
     const [appDetailsVisible, setAppDetailsVisible] = useState(false);
     const [showPokeDex, setShowPokeDex] = useState(false);
     const [showPlayerUtility, setShowPlayerUtility] = useState(false);
-    
+    const [pokeBattleState, setPokeBattleState] = useState({
+        battleStarted: false, // Initialize battleStarted state
+        opponentPokemon: null,
+        playerPokemon: null
+    });
+
     //TODO: fully implement preloading for urls
     // useEffect(() => {
     //     // Preload images in useEffect
@@ -285,21 +317,56 @@ function MainGame() {
     function toggleAppDetails() {
         setAppDetailsVisible(!appDetailsVisible);
     }
+    //
+    // function startBattle(playerPokemon, opponentPokemon) {
+    //     setPokeBattleState({
+    //         battleStarted: true,
+    //         playerPokemon: playerPokemon,
+    //         opponentPokemon: opponentPokemon,
+    //     });
+    // }
+    //
+    // function endBattle() {
+    //     setPokeBattleState({
+    //         battleStarted: false,
+    //         playerPokemon: null,
+    //         opponentPokemon: null,
+    //     });
+    // }
 
     return (
         <div>
             <div className="main-game">
-                <div className={`game-image-container ${showPokeDex ? 'hidden': ''}"}`}>
-                    <img
-                        src={
-                            currentStoryNode.image && typeof currentStoryNode.image === 'string'
-                                ? currentStoryNode.image
-                                : typeof currentStoryNode.image === 'function'
-                                    ? currentStoryNode.image(state)
-                                    : null
-                        }
-                        alt="Image"
-                    />
+                <div className={`game-image-container`}>
+                    {currentStoryNode.id === 3 ? ( // Start Wild Pokémon Battle
+
+                        // TODO: Create a way to set new enemies and pokemon states for now hardcode
+                        // <PokemonBattle
+                        //     battleStarted={pokeBattleState.battleStarted}
+                        //     playerPokemon={pokeBattleState.playerPokemon} // Pass the chosen player's Pokemon here
+                        //     opponentPokemon={pokeBattleState.opponentPokemon} // Pass the opponent's Pokemon here
+                        //     stageType={imagePaths.grassyBattleBG}
+                        // />
+
+                        <PokeBattle
+                            battleStarted={true}
+                            playerPokemon={"pikachu"}
+                            opponentPokemon={"blastoise"}
+                            stageType={imagePaths.grassyBattleBG}
+                            />
+                    ) : (
+                        // Not pokeBattle continue story images
+                        <img
+                            src={
+                                currentStoryNode.image && typeof currentStoryNode.image === 'string'
+                                    ? currentStoryNode.image
+                                    : typeof currentStoryNode.image === 'function'
+                                        ? currentStoryNode.image(state)
+                                        : null
+                            }
+                            alt="Image"
+                        />
+                    )}
                 </div>
                 <p1 id="content">{currentStoryNode.text}</p1>
                 <div id="option-buttons">
@@ -314,7 +381,6 @@ function MainGame() {
                             </button>
                         ))}
                 </div>
-            </div>
             <div
                 className={`player-utility-panel ${showPlayerUtility ? 'open' : ''}`}
                 onMouseEnter={() => setShowPlayerUtility(true)}
@@ -344,7 +410,7 @@ function MainGame() {
                                 rel="noopener noreferrer"
                             >
                                 <img
-                                    src={githubLogo}
+                                    src={imagePaths.githubLogo}
                                     alt="See on GitHub"
                                     className="github-logo"
                                 />
@@ -384,8 +450,9 @@ function MainGame() {
                     </header>
                 </section>
             </div>
+            </div>
         </div>
     );
-}
-
+    }
 export default MainGame;
+

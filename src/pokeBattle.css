@@ -1,0 +1,25 @@
+.battle-container {
+    min-width: 1280px;
+    min-height: 720px;
+    display: block;
+    margin: 0 auto;
+    justify-content: center;
+    position: relative;
+    background-color: transparent;
+}
+
+.battle-container.active {
+    /*display: block;*/
+}
+
+.opponent-pokemon {
+    /* Add your styles for the opponent's Pokémon container */
+}
+
+.player-pokemon {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    /* Add your styles for the player's Pokémon container */
+}
