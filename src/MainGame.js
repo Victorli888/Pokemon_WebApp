@@ -350,8 +350,8 @@ function MainGame() {
 
                         <PokeBattle
                             battleStarted={true}
-                            playerPokemon={"pikachu"}
-                            opponentPokemon={"blastoise"}
+                            playerPokemon={"zapdos"}
+                            opponentPokemon={"metapod"}
                             stageType={imagePaths.grassyBattleBG}
                             />
                     ) : (

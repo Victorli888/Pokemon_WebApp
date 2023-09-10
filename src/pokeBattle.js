@@ -52,19 +52,19 @@ const PokemonBattle = ({ battleStarted, playerPokemon, opponentPokemon, stageTyp
                         <p>HP: {opponentPokemonData.stats[0].base_stat}</p>
                     </div>
             <div>
-                <img
+                <img id={"opponent-pokemon-sprite"}
                     src={opponentPokemonData.sprites.front_default}
                     alt={opponentPokemon.name}
                 />
             </div>
-            <div className="player-pokemon">
+            <div className="player-pokemon-container">
                 <h2>Player's Pokemon:</h2>
                     <div>
                         <p>Level: {playerPokemonData.base_experience}</p>
                         <p>HP: {playerPokemonData.stats[0].base_stat}</p>
                     </div>
-                <div>
-                    <img
+                <div >
+                    <img id={"player-pokemon-sprite"}
                     src={playerPokemonData.sprites.back_default}
                     alt={playerPokemon.name}/>
                 </div>

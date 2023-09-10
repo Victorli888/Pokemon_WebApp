@@ -5,6 +5,7 @@
     margin: 0 auto;
     justify-content: center;
     position: relative;
+    z-index: 1;
     background-color: transparent;
 }
 
@@ -12,14 +13,34 @@
     /*display: block;*/
 }
 
-.opponent-pokemon {
-    /* Add your styles for the opponent's Pokémon container */
-}
 
-.player-pokemon {
+.player-pokemon_container {
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 1;
+
     /* Add your styles for the player's Pokémon container */
+}
+
+#player-pokemon-sprite {
+    position: absolute;
+    bottom: -10%;
+    left: 30%;
+    transform: translateX(-50%);
+    height: 350px;
+    width: 350px;
+    z-index: 1;
+
+}
+
+#opponent-pokemon-sprite {
+    position: absolute;
+    bottom: 30%;
+    right: 5%;
+    transform: translateX(-50%);
+    height: 250px;
+    width: 250px;
+    z-index: 1;
 }
