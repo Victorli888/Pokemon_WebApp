@@ -24,6 +24,8 @@ Encounter wild Pokémon and engage in exciting battles. Test your skills, captur
 - JavaScript
 - React
 - HTML/CSS
+- NPM
+- Node.js
 
 ## Getting Started
 
