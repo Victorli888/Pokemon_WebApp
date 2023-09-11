@@ -367,7 +367,11 @@ function MainGame() {
                             alt="Image"
                         />
                     )}
+                    <div className="cover-layer">
+                        {/*Intentionally left blank*/}
+                    </div>
                 </div>
+
                 <p1 id="content">{currentStoryNode.text}</p1>
                 <div id="option-buttons">
                     {currentStoryNode.options &&
