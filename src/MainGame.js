@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import imagePaths from "./imagePaths";
 import './index.css';
 import Pokedex from "./pokeDex";
-import PokemonBattle from "./pokeBattle";
-import PokeBattle from "./pokeBattle";
+import PokemonBattle from "./pokeBattleView";
+import PokeBattle from "./pokeBattleView";
 
 
 function MainGame() {
@@ -247,19 +247,8 @@ function MainGame() {
             text: 'You Find a wild pokemon in the grass! What do you do next?',
             options: [
                 {
-                    text: 'Fight',
+                    text: 'Continue...',
                     nextText: -1
-                },
-                {
-                    text: 'Bag',
-                    nextText: "open-bag"
-                },
-                {
-                    text: 'Pokemon',
-                    nextText: "open-player-pokemon"
-                },                {
-                    text: 'Run',
-                    nextText: 'running-from-battle'
                 }
             ]
         },
