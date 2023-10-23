@@ -90,7 +90,6 @@ body {
     gap: 10px;
 }
 
-
 .battle-options button {
     /* Styles for the buttons inside the battle details container */
     background-color: rgba(0, 112, 192, 0.7); /* Reduce opacity to match the details box */
@@ -109,29 +108,28 @@ body {
 
 }
 
-/* Position buttons in the corners */
 .battle-options #top-left {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    bottom: 10px;
+    right: 10px;
 }
 
 .battle-options #top-right {
     position: absolute;
-    top: 10px;
-    right: 10px;
-}
-
-.battle-options #bot-left {
-    position: absolute;
     bottom: 10px;
     left: 10px;
 }
 
+.battle-options #bot-left {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
 .battle-options #bot-right {
     position: absolute;
-    bottom: 10px;
-    right: 10px;
+    top: 10px;
+    left: 10px;
 }
 
 

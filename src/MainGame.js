@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import imagePaths from "./imagePaths";
 import './index.css';
 import Pokedex from "./pokeDex";
-import PokemonBattle from "./pokeBattleView";
 import PokeBattle from "./pokeBattleView";
+import { playerPokemonTeam, opponentPokemonTeam } from './gameData.js';
+
 
 
 function MainGame() {
@@ -248,7 +249,7 @@ function MainGame() {
             options: [
                 {
                     text: 'Continue...',
-                    nextText: -1
+                    nextText: 2
                 }
             ]
         },
@@ -260,7 +261,7 @@ function MainGame() {
     const [showPokeDex, setShowPokeDex] = useState(false);
     const [showPlayerUtility, setShowPlayerUtility] = useState(false);
     const [pokeBattleState, setPokeBattleState] = useState({
-        battleStarted: false, // Initialize battleStarted state
+        isInBattle: false, // Initialize battleStarted state
         opponentPokemon: null,
         playerPokemon: null
     });
@@ -338,9 +339,9 @@ function MainGame() {
                         // />
 
                         <PokeBattle
-                            battleStarted={true}
-                            playerPokemon={"zapdos"}
-                            opponentPokemon={"metapod"}
+                            isInBattle={true}
+                            playerPokemonTeam={playerPokemonTeam}
+                            opponentPokemonTeam={opponentPokemonTeam}
                             stageType={imagePaths.grassyBattleBG}
                             />
                     ) : (
