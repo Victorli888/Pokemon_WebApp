@@ -1,40 +1,144 @@
+import {opponentPokemonTeam, playerPokemonTeam} from "./gameData";
+import {gameTexts} from "./gameTexts";
+
 async function startFightMove(fightMove, attackingPokemon, defendingPokemon) {
-    try {
-        // Fetch move details from the PokeAPI
-        const response = await fetch(`https://pokeapi.co/api/v2/move/${fightMove}`);
-        const moveData = await response.json();
+    console.log(`making Request to PokeAPI for ${fightMove}`)
+    // Fetch move details from the PokeAPI
+    const response = await fetch(`https://pokeapi.co/api/v2/move/${fightMove}`);
+    const moveData = await response.json();
 
-        // Calculate damage based on move power and opponent's defense
-        const damage = Math.floor((2 * attackingPokemon.attack * moveData.power) / defendingPokemon.defence / 5) + 2;
-        console.log(`${attackingPokemon.name} used ${fightMove} and did ${damage} to ${defendingPokemon.name}`)
-        // Update opponent's HP
-        defendingPokemon.hp -= damage;
-
-        // Check if the opponent's HP is reduced to 0 or below
-        if (defendingPokemon.hp <= 0) {
-            // Opponent fainted, return victory result
-            return {
-                result: 'victory',
-                attackingPokemon: attackingPokemon,
-                defendingPokemon: defendingPokemon,
-            };
-        } else {
-            // Opponent still has HP, return continue result
-            return {
-                result: 'continue',
-                attackingPokemon: attackingPokemon,
-                defendingPokemon: defendingPokemon,
-            };
-        }
-    } catch (error) {
-        console.error(error);
-        // Handle error case
-        return {
-            result: 'error',
-            attackingPokemon: attackingPokemon,
-            defendingPokemon: defendingPokemon,
-        };
+    if (!moveData) {
+        console.log(`Move data for ${fightMove} is undefined`);
+        return null; // or handle the error in an appropriate way
     }
+
+    // Calculate damage based on move power and opponent's defense
+    const damage = Math.floor((2 * attackingPokemon.attack * moveData.power) / defendingPokemon.defence / 5) + 2;
+    console.log(`${attackingPokemon.name} used ${fightMove} and did ${damage} to ${defendingPokemon.name}`)
+    // Update opponent's HP
+    defendingPokemon.hp -= damage;
+
+    return {
+        attackingPokemon: attackingPokemon,
+        defendingPokemon: defendingPokemon
+    }
+}
+
+async function attemptPokemonCatch(pokemon, ballType) {
+     let catchChance = pokemon.catchPercent + ballType.catchValue
+
+    if (Math.random() < catchChance) {
+        // Catch is successful
+        console.log(`You caught ${pokemon.name}!`);
+        return true;
+    } else {
+        // Catch failed
+        console.log(`Oh no! ${pokemon.name} broke free.`);
+        return false;
+    }
+}
+
+function countEligiblePokemon(pokemonTeam) {
+    let eligiblePokemonCount = 0;
+    pokemonTeam.forEach(function(pokemon) {
+        if (!pokemon.isFainted) {
+            eligiblePokemonCount += 1;
+        }
+    });
+    return eligiblePokemonCount;
+}
+
+
+
+// async function useBagItem(item, pokemon){
+//     if (item.itemType === "potion"){
+//         pokemon.hp += item.effect;
+//     }
+//     else if (item.itemType === "pokeball"){
+//         let pokemonCatchSuccess = attemptPokemonCatch(pokemon, balltype)
+//         if (pokemonCatchSuccess){
+//             playerPokemonTeam.addToPlayerTeam(pokemon)
+//             // Display Catch Succeeded
+//         }
+//         else{
+//             // Display Catch Failed
+//         }
+//     }
+// }
+
+async function startPokeBattleRound(playerAction, selection, playerPokemon, opponentPokemon) {
+    console.log("Start of the Round");
+    let currentTurn = playerPokemon.speed > opponentPokemon.speed ? "player" : "opponent";
+    let playerPendingTurn = true;
+    let opponentPendingTurn = true;
+
+    while (playerPendingTurn || opponentPendingTurn) {
+        if (playerPendingTurn && playerPokemon && currentTurn === "player") {
+            if (playerAction === "fight") {
+                console.log("Player Selected Fight");
+                let results = await startFightMove(selection, playerPokemon, opponentPokemon);
+                results.attackingPokemon = playerPokemon
+                results.defendingPokemon = opponentPokemon
+                if (opponentPokemon && opponentPokemon.hp <= 0) {
+                    break;
+                }
+            } else if (playerAction === "bag") {
+                // useBagItem(somePotion, playerPokemon)
+                console.log("WIP: using item!!!");
+            } else if (playerAction === "pokemon") {
+                // newlySelectedPokemon = pickPokemon()
+                // performPokemonSwap(playerPokemon, newlySelectedPokemon)
+            } else {
+                console.error("Something went wrong selecting a player move");
+            }
+            currentTurn = "opponent";
+            playerPendingTurn = false;
+            console.log(`the current Turn is now: ${currentTurn}`);
+        }
+
+        if (opponentPendingTurn && opponentPokemon && currentTurn === "opponent") {
+            console.log("opponent making turn");
+            let results = await startFightMove(opponentPokemon.moves[0], opponentPokemon, playerPokemon);
+            results.attackingPokemon = opponentPokemon
+             results.defendingPokemon = playerPokemon
+            if (playerPokemon && playerPokemon.hp <= 0) {
+                break;
+            }
+            currentTurn = "player";
+            opponentPendingTurn = false;
+            console.log(`the current Turn is now: ${currentTurn}`);
+        }
+        console.log(`player pending turn:${playerPendingTurn}, opponentPendingTurn:${opponentPendingTurn}`);
+    }
+
+    if (playerPokemon && playerPokemon.hp <= 0) {
+        console.log(`${playerPokemon.name} has fainted`);
+        setPokemonToFainted(playerPokemon);
+        let playerRemainingPokemon = countEligiblePokemon(playerPokemonTeam);
+        console.log(`Player Pokemon Remaining ${playerRemainingPokemon}`);
+        if (playerRemainingPokemon === 0) {
+            console.log("setting White out to True");
+            playerPokemon.willWhiteOut = true;
+        }
+    } else if (opponentPokemon && opponentPokemon.hp <= 0) {
+        console.log(`${opponentPokemon.name} has fainted`);
+        setPokemonToFainted(opponentPokemon);
+        let opponentRemainingPokemon = countEligiblePokemon(opponentPokemonTeam);
+        if (opponentRemainingPokemon === 0) {
+            opponentPokemon.willWhiteOut = true;
+        }
+    }
+
+    return {
+        playerPokemon: playerPokemon,
+        opponentPokemon: opponentPokemon
+    };
+}
+
+
+function setPokemonToFainted(pokemon){
+    pokemon.isFainted = true
+    pokemon.hp = 0
 }
 
 function performBagAction(playerPokemon, opponentPokemon) {
@@ -46,24 +150,21 @@ function performBagAction(playerPokemon, opponentPokemon) {
     // Return battle result
 }
 
-function performPokemonSwap(playerPokemon, opponentPokemon) {
-    // Allow the player to switch their active Pokémon
-    // Determine if the switch is valid (e.g., not fainted Pokémon)
-    // Update active Pokémon save the array state & continue Battle
-    // Return battle result
-}
+function performPokemonSwap(currentPokemon, selectedPokemon) {
 
-function attemptEscape(playerPokemon, opponentPokemon, isTrainerBattle) {
-    // Determine if the player successfully escapes from the battle
-    // Consider factors like Pokémon speed and battle conditions
-    // Return battle result (escape or continue)
+    if (selectedPokemon.isFainted){
+        return currentPokemon
+    }
+
+    else{
+        return selectedPokemon
+    }
 }
 
 // Export the battle logic functions and constants
 export {
-    startFightMove,
+    startPokeBattleRound,
     performBagAction,
     performPokemonSwap,
-    attemptEscape,
 };
 

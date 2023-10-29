@@ -339,10 +339,10 @@ function MainGame() {
                         // />
 
                         <PokeBattle
-                            isInBattle={true}
                             playerPokemonTeam={playerPokemonTeam}
                             opponentPokemonTeam={opponentPokemonTeam}
                             stageType={imagePaths.grassyBattleBG}
+                            isTrainerBattle={true}
                             />
                     ) : (
                         // Not pokeBattle continue story images

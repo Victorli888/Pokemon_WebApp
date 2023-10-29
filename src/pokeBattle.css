@@ -137,3 +137,30 @@ body {
     /* Button styles on hover */
     background-color: rgba(0, 80, 160, 0.7); /* Adjust hover opacity if needed */
 }
+
+.battle-options #continue-btn {
+    position: absolute;
+    font-size: 16px;
+    width: 90px;
+    height: 30px;
+    padding: 10px 10px 10px 10px;
+    top: 50px;
+    left: 300px;
+}
+
+#display-text {
+    position: absolute;
+    text-align: left; /* Center the button text */
+    font-size: 26px; /* Adjust font size */
+    font-weight: bold; /* Add bold font weight */
+    /*text-transform: uppercase; !* Convert text to uppercase *!*/
+    font-family: "PokemonDSFont", serif;
+    width: 750px;
+    height: 100px;
+    color: black;
+    padding-right: 10px;
+    padding-left: 10px;
+    left: -400px;
+    bottom: -30px;
+
+}
