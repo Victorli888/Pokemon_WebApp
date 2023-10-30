@@ -1,43 +1,14 @@
-/* General styling */
-.App {
-  text-align: center;
-}
+/*Layers
+4: Poke Player Utility ( PokeDex, Bag, Pokemon, etc)
+3: Player Control (Buttons/Dialouge)
+2: Cover Layer
+1: Game Display Content (Pokemon/Characters/Game Effects)
+0: Background
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
-.App-header {
-  background-color: #39414f;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
+*/
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
   display: block;
@@ -48,24 +19,9 @@ footer, header, hgroup, menu, nav, section {
   max-height: 540px;
   padding: 10px;
   display: inline-block;
+  z-index: 2;
 }
 
-.game-image-container img {
-  max-width: 960px;
-  max-height: 540px;
-  padding: 10px;
-  display: block;
-  margin: 0 auto;
-  justify-content: center;
-}
-
-/* ... (your existing styles) */
-
-.game-image-container {
-  /* Your existing styles */
-  /* Add a higher z-index to make sure game-image-container appears behind pokedex-container */
-  z-index: 1;
-}
 
 .pokeUtilities-container {
   position: fixed;
@@ -80,24 +36,27 @@ footer, header, hgroup, menu, nav, section {
   transition: opacity 0.3s ease-in-out;
   opacity: 0; /* Start with opacity 0, so it's hidden */
   pointer-events: none; /* Prevent interactions when not open */
-  z-index: 2; /* Higher z-index to make sure pokedex-container appears above game-image-container */
+  z-index: 4; /* Higher z-index to make sure pokedex-container appears above game-image-container */
 }
 
 .pokeUtilities-container.open {
   opacity: 1; /* Show the Pokedex when it's open */
   pointer-events: auto; /* Allow interactions when open */
+  z-index: 4;
 }
 
 #image-element {
   max-width: 640px;
   max-height: 360px;
+  z-index: 1;
 }
 
 #header h1 {
   font-size: 1.25em;
   font-weight: bold;
   margin-bottom: 0.5em;
-  font-family: "Toppan Bunkyu Midashi Gothic";
+  font-family: "Toppan Bunkyu Midashi Gothic", serif;
+  z-index: 3;
 }
 
 .main-game {
@@ -107,6 +66,11 @@ footer, header, hgroup, menu, nav, section {
   justify-content: center;
   text-align: center;
   padding: 20px; /* Adjust padding as needed */
+  z-index: 1;
+}
+
+.game-image-container{
+  z-index: 1;
 }
 
 .main-game p1 {
@@ -115,9 +79,13 @@ footer, header, hgroup, menu, nav, section {
   padding-left: 100px;
   padding-right: 100px;
   justify-content: center;
-  font-family: "Toppan Bunkyu Midashi Gothic";
+  font-family: "Toppan Bunkyu Midashi Gothic", serif;
+  z-index: 3;
 }
 
+#option-buttons{
+  z-index: 3;
+}
 body {
   margin: 0;
   display: flex;
@@ -128,16 +96,21 @@ body {
   height: 100vh;
   background-color: #39414f;
   color: #e0e0e0;
-  font-family: "Toppan Bunkyu Midashi Gothic";
+  font-family: "Toppan Bunkyu Midashi Gothic", serif;
+  z-index: 3;
 }
+
+
 
 .app-details{
   border-top: 2px dashed #505560;
   padding-top: 20px;
+  z-index: 4;
 }
 
 /* App details section */
 .app-details.visible {
+  z-index: 4;
   font-size: smaller;
   margin-top: 1em;
   padding: 0 100px;
@@ -158,6 +131,7 @@ body {
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
   margin-top: 20px;
+  z-index: 2;
 }
 
 .details-toggle-btn {
@@ -169,10 +143,12 @@ body {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  z-index: 2;
 }
 
 .details-toggle-btn:hover {
   background-color: #505560;
+  z-index: 2;
 }
 
 /* GitHub Button */
@@ -186,10 +162,12 @@ body {
   cursor: pointer;
   transition: background-color 0.3s ease;
   text-decoration: none;
+  z-index: 2;
 }
 /* GitHub Button on hover */
 .github-btn:hover {
   background-color: #fff; /* Change to white on hover */
+  z-index: 2;
 }
 
 /* GitHub Hyperlink */
@@ -208,12 +186,14 @@ body {
   height: 30px;
   margin-left: 10px;
   margin-right: 10px;
+  z-index: 2;
 }
 #details-header {
    display: flex;
    flex-direction: column;
    align-items: center;
    text-align: center;
+  z-index: 2;
  }
 
 /* GitHub Link Container */
@@ -274,6 +254,7 @@ body {
   gap: 10px;
   margin-top: 20px;
   justify-content: center;
+  z-index: 2;
 }
 
 .btn {
@@ -286,8 +267,15 @@ body {
   font-size: 15px;
   color: white;
   outline: none;
-  min-width: 150px; /* Set the minimum width for the button */
-  min-height: 30px; /* Set the minimum height for the button */
+  min-width: 150px;
+  z-index: 2;
+}
+.cover-layer {
+  position: absolute;
+  width: 100%;
+  height: 10%;
+  background-color: #39414f;
+  z-index: 1; /* Set z-index lower than other elements to keep it at the bottom */
 }
 
 .btn:hover {
