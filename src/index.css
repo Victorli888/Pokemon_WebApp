@@ -67,7 +67,7 @@ footer, header, hgroup, menu, nav, section {
   z-index: 1;
 }
 
-.pokedex-container {
+.pokeUtilities-container {
   position: fixed;
   top: 0;
   left: 0;
@@ -83,7 +83,7 @@ footer, header, hgroup, menu, nav, section {
   z-index: 2; /* Higher z-index to make sure pokedex-container appears above game-image-container */
 }
 
-.pokedex-container.open {
+.pokeUtilities-container.open {
   opacity: 1; /* Show the Pokedex when it's open */
   pointer-events: auto; /* Allow interactions when open */
 }
