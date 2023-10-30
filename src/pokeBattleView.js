@@ -10,6 +10,7 @@ import {
 import './pokeBattle.css';
 import './index.css';
 import {gameTexts} from "./gameTexts";
+
 const PokemonBattle = ({playerPokemonTeam, opponentPokemonTeam, stageType, isTrainerBattle }) => {
 
     const [playerPokemon, setPlayerPokemon] = useState(playerPokemonTeam[0]);
@@ -21,7 +22,9 @@ const PokemonBattle = ({playerPokemonTeam, opponentPokemonTeam, stageType, isTra
     const [isShowingFightOptions, setIsShowingFightOptions] = useState(false);
     const [isShowingBagOptions, setIsShowingBagOptions] = useState(false);
     let [isBattleState, setIsBattleState] = useState(true);
-    const [isShowingOkayOption, setIsShowingOkayOption] = useState(false);
+    const [showGameText, setShowGameText] = useState(null);
+    let [isGameOverState, setIsGameOverState] = useState(false);
+
 
     // Call this function when you want to hide the battle options and buttons.
     const hidePokeBattleOptions = () => {
@@ -47,51 +50,55 @@ const PokemonBattle = ({playerPokemonTeam, opponentPokemonTeam, stageType, isTra
         setIsShowingFightOptions(true)
     }
 
-    const hideFightDetails = () => {
+    const hideFightOptions = () => {
         setIsShowingFightOptions(false)
     }
 
     function displayText(text) {
         return (
             <div>
-                <p>{text}</p>
+                <p id={'display-text'}>{text}</p>
             </div>
         );
     }
+
+    function refreshPage() {
+        window.location.reload();
+    }
+
 
     function updateDetails(){
 
         console.log("updating Details")
         hidePokeBattleOptions()
-        hideFightDetails()
-        setIsShowingOkayOption(true)
+        hideFightOptions()
+        showDetailsBox()
+    };
 
+    function checkForWinner(){
         if(playerPokemon && playerPokemon.willWhiteOut){
             console.log("GAME OVER")
-            isBattleState = false;
+            setIsBattleState(false)
             console.log(`BattleState Now set to ${isBattleState}`)
+            setShowGameText(gameTexts.playerDefeated)
+            setIsGameOverState(true);
+            console.log(`isGameOverState: ${isGameOverState}`)
+
         }
-        if(opponentPokemon && opponentPokemon.willWhiteOut){
+        else if(opponentPokemon && opponentPokemon.willWhiteOut){
             console.log("YOU WIN!")
             console.log(`WHITE OUT VALUE: ${opponentPokemon.willWhiteOut}`)
-            isBattleState = false;
+            setIsBattleState(false)
             console.log(`BattleState Now set to ${isBattleState}`)
-
+            setShowGameText(gameTexts.opponentDefeated)
         }
 
-        hideFightDetails();
-        hideDetailsBox();
-
-
-
-        if(isBattleState){
-            showDetailsBox()
-            // showPokeBattleOptions()
-        }
         else{
-            hideDetailsBox()
+            console.log("Battle Continues...")
+
         }
-    };
+
+    }
 
     useEffect(() => {
         if (isBattleState) {
@@ -214,6 +221,8 @@ const PokemonBattle = ({playerPokemonTeam, opponentPokemonTeam, stageType, isTra
                                 console.log("Move One")
                                 let results = await startPokeBattleRound("fight", playerPokemon.moves[0], playerPokemon, opponentPokemon)
                                 updateDetails(results.playerPokemon, results.opponentPokemon)
+                                setShowGameText(`${playerPokemon.name} used ${playerPokemon.moves[0]}`)
+                                checkForWinner()
                             }}>
                                 {playerPokemon.moves[0]}
                             </button>
@@ -261,15 +270,24 @@ const PokemonBattle = ({playerPokemonTeam, opponentPokemonTeam, stageType, isTra
                         </>
                     )}
 
-                    {isShowingOkayOption && (
+                    {showGameText && (
                         <>
-                            <p1 id={'display-text'}>a git-based workflow for continuous deployment and hosting of full-stack web apps.</p1>
-
+                            <p id="display-text" style={{ whiteSpace: 'pre-line' }}>{showGameText}</p>
                             <button id={'continue-btn'} onClick={() =>{
                                 console.log("Okay Pressed!")
-                                setIsShowingOkayOption(false)
-                                showPokeBattleOptions()
-                                showDetailsBox()
+                                setShowGameText(null)
+                                if (isGameOverState) {
+                                    console.log("refreshing page")
+                                    refreshPage()
+                                }
+                                else if (!isBattleState){
+                                    console.log("battle Ended continue on with story")
+                                    hideDetailsBox()
+                                }
+                                else {
+                                    showPokeBattleOptions()
+                                    showDetailsBox()
+                                }
                             }}>
                             Continue...
                             </button>
@@ -282,4 +300,4 @@ const PokemonBattle = ({playerPokemonTeam, opponentPokemonTeam, stageType, isTra
 
     );
 };
-export default PokemonBattle;
+export default PokemonBattle

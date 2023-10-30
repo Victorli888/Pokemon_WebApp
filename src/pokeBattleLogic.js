@@ -1,5 +1,6 @@
 import {opponentPokemonTeam, playerPokemonTeam} from "./gameData";
 import {gameTexts} from "./gameTexts";
+import pokeBattleView from "./pokeBattleView";
 
 async function startFightMove(fightMove, attackingPokemon, defendingPokemon) {
     console.log(`making Request to PokeAPI for ${fightMove}`)

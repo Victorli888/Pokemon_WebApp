@@ -14,8 +14,8 @@ export var playerPokemonTeam = [
 export var opponentPokemonTeam = [
     {
         name: "charizard",
-        hp: 150,
-        attack: 45,
+        hp: 120,
+        attack: 80,
         defence: 80,
         speed: 55,
         moves: ["rollout","tackle","fly","flamethrower"],
