@@ -1,5 +1,6 @@
 /*Layers
-4: Poke Player Utility ( PokeDex, Bag, Pokemon, etc)
+5: Poke Player Utility ( PokeDex, Bag, Pokemon, etc)
+4: Utility Background cover
 3: Player Control (Buttons/Dialouge)
 2: Cover Layer
 1: Game Display Content (Pokemon/Characters/Game Effects)
@@ -222,7 +223,7 @@ body {
   align-items: flex-start;
   padding: 20px;
   transition: left 0.3s ease-in-out;
-  z-index: 3; /* Higher z-index to make sure it appears above other content */
+  z-index: 5; /* Higher z-index to make sure it appears above other content */
 }
 
 .player-utility-panel.open {
