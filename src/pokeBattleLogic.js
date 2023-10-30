@@ -87,6 +87,7 @@ async function startPokeBattleRound(playerAction, selection, playerPokemon, oppo
                 // useBagItem(somePotion, playerPokemon)
                 console.log("WIP: using item!!!");
             } else if (playerAction === "pokemon") {
+                console.log("WIP: Selecting Pokemon!!!")
                 // newlySelectedPokemon = pickPokemon()
                 // performPokemonSwap(playerPokemon, newlySelectedPokemon)
             } else {
@@ -101,7 +102,7 @@ async function startPokeBattleRound(playerAction, selection, playerPokemon, oppo
             console.log("opponent making turn");
             let results = await startFightMove(opponentPokemon.moves[0], opponentPokemon, playerPokemon);
             results.attackingPokemon = opponentPokemon
-             results.defendingPokemon = playerPokemon
+            results.defendingPokemon = playerPokemon
             if (playerPokemon && playerPokemon.hp <= 0) {
                 break;
             }
@@ -127,6 +128,17 @@ async function startPokeBattleRound(playerAction, selection, playerPokemon, oppo
         let opponentRemainingPokemon = countEligiblePokemon(opponentPokemonTeam);
         if (opponentRemainingPokemon === 0) {
             opponentPokemon.willWhiteOut = true;
+            console.log("setting White out to True");
+        }
+        else{
+            const nextOpponentPokemonIndex = opponentPokemonTeam.indexOf(opponentPokemon) + 1;
+            if (nextOpponentPokemonIndex < opponentPokemonTeam.length) {
+                const nextOpponentPokemon = opponentPokemonTeam[nextOpponentPokemonIndex];
+                opponentPokemon = nextOpponentPokemon
+                console.log(`New opponent Pokemon set to: ${nextOpponentPokemon.name}`);
+            } else {
+                console.log("No more opponent Pokemon left");
+            }
         }
     }
 

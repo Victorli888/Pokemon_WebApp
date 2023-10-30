@@ -67,9 +67,11 @@ const PokemonBattle = ({playerPokemonTeam, opponentPokemonTeam, stageType, isTra
     }
 
 
-    function updateDetails(){
+    function updateDetails(playerPokemon, opponentPokemon){
+        setPlayerPokemon(playerPokemon)
+        setOpponentPokemon(opponentPokemon)
 
-        console.log("updating Details")
+        console.log("updating Details & completing round")
         hidePokeBattleOptions()
         hideFightOptions()
         showDetailsBox()
@@ -186,7 +188,7 @@ const PokemonBattle = ({playerPokemonTeam, opponentPokemonTeam, stageType, isTra
                             <button id={'top-right'} onClick={() => {
                                 // openBag()
                                 hidePokeBattleOptions()
-                                displayText("WIP: Displaying Bag Items")
+                                console.log("WIP: Displaying Bag Items")
                                 // showBagOptions()
                             }}>Bag</button>
 
@@ -194,7 +196,7 @@ const PokemonBattle = ({playerPokemonTeam, opponentPokemonTeam, stageType, isTra
                                 // performPokemonSwap()
                                 // allow cancel & display  Player Pokemon Team
                                 hidePokeBattleOptions()
-                                displayText("WIP: Display Pokemon to swap")
+                                console.log("WIP: Display Pokemon to swap")
                             }}>Pokemon</button>
 
                             <button id={'bot-right'} onClick={() => {

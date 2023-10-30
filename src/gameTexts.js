@@ -4,6 +4,6 @@ export var  gameTexts = {
     escapeFail: "You are not able to run away from a trainer battle.",
     pokeSwapFail: "You can't swap to a pokemon that has fainted.",
     playerDefeated: `Everyone on your team has fainted... \nGame Over, You will need to restart the game`,
-    opponentDefeated: `Your opponent has no other pokemon to fight with... \nYou Win,`
+    opponentDefeated: `Your opponent has no other pokemon to fight with... \nYou Win.`
 }
 
