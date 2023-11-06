@@ -91,7 +91,7 @@ function MainGame() {
         <div>
             <div className="main-game">
                 <div className={`game-image-container`}>
-                    {currentStoryNode.id === "trainerBattleWilliam" ? ( // Start Wild Pokémon Battle
+                    {currentStoryNode.id === "trainerBattleDale" ? ( // Start Wild Pokémon Battle
 
                         // TODO: Create a way to set new enemies and pokemon states for now hardcode
                         // <PokemonBattle
