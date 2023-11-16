@@ -5,6 +5,7 @@ export const storyNodes = [
     {
         id: 1,
         image: imagePaths.bedroomBG,
+        left_char: imagePaths.ashe,
         text: "            Zzz... Hm? Wha...? You hear a loud buzzing and wake up to check the time. " +
             "What time is it? What? 9:30?! Why didn't anyone wake me up! I'm late! I've got to get to the Pokemon Lab " +
             "before all the good starter pokemon are taken!"
@@ -31,6 +32,8 @@ export const storyNodes = [
     {
         id: 3,
         image: imagePaths.pokeLabInteriorBG,
+        left_char: imagePaths.ashe,
+        right_char: imagePaths.proffesorOak,
         text: "You must be Ash! I'm glad you made it! Welcome to the world of Pokemon! I'm excited to introduce you to" +
             " to the world of Pokemon. Obviously my name isn't professor, call me Oak instead! ",
         options: [
@@ -43,7 +46,8 @@ export const storyNodes = [
     },
     {
         id: 4,
-        image: imagePaths.pokeWorldMap
+        image: imagePaths.pokeWorldMap,
+        left_char: imagePaths.proffesorOak
         ,
         text: ' This world is inhabited by creatures that we call pokemon.\n' +
             '            People and pokemon live together by supporting each other.\n' +
@@ -177,6 +181,8 @@ export const storyNodes = [
         //TODO: Create lock for PokeDex up until this point, ping a notification that Pokedex is unlocked
         id: "pokeDex-acquired",
         image: imagePaths.pokeLabInteriorBG,
+        left_char: imagePaths.pokeDex,
+        right_char: imagePaths.proffesorOak,
         text: `Oh and before you go, I want you to have this.... It's a pokeDex it contains data for all the known pokemon we've discovered so far.
             ... The closest city is Pewter City why don't you start there.`,
         options: [
@@ -213,6 +219,7 @@ export const storyNodes = [
     {
         id: `Pier`,
         image: imagePaths.pierBG,
+        right_char: imagePaths.ashe,
         text: `You see a beautiful Pier, seagulls off in the distance, and the sun smiling over you`,
         options: [
             {
@@ -224,6 +231,7 @@ export const storyNodes = [
     {
         id: `home`,
         image: imagePaths.homeBG,
+        right_char: imagePaths.ashe,
         text: `You Enter your Home, lay out on your couch and feel the coziness flow through you`,
         options: [
             {
@@ -239,17 +247,19 @@ export const storyNodes = [
         options: [
             {
                 text: `check it out`,
-                nextText:`trainerWill`
+                nextText:`trainerDale`
             },
             {
                 text: 'ignore it',
-                nextText: `trainerWill`
+                nextText: `trainerDale`
             }
         ]
     },
     {
         id: `lab`,
         image: imagePaths.pokeLabInteriorBG,
+        left_char: imagePaths.ashe,
+        right_char: imagePaths.proffesorOak,
         text: `oh Ash, You're back so fast. Did you forget something?`,
         options: [
             {
@@ -264,6 +274,8 @@ export const storyNodes = [
     },
     {
         id: `oakDialog`,
+        left_char: imagePaths.ashe,
+        right_char: imagePaths.proffesorOak,
         image: imagePaths.pokeLabInteriorBG,
         text: `Pewter City is home to the Rock Type Gym, the Gym Leader Brock. Defeating him and earing the Pewter City Gym Badge will be a major milestone in your pokemon adventure.`,
         options: [
@@ -278,12 +290,24 @@ export const storyNodes = [
         ]
     },
     {
-        id: `trainerWill`,
+        id: `trainerDale`,
         image: imagePaths.tallGrassBG,
+        left_char: imagePaths.ashe,
+        right_char: imagePaths.trainerDale,
         text: `A Pokemon trainer with pops out and says " Oh hey there! I'm trying catch pokemon but I need more practice battling!"`,
         options: [
             {
                 text: `StartBattle`,
+                nextText:`trainerBattleDale`
+            }
+        ]
+    },
+    {
+        id: `trainerBattleDale`,
+        image: imagePaths.tallGrassBG,
+        options: [
+            {
+                text: `StartBattle!`,
                 nextText:`splitPath`
             }
         ]
@@ -447,6 +471,7 @@ export const storyNodes = [
     {
         id: `abandonedHouse`,
         image: imagePaths.abandonedHouseBG,
+        left_char: imagePaths.ashe,
         text: `You enter the abandoned house and you see an empty living room with rotting floorboards, and in the corner of the house you see a tattered old wicker basket`,
         options: [
             {
@@ -472,7 +497,7 @@ export const storyNodes = [
     },
     {
         id: `fancyHouse`,
-        image: imagePaths.pokeMansion,
+        image: imagePaths.pokeMansionBG,
         text: `You approach a gorgeous home made of chiseled stone bricks, its intricate details and craftsmanship leaving you in awe. `,
         options: [
             {
@@ -487,8 +512,9 @@ export const storyNodes = [
     },
     {
         id: `fancyHouseDoor`,
-        image: imagePaths.grassyBattleBG,
-        text: `You really shouldn't barge into a house uninvited`,
+        image: imagePaths.pokeMansionBG,
+        left_char: imagePaths.ashe,
+        text: `I probably shouldn't barge into someone's house uninvited.`,
         options: [
             {
                 text: `Leave`,
@@ -518,6 +544,8 @@ export const storyNodes = [
     {
         id: `strangeOldMan1`,
         image: imagePaths.pewterCityBG,
+        left_char: imagePaths.ashe,
+        right_char: imagePaths.oldMan,
         text: `I used to be a pokemon trainer just like you! let me ask you what do you think of your pokemon?  `,
         options: [
             {
@@ -537,6 +565,8 @@ export const storyNodes = [
     {
         id: `strangeOldMan2`,
         image: imagePaths.pewterCityBG,
+        left_char: imagePaths.ashe,
+        right_char: imagePaths.oldMan,
         text: `Ah, you have a great bond with your Pokémon! That's wonderful to hear. Let me test your qualities as a trainer. Imagine you encounter a lost and injured Pokémon in the wild. What would you do?`,
         options: [
             {
@@ -556,6 +586,8 @@ export const storyNodes = [
     {
         id: `strangeOldMan3`,
         image: imagePaths.pewterCityBG,
+        left_char: imagePaths.ashe,
+        right_char: imagePaths.oldMan,
         text: `Never forget this unshakable virtue you have ! Here's another scenario: You come across a Pokémon being mistreated by its trainer. How would you react?`,
         options: [
             {
@@ -575,6 +607,8 @@ export const storyNodes = [
     {
         id: `strangeOldMan4`,
         image: imagePaths.grassyBattleBG,
+        left_char: imagePaths.ashe,
+        right_char: imagePaths.oldMan,
         text: `Impressive, you're a kind-hearted trainer! One more question: You find a hurt and abandoned Pokémon that doesn't belong to you. What do you do?`,
         options: [
             {
@@ -594,6 +628,8 @@ export const storyNodes = [
     {
         id: `strangeOldManSuccess`,
         image: imagePaths.pewterCityBG,
+        left_char: imagePaths.ashe,
+        right_char: imagePaths.oldMan,
         text: `You're absolutely the kind of trainer I was looking for! Your compassion and empathy for Pokémon are truly remarkable. I want to pass on to you my own life-long friend as a token of your compassionate nature. Will you accept this Pokémon?`,
         options: [
             {
@@ -609,6 +645,8 @@ export const storyNodes = [
     {
         id: `strangeOldManFailed`,
         image: imagePaths.grassyBattleBG,
+        left_char: imagePaths.ashe,
+        right_char: imagePaths.oldMan,
         text: `Oh, it seems like you're still learning about being a compassionate trainer. Don't worry; we all start somewhere. Feel free to come back if you have more questions or want to learn. Good luck on your journey as a Pokémon trainer!`,
         options: [
             {
@@ -620,6 +658,7 @@ export const storyNodes = [
     {
         id: `pewterCityGym`,
         image: imagePaths.pewterCityGymBG,
+        left_char: imagePaths.ashe,
         text: `You step into the Pewter City Gym, known for its rock-type Pokémon. The gym is dimly lit, and the ground is covered in rocky terrain. Two trainers stand ready for a battle.`,
         options: [
             {
@@ -635,6 +674,8 @@ export const storyNodes = [
     {
         id: `pewterCityGymTrainer1Battle`,
         image: imagePaths.pewterCityGymBG,
+        left_char: imagePaths.ashe,
+        right_char: imagePaths.trainerMark,
         text: `You engaged in a fierce battle with the trainer's Pokemon. It's a tough fight, but you manage to emerge victorious. The trainer nods in respect.`,
         options: [
             {
@@ -646,6 +687,8 @@ export const storyNodes = [
     {
         id: `pewterCityGymTrainer2Battle`,
         image: imagePaths.pewterCityGymBG,
+        left_char: imagePaths.ashe,
+        right_char: imagePaths.trainerLocke,
         text: `You engage in a challenging battle with the trainer. After a hard-fought battle, you manage to come out victorious. The trainer acknowledges your skill.`,
         options: [
             {
@@ -657,6 +700,8 @@ export const storyNodes = [
     {
         id: `pewterCityGymLeaderBattle`,
         image: imagePaths.pewterCityGymBG,
+        left_char: imagePaths.ashe,
+        right_char: imagePaths.gymLeaderBrock,
         text: `You face off against Gym Leader Brock. This is it the first real test on becoming a Pokemon Master. Can your Pokémon prevail against his rock-type pokemon?`,
         options: [
             {
@@ -668,6 +713,8 @@ export const storyNodes = [
     {
         id: `pewterCityGymLeaderResult`,
         image: imagePaths.pewterCityGymBG,
+        left_char: imagePaths.ashe,
+        right_char: imagePaths.gymLeaderBrock,
         text: `The battle against Gym Leader Brock is intense, but with skill and determination, you manage to defeat his Pokemon Brock nods in respect and awards you the Boulder Badge as a sign of your victory.`,
         options: [
             {
@@ -679,6 +726,7 @@ export const storyNodes = [
     {
         id: `pewterCityGymLeaderResult1`,
         image: imagePaths.pewterCityGymBG,
+        right_char: imagePaths.boulderBadge,
         text: `The Boulder Badge glimmers in the sunlight and is a testament to your first step to becoming a Pokemon Master .`,
         options: [
             {
