@@ -5,8 +5,12 @@ import Pokedex from "./pokeDex";
 import PokeBag from "./pokeBag";
 import PlayerPoke from "./playerPoke";
 import PokeBattle from "./pokeBattleView";
+import characterAnimation from "./characterAnimation";
 import { playerPokemonTeam, opponentPokemonTeam } from './gameData.js';
 import {storyNodes} from './storyNodes'
+import TalkingCharacter from "./characterAnimation";
+import './characterAnimation.css'
+import DisplayDialogue from "./displayDialogue";
 
 
 
@@ -26,6 +30,7 @@ function MainGame() {
         opponentPokemon: null,
         playerPokemon: null
     });
+    const [resetDialogue, setResetDialogue] = useState(false);
 
 
 
@@ -55,8 +60,10 @@ function MainGame() {
     function selectOption(option) {
         const nextTextNodeId = option.nextText;
         if (nextTextNodeId <= 0) {
+            setResetDialogue(true)
             return startGame();
         }
+        setResetDialogue(true)
         setState((prevState) => ({ ...prevState, ...option.setState }));
         showTextNode(nextTextNodeId);
     }
@@ -109,23 +116,36 @@ function MainGame() {
                             />
                     ) : (
                         // Not pokeBattle continue story images
-                        <img
-                            src={
-                                currentStoryNode.image && typeof currentStoryNode.image === 'string'
-                                    ? currentStoryNode.image
-                                    : typeof currentStoryNode.image === 'function'
-                                        ? currentStoryNode.image(state)
-                                        : null
-                            }
-                            alt="Image"
-                        />
+                        <div className="story-container">
+                            <img
+                                src={
+                                    currentStoryNode.image && typeof currentStoryNode.image === 'string'
+                                        ? currentStoryNode.image
+                                        : typeof currentStoryNode.image === 'function'
+                                            ? currentStoryNode.image(state)
+                                            : null
+                                }
+                                alt="Image"
+                            />
+                            <TalkingCharacter
+                                id='left-char'
+                                characterImg={currentStoryNode.left_char}
+                            />
+                            <TalkingCharacter
+                                id='right-char'
+                                characterImg={currentStoryNode.right_char}
+                            />
+                            <DisplayDialogue
+                                dialogue={currentStoryNode.text}
+                                resetDialogue={resetDialogue}
+                            />
+                        </div>
+
                     )}
                     <div className="cover-layer">
                         {/*Intentionally left blank*/}
                     </div>
                 </div>
-
-                <p1 id="content">{currentStoryNode.text}</p1>
                 <div id="option-buttons">
                     {currentStoryNode.options &&
                         currentStoryNode.options.map((option, index) => (

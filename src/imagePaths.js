@@ -23,6 +23,7 @@ import tallGrassFlippedBG from './media/backgrounds/tallGrassflipped.jpeg'
 
 // Characters
 import ashe from './media/characterSprites/Ash.png'
+import gymLeaderBrock from './media/characterSprites/gymLeaderBrock.png'
 import trainerLocke from './media/characterSprites/Locke.png'
 import oldMan from './media/characterSprites/oldMan.png'
 import proffesorOak from './media/characterSprites/ProffOak.png'
@@ -33,18 +34,23 @@ import charmander from './media/pokemon/charmander.png'
 import bulbasaur from './media/pokemon/bulbasaur.png'
 
 // Other Media
+import boulderBadge from './media/gameAssets/boulderBadge.png'
 import githubLogo from './media/github-mark/github-mark-white.png';
+import pokeDex from "./media/gameAssets/pokeDex.png";
 
 const imagePaths = {
     abandonedHouseBG: abandonedHouseBG,
     bedroomBG: bedroomBG,
+    boulderBadge: boulderBadge,
     grassyBattleBG: grassyBattleBG,
+    gymLeaderBrock: gymLeaderBrock,
     homeBG: homeBG,
     palletTownBG: palletTownBG,
     pewterCityBG: pewterCityBG,
     pewterCityGymBG: pewterCityGymBG,
     pewterCityOutskirtsBG: pewterCityOutskirtsBG,
     pierBG: pierBG,
+    pokeDex: pokeDex,
     pokeLabExteriorBG: pokeLabExteriorBG,
     pokeLabInteriorBG: pokeLabInteriorBG,
     pokeMansionBG: pokeMansionBG,

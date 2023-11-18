@@ -15,6 +15,7 @@ footer, header, hgroup, menu, nav, section {
   display: block;
 }
 
+
 .image-container {
   max-width: 960px;
   max-height: 540px;
@@ -101,7 +102,9 @@ body {
   z-index: 3;
 }
 
-
+.story-container{
+  position: relative;
+}
 
 .app-details{
   border-top: 2px dashed #505560;

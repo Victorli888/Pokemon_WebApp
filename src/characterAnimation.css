@@ -1,0 +1,27 @@
+.character {
+    opacity: 1;
+    position: absolute;
+    animation: popUpAndDown 1s infinite alternate;
+    cursor: pointer;
+}
+
+#left-char {
+    bottom: 5%;
+    left: 5%
+}
+
+#right-char {
+    bottom: 5%;
+    right: 5%
+}
+
+@keyframes popUpAndDown {
+    0% {
+        transform: translateY(0);
+        opacity: 1; /* Initial opacity */
+    }
+    100% {
+        transform: translateY(-10px);
+        opacity: 1; /* Final opacity */
+    }
+}
