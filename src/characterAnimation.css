@@ -6,13 +6,13 @@
 }
 
 #left-char {
-    top: 350px;
-    left: 300px
+    bottom: 5%;
+    left: 5%
 }
 
 #right-char {
-    top: 350px;
-    right: 300px
+    bottom: 5%;
+    right: 5%
 }
 
 @keyframes popUpAndDown {

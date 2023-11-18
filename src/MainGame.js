@@ -10,6 +10,7 @@ import { playerPokemonTeam, opponentPokemonTeam } from './gameData.js';
 import {storyNodes} from './storyNodes'
 import TalkingCharacter from "./characterAnimation";
 import './characterAnimation.css'
+import DisplayDialogue from "./displayDialogue";
 
 
 
@@ -29,6 +30,7 @@ function MainGame() {
         opponentPokemon: null,
         playerPokemon: null
     });
+    const [resetDialogue, setResetDialogue] = useState(false);
 
 
 
@@ -58,8 +60,10 @@ function MainGame() {
     function selectOption(option) {
         const nextTextNodeId = option.nextText;
         if (nextTextNodeId <= 0) {
+            setResetDialogue(true)
             return startGame();
         }
+        setResetDialogue(true)
         setState((prevState) => ({ ...prevState, ...option.setState }));
         showTextNode(nextTextNodeId);
     }
@@ -112,7 +116,7 @@ function MainGame() {
                             />
                     ) : (
                         // Not pokeBattle continue story images
-                        <div>
+                        <div className="story-container">
                             <img
                                 src={
                                     currentStoryNode.image && typeof currentStoryNode.image === 'string'
@@ -131,6 +135,10 @@ function MainGame() {
                                 id='right-char'
                                 characterImg={currentStoryNode.right_char}
                             />
+                            <DisplayDialogue
+                                dialogue={currentStoryNode.text}
+                                resetDialogue={resetDialogue}
+                            />
                         </div>
 
                     )}
@@ -138,7 +146,6 @@ function MainGame() {
                         {/*Intentionally left blank*/}
                     </div>
                 </div>
-                <p1 id="content">{currentStoryNode.text}</p1>
                 <div id="option-buttons">
                     {currentStoryNode.options &&
                         currentStoryNode.options.map((option, index) => (
