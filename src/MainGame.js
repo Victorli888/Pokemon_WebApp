@@ -5,17 +5,11 @@ import Pokedex from "./pokeDex";
 import PokeBag from "./pokeBag";
 import PlayerPoke from "./playerPoke";
 import PokeBattle from "./pokeBattleView";
-import characterAnimation from "./characterAnimation";
 import { playerPokemonTeam, opponentPokemonTeam } from './gameData.js';
 import {storyNodes} from './storyNodes'
 import TalkingCharacter from "./characterAnimation";
 import './characterAnimation.css'
 import DisplayDialogue from "./displayDialogue";
-
-
-
-
-
 
 function MainGame() {
     const [state, setState] = useState();
@@ -132,6 +126,10 @@ function MainGame() {
                                 characterImg={currentStoryNode.left_char}
                             />
                             <TalkingCharacter
+                                id='center-char'
+                                characterImg={currentStoryNode.center_char}
+                            />
+                            <TalkingCharacter
                                 id='right-char'
                                 characterImg={currentStoryNode.right_char}
                             />
@@ -182,63 +180,6 @@ function MainGame() {
             </div>
             <div className={`pokeUtilities-container ${showPlayerPokemon ? 'open' : ''}`}>
                 {showPlayerPokemon && <PlayerPoke/>}
-            </div>
-            <div className= "details-toggle-btn-container">
-                <div>
-                    <button className={"details-toggle-btn"} onClick={toggleAppDetails}> Show Details </button>
-                </div>
-            </div>
-            <div className={`app-details ${appDetailsVisible ? 'visible' : 'hidden'}`}>
-                <section id="one" className="wrapper style2 special">
-                    <header className="major">
-                        <h2 id="details-header">
-                            <div className="github-link-container">
-                            <a
-                                href="https://github.com/Victorli888/Pokemon_WebApp"
-                                className="github-link"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <img
-                                    src={imagePaths.githubLogo}
-                                    alt="See on GitHub"
-                                    className="github-logo"
-                                />
-                                See on GitHub
-                            </a>
-                        </div>
-                        </h2>
-
-                        <p1>
-                            Embark on a nostalgic text-based adventure reminiscent of a cherished childhood classic. Immerse
-                            yourself in
-                            a captivating journey shaped by your decisions. Choose your path, make meaningful choices, and
-                            experience the excitement of a dynamic storyline.
-                        </p1>
-                        <p1>
-                            In "Pokemon Text and Adventure," you'll encounter a world filled with iconic characters, challenging
-                            puzzles, and captivating narratives. Engage in exciting battles, capture Pokemon, and unravel
-                            mysteries as you progress through the game.
-                        </p1>
-                        <p1>
-                            Features:
-                        </p1>
-                        <ul>
-                            <li>Choose Your Adventure: Make choices that impact the storyline and shape your character's
-                                journey.
-                            </li>
-                            <li>Captivating Narrative: Immerse yourself in a rich and engaging storyline filled with twists and
-                                turns.
-                            </li>
-                            <li>Dynamic Gameplay: Engage in Pokemon battles, solve puzzles, and interact with memorable
-                                characters.
-                            </li>
-                            <li>Nostalgic Experience: Relive the excitement of a classic text adventure with a Pokemon twist.
-                            </li>
-                            <li>Responsive Design: Enjoy a seamless experience on various devices, from desktop to mobile.</li>
-                        </ul>
-                    </header>
-                </section>
             </div>
             </div>
         </div>

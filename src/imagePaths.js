@@ -1,6 +1,7 @@
 // Backgrounds
 import abandonedHouseBG from './media/backgrounds/abandonedHouseBG.jpeg'
 import bedroomBG from './media/backgrounds/bedroomBG.jpeg'
+import endScreenBG from './media/backgrounds/endScreenBG.jpeg'
 import grassyBattleBG from './media/backgrounds/grassyFieldBG.jpeg'
 import homeBG from './media/backgrounds/homeBG.jpeg'
 import palletTownBG from './media/backgrounds/palletTownBG.jpeg'
@@ -32,18 +33,24 @@ import trainerDale from './media/characterSprites/trainer2.png'
 import squirtle from './media/pokemon/squirtle.png'
 import charmander from './media/pokemon/charmander.png'
 import bulbasaur from './media/pokemon/bulbasaur.png'
+import flyingPikachu from './media/pokemon/flying-pikachu.png'
 
 // Other Media
+import aboutIcon from './media/gameAssets/aboutIcon.png'
 import boulderBadge from './media/gameAssets/boulderBadge.png'
 import githubLogo from './media/github-mark/github-mark-white.png';
 import pokeDex from "./media/gameAssets/pokeDex.png";
+import pokeLogo from "./media/gameAssets/International-Pokemon-logo.png"
 
 const imagePaths = {
     abandonedHouseBG: abandonedHouseBG,
+    aboutIcon:aboutIcon,
     bedroomBG: bedroomBG,
     boulderBadge: boulderBadge,
+    endScreenBG: endScreenBG,
     grassyBattleBG: grassyBattleBG,
     gymLeaderBrock: gymLeaderBrock,
+    flyingPikachu: flyingPikachu,
     homeBG: homeBG,
     palletTownBG: palletTownBG,
     pewterCityBG: pewterCityBG,
@@ -53,6 +60,7 @@ const imagePaths = {
     pokeDex: pokeDex,
     pokeLabExteriorBG: pokeLabExteriorBG,
     pokeLabInteriorBG: pokeLabInteriorBG,
+    pokeLogo: pokeLogo,
     pokeMansionBG: pokeMansionBG,
     pokeWorldMap: pokeWorldMap,
     routeThreeBG: routeThreeBG,

@@ -1,0 +1,44 @@
+.navbar {
+    align-items: center;
+    background: #2e313a;
+    font-size: 1rem;
+    top: 0;
+    z-index: 1;
+    box-shadow: rgba(1, 0, 0, 0.87) 0px 4px 6px -1px;
+    transition: 250ms ease;
+    height: 80px;
+    width: 100%;
+}
+
+#poke-logo {
+    height: 80px;
+    transition: 250ms ease;
+}
+
+.navbar-logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
+}
+
+#git-logo:hover,
+#about-logo:hover {
+    filter: brightness(69%); /* Nice */
+}
+
+#git-logo{
+    height:5%;
+    width:5%;
+    padding-top: 7px;
+    padding-left: 5px;
+}
+
+#about-logo{
+    height:5%;
+    width:5%;
+    transform: translateX(1660%);
+    padding-top: 5px;
+    padding-right: 5px;
+}
+

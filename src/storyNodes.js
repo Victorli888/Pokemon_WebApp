@@ -1,5 +1,6 @@
 import imagePaths from "./imagePaths";
 import {gameTexts} from "./gameTexts";
+import pokeDex from "./pokeDex";
 
 export const storyNodes = [
     {
@@ -207,7 +208,8 @@ export const storyNodes = [
         //TODO: Create lock for PokeDex up until this point, ping a notification that Pokedex is unlocked
         id: "pokeDex-acquired",
         image: imagePaths.pokeLabInteriorBG,
-        left_char: imagePaths.pokeDex,
+        left_char: imagePaths.ashe,
+        center_char: imagePaths.pokeDex,
         right_char: imagePaths.proffesorOak,
         text: [
             "Oh, before you go, take this...","It's a Pokédex containing data on all the known Pokémon we've discovered.",
@@ -844,8 +846,9 @@ export const storyNodes = [
     },
     {
         id: `endScreen`,
-        image: imagePaths.pewterCityGymBG,
-        text: [`Thank you for playing! Don't hesitate to explore the entire project on the Github, or contact me if you want to connect. Cheers, and happy coding!"`],
+        image: imagePaths.endScreenBG,
+        center_char: imagePaths.flyingPikachu,
+        text: [`The End!`,`Thank you for playing! Don't hesitate to explore the entire project on the Github, or contact me if you want to connect. Cheers, and happy coding!"`],
         options: [
             {
                 text: [`Start Again!`],
