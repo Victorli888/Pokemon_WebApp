@@ -82,12 +82,12 @@ export const storyNodes = [
         text: ['But Enough about me!', 'you came to embark on your adventure now which pokemon will you choose?'],
         options: [
             {
-                text: 'Charmander the Fire type',
-                nextText: 6
-            },
-            {
                 text: 'Bulbasaur the Grass type',
                 nextText: 7
+            },
+            {
+                text: 'Charmander the Fire type',
+                nextText: 6
             },
             {
                 text: 'Squirtle the Water type',
