@@ -1,6 +1,4 @@
-import {opponentPokemonTeam, playerPokemonTeam} from "./gameData";
-import {gameTexts} from "./gameTexts";
-import pokeBattleView from "./pokeBattleView";
+import {pokemonBattles} from "./gamePokeBattles";
 
 async function startFightMove(fightMove, attackingPokemon, defendingPokemon) {
     console.log(`making Request to PokeAPI for ${fightMove}`)
@@ -39,18 +37,6 @@ async function attemptPokemonCatch(pokemon, ballType) {
     }
 }
 
-function countEligiblePokemon(pokemonTeam) {
-    let eligiblePokemonCount = 0;
-    pokemonTeam.forEach(function(pokemon) {
-        if (!pokemon.isFainted) {
-            eligiblePokemonCount += 1;
-        }
-    });
-    return eligiblePokemonCount;
-}
-
-
-
 // async function useBagItem(item, pokemon){
 //     if (item.itemType === "potion"){
 //         pokemon.hp += item.effect;
@@ -67,91 +53,84 @@ function countEligiblePokemon(pokemonTeam) {
 //     }
 // }
 
-async function startPokeBattleRound(playerAction, selection, playerPokemon, opponentPokemon) {
-    console.log("Start of the Round");
-    let currentTurn = playerPokemon.speed > opponentPokemon.speed ? "player" : "opponent";
-    let playerPendingTurn = true;
-    let opponentPendingTurn = true;
+async function startPokeBattleRound(playerAction, selection, playerPokemon, opponentPokemon, playerTeam, opponentTeam){
+    const isPlayerFaster = playerPokemon.speed > opponentPokemon.speed
+    const turnOrder = isPlayerFaster? ['player','opponent']:['opponent','player']
 
-    while (playerPendingTurn || opponentPendingTurn) {
-        if (playerPendingTurn && playerPokemon && currentTurn === "player") {
-            if (playerAction === "fight") {
-                console.log("Player Selected Fight");
-                let results = await startFightMove(selection, playerPokemon, opponentPokemon);
-                results.attackingPokemon = playerPokemon
-                results.defendingPokemon = opponentPokemon
-                if (opponentPokemon && opponentPokemon.hp <= 0) {
-                    break;
-                }
-            } else if (playerAction === "bag") {
-                // useBagItem(somePotion, playerPokemon)
-                console.log("WIP: using item!!!");
-            } else if (playerAction === "pokemon") {
-                console.log("WIP: Selecting Pokemon!!!")
-                // newlySelectedPokemon = pickPokemon()
-                // performPokemonSwap(playerPokemon, newlySelectedPokemon)
-            } else {
-                console.error("Something went wrong selecting a player move");
-            }
-            currentTurn = "opponent";
-            playerPendingTurn = false;
-            console.log(`the current Turn is now: ${currentTurn}`);
-        }
-
-        if (opponentPendingTurn && opponentPokemon && currentTurn === "opponent") {
-            console.log("opponent making turn");
-            let results = await startFightMove(opponentPokemon.moves[0], opponentPokemon, playerPokemon);
-            results.attackingPokemon = opponentPokemon
-            results.defendingPokemon = playerPokemon
-            if (playerPokemon && playerPokemon.hp <= 0) {
-                break;
-            }
-            currentTurn = "player";
-            opponentPendingTurn = false;
-            console.log(`the current Turn is now: ${currentTurn}`);
-        }
-        console.log(`player pending turn:${playerPendingTurn}, opponentPendingTurn:${opponentPendingTurn}`);
+    const battleData = {
+        player: {pokemon: playerPokemon, team: playerTeam, action: playerAction, moveSelection: selection},
+        opponent: {pokemon: opponentPokemon, team: opponentTeam, action: 'fight', moveSelection: opponentPokemon.moves[0]}
     }
 
-    if (playerPokemon && playerPokemon.hp <= 0) {
-        console.log(`${playerPokemon.name} has fainted`);
-        setPokemonToFainted(playerPokemon);
-        let playerRemainingPokemon = countEligiblePokemon(playerPokemonTeam);
-        console.log(`Player Pokemon Remaining ${playerRemainingPokemon}`);
-        if (playerRemainingPokemon === 0) {
-            console.log("setting White out to True");
-            playerPokemon.willWhiteOut = true;
-        }
-    } else if (opponentPokemon && opponentPokemon.hp <= 0) {
-        console.log(`${opponentPokemon.name} has fainted`);
-        setPokemonToFainted(opponentPokemon);
-        let opponentRemainingPokemon = countEligiblePokemon(opponentPokemonTeam);
-        if (opponentRemainingPokemon === 0) {
-            opponentPokemon.willWhiteOut = true;
-            console.log("setting White out to True");
-        }
-        else{
-            const nextOpponentPokemonIndex = opponentPokemonTeam.indexOf(opponentPokemon) + 1;
-            if (nextOpponentPokemonIndex < opponentPokemonTeam.length) {
-                const nextOpponentPokemon = opponentPokemonTeam[nextOpponentPokemonIndex];
-                opponentPokemon = nextOpponentPokemon
-                console.log(`New opponent Pokemon set to: ${nextOpponentPokemon.name}`);
-            } else {
-                console.log("No more opponent Pokemon left");
-            }
-        }
-    }
+    for(let attacker of turnOrder){
+        let defender = turnOrder[1-turnOrder.indexOf(attacker)]
+        console.log(`Start of ${attacker}'s turn.`)
+        if (battleData[attacker].action === 'fight'){
+            await handleFightAction(attacker, battleData[attacker], battleData[defender]);
+            await updateBattleData(battleData[attacker], battleData[defender])
 
-    return {
-        playerPokemon: playerPokemon,
-        opponentPokemon: opponentPokemon
-    };
+        }
+
+
+    // else if (battleData[attacker].action === 'bag'){
+    //     await handleBagAction(attacker, battleData[attacker])
+    // }
+    //
+    // else if (battleData[attacker.action] === 'pokemon'){
+    //     await handlePokemonAction(attacker, battleData[attacker])
+    // }
+    // else if (battleData[attacker.action] === 'run'){
+    //     await handleRunAction(attacker, battleData[attacker])
+    // }
+    else {
+        console.error(`Invalid action selected by ${attacker}.`);
+    }
+    console.log(` ${attacker}'s turn end.`);
+    }
+    return {playerPokemon: battleData["player"].pokemon, opponentPokemon: battleData["opponent"].pokemon}
 }
 
 
-function setPokemonToFainted(pokemon){
+async function updateBattleData (attackingTrainer, defendingTrainer) {
+    console.log(`LOOK AT ME: ${defendingTrainer.pokemon.name}`)
+    if (defendingTrainer.pokemon.hp <= 0) {
+        console.log(` ${defendingTrainer.pokemon.name} has fainted, Attempting Swapping Pokemon `);
+        await handlePokemonFainted(defendingTrainer.pokemon);
+        const newPokemon = await forceSwap(defendingTrainer.team);
+        let previousPokemon = defendingTrainer.pokemon
+        defendingTrainer.pokemon = newPokemon
+
+        if (!newPokemon) {
+            defendingTrainer.pokemon = previousPokemon
+            defendingTrainer.pokemon.willWhiteOut = true
+        }
+    }
+}
+async function forceSwap(team) {
+    let nextAvailablePokemon = team.find(pokemon => !pokemon.isFainted && pokemon.hp > 0);
+
+    if (!nextAvailablePokemon) {
+        console.log('No more available Pokemon in team!');
+        return null;
+    }
+
+    console.log(`Switched to next available Pokemon: ${nextAvailablePokemon.name}`);
+    return nextAvailablePokemon;
+}
+async function handlePokemonFainted(pokemon){
     pokemon.isFainted = true
     pokemon.hp = 0
+}
+
+async function handleFightAction(trainer, attacker, defender) {
+    console.log(`${trainer} Selected Fight`);
+
+    let fightResult = await startFightMove(attacker.moveSelection, attacker.pokemon, defender.pokemon);
+
+    // Updating pokemon objects with changes that have occurred as a result of the fight move
+    // attacker.pokemon = fightResult.attackingPokemon;
+    // defender.pokemon = fightResult.defendingPokemon;
+
 }
 
 function performBagAction(playerPokemon, opponentPokemon) {
