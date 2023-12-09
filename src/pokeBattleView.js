@@ -24,6 +24,8 @@ const PokemonBattle = ({playerPokemonTeam, opponentPokemonTeam, stageType, isTra
     let [isBattleState, setIsBattleState] = useState(true);
     const [showGameText, setShowGameText] = useState(null);
     let [isGameOverState, setIsGameOverState] = useState(false);
+    let [isRoundDone, setIsRoundDone] = useState(true);
+    let [continuePressed, setContinuePressed] = useState(false);
 
 
     // Call this function when you want to hide the battle options and buttons.
@@ -77,6 +79,18 @@ const PokemonBattle = ({playerPokemonTeam, opponentPokemonTeam, stageType, isTra
         showDetailsBox()
     };
 
+    function updateSinglePokemon(pokemon, trainer){
+        if (trainer === 'player'){
+            setPlayerPokemon(pokemon)
+        }
+        else if (trainer === 'opponent'){
+            setOpponentPokemon(pokemon)
+        }
+        else{
+            throw new Error("player or opponent string not set");
+        }
+    }
+
     function checkForWinner(){
         if(playerPokemon && playerPokemon.willWhiteOut){
             console.log("GAME OVER")
@@ -114,6 +128,41 @@ const PokemonBattle = ({playerPokemonTeam, opponentPokemonTeam, stageType, isTra
         }
     }, [isBattleState, opponentPokemon, playerPokemon]);
 
+    useEffect(() => {
+        if(continuePressed) { // only if the flag is true
+            setShowGameText(null)
+            if (isGameOverState) {
+                console.log("refreshing page")
+                refreshPage()
+            }
+            // else if (isRoundDone) {
+            //     showPokeBattleOptions()
+            //     showDetailsBox()
+            // }
+            else if (!isBattleState){
+                console.log("battle Ended continue on with story")
+                hideDetailsBox()
+            }
+            else {
+                console.log("showing Options")
+                showPokeBattleOptions()
+                hideFightOptions()
+
+            }
+
+            setContinuePressed(false); // reset the flag for next round
+        }
+    }, [continuePressed]); // add continuePressed in the dependency array
+
+    // useEffect(() => {
+    //     if (continuePressed) {
+    //         // Call your function that should run when 'continue' is clicked.
+    //         displayBetterGameText(playerPokemon, opponentPokemon, turnOrder.shift());
+    //         // Reset 'continuePressed' for next sequence.
+    //         setContinuePressed(false);
+    //     }
+    // }, [continuePressed]);
+
     const fetchPokemonData = (pokemonName, setData) => {
         console.log(` attempting to fetch data for ${pokemonName}`)
         // Construct the URL to fetch Pokémon data by name
@@ -137,6 +186,158 @@ const PokemonBattle = ({playerPokemonTeam, opponentPokemonTeam, stageType, isTra
                 console.error(`Error fetching ${pokemonName}'s data:`, error);
             });
     };
+
+    async function displayGameText(playerPokemon, opponentPokemon, turnOrder){
+        let gameText = '';
+        let turnCounter = 0;
+
+        console.log(`This is the turn order ${turnOrder[0].actor} then ${turnOrder[1].actor}`);
+
+        for(let action of turnOrder){
+            if(action.actor === "player"){
+                gameText += `${playerPokemon.name} used ${playerPokemon.moves[0]}\n`;
+                turnCounter++;
+            }
+            else if(action.actor === "opponent"){
+                gameText += `${opponentPokemon.name} used ${opponentPokemon.moves[0]}\n`;
+                turnCounter++;
+            }
+        }
+
+        setShowGameText(gameText);
+        console.log(`counted ${turnCounter} turns`);
+    }
+
+    // async function displayBetterGameText(playerPokemon, opponentPokemon, turnOrder){
+    //     let gameText = '';
+    //     setIsRoundDone(false)
+    //
+    //
+    //     console.log(`${turnOrder[0].actor} is going now`);
+    //
+    //
+    //     if(turnOrder[0].actor === "player"){
+    //         gameText += `${playerPokemon.name} used ${playerPokemon.moves[0]}\n`;
+    //         setShowGameText(gameText);
+    //         updateSinglePokemon(playerPokemon, 'player')
+    //         await displayBetterGameText(playerPokemon, opponentPokemon, turnOrder.shift)
+    //
+    //     }
+    //     else if(turnOrder[0].actor === "opponent"){
+    //         gameText += `${opponentPokemon.name} used ${opponentPokemon.moves[0]}\n`;
+    //         setShowGameText(gameText);
+    //         updateSinglePokemon(opponentPokemon, 'opponent')
+    //         await displayBetterGameText(playerPokemon, opponentPokemon, turnOrder.shift)
+    //     }
+    //     else{
+    //         setShowGameText('Round complete!')
+    //     }
+    //     setIsRoundDone(true)
+    //
+    // }
+
+
+    // async function displayBetterGameText(playerPokemon, opponentPokemon, turnOrder) {
+    //     let gameText = '';
+    //     setIsRoundDone(false);
+    //
+    //     // Add guard clause to check if turnOrder[0] exists
+    //     if (!turnOrder[0]) {
+    //         console.log('Round complete!');
+    //         setIsRoundDone(true);
+    //         return;
+    //     }
+    //
+    //     console.log(`${turnOrder[0].actor} is going now`);
+    //
+    //     if (turnOrder[0].actor === "player") {
+    //         gameText += `${playerPokemon.name} used ${playerPokemon.moves[0]}\n`;
+    //         setShowGameText(gameText);
+    //         console.log("updating Player Details")
+    //         // updateSinglePokemon(playerPokemon, 'player');
+    //         console.log('\n\n Wait for player to press continue')
+    //         await waitToContinue();
+    //         console.log('\n\n Continue Pressed!')
+    //         await displayBetterGameText(playerPokemon, opponentPokemon, turnOrder.slice(1));
+    //     } else if (turnOrder[0].actor === "opponent") {
+    //         gameText += `${opponentPokemon.name} used ${opponentPokemon.moves[0]}\n`;
+    //         setShowGameText(gameText);
+    //         console.log("updating opponent Details")
+    //         // updateSinglePokemon(opponentPokemon, 'opponent');
+    //         console.log('\n\n Wait for player to press continue')
+    //         await waitToContinue();
+    //         console.log('\n\n Continue Pressed!')
+    //         await displayBetterGameText(playerPokemon, opponentPokemon, turnOrder.slice(1));
+    //     } else {
+    //         setShowGameText('Round complete!');
+    //     }
+    //
+    //     setIsRoundDone(true);
+    // }
+    //
+    // let [update, setUpdate] = useState(false);
+    // async function waitToContinue() {
+    //     return new Promise(resolve => {
+    //         console.log("WaitToContinue(): waiting for Continue To Be Pressed");
+    //
+    //         const checkContinue = () => {
+    //             if (continuePressed) {
+    //                 console.log("WaitToContinue(): Continue Pressed");
+    //                 setShowGameText(null)
+    //                 setUpdate(prev => !prev)
+    //                 setContinuePressed(false); // Reset for the next round
+    //                 resolve();
+    //             } else {
+    //                 setTimeout(checkContinue, 100); // Check again after a short delay
+    //             }
+    //         };
+    //
+    //         // checkContinue();
+    //     });
+    // }
+
+
+
+    // async function displayBetterGameText(playerPokemon, opponentPokemon, turnOrder){
+    //     let gameText = '';
+    //     setIsRoundDone(false)
+    //
+    //     // Add guard clause to check if turnOrder[0] exists
+    //     if (!turnOrder[0]) {
+    //         console.log('Round complete!')
+    //         setIsRoundDone(true)
+    //         return
+    //     }
+    //
+    //     console.log(`${turnOrder[0].actor} is going now`);
+    //
+    //
+    //     if(turnOrder[0].actor === "player"){
+    //         gameText += `${playerPokemon.name} used ${playerPokemon.moves[0]}\n`;
+    //         setShowGameText(gameText);
+    //         updateSinglePokemon(playerPokemon, 'player')
+    //         while(!continuePressed){
+    //             //wait for player to press continue...
+    //         }
+    //         await displayBetterGameText(playerPokemon, opponentPokemon, turnOrder.shift())
+    //
+    //     }
+    //     else if(turnOrder[0].actor === "opponent"){
+    //         gameText += `${opponentPokemon.name} used ${opponentPokemon.moves[0]}\n`;
+    //         setShowGameText(gameText);
+    //         updateSinglePokemon(opponentPokemon, 'opponent')
+    //
+    //         while(!continuePressed){
+    //             //wait for player to press continue...
+    //         }
+    //         await displayBetterGameText(playerPokemon, opponentPokemon, turnOrder.shift())
+    //     }
+    //     else{
+    //         setShowGameText('Round complete!')
+    //     }
+    //     setIsRoundDone(true)
+    // }
+
     return (
         <div className={'game-container'}>
         <div
@@ -147,12 +348,12 @@ const PokemonBattle = ({playerPokemonTeam, opponentPokemonTeam, stageType, isTra
             <h2>Opponent's Pokemon:</h2>
                 <div className={""}>
                     <p>Level: {opponentPokemonData.base_experience}</p>
-                    <p>HP: {opponentPokemon.hp}</p>
+                    <p>HP: {opponentPokemon && opponentPokemon.hp}</p>
                 </div>
         <div>
             <img id={"opponent-pokemon-sprite"}
                 src={opponentPokemonData.sprites.front_default}
-                alt={opponentPokemon.name}
+                alt={opponentPokemon && opponentPokemon.name}
             />
         </div>
         </div>
@@ -161,12 +362,12 @@ const PokemonBattle = ({playerPokemonTeam, opponentPokemonTeam, stageType, isTra
                 <div>
                     <p>Level: {playerPokemonData.base_experience}</p>
                     {/*<p>HP: {playerPokemonData.stats[0].base_stat}</p>*/}
-                    <p>HP: {playerPokemon.hp}</p>
+                    <p>HP: {playerPokemon && playerPokemon.hp}</p>
                 </div>
             <div >
                 <img id={"player-pokemon-sprite"}
                 src={playerPokemonData.sprites.back_default}
-                alt={playerPokemon.name}/>
+                alt={playerPokemon && playerPokemon.name}/>
             </div>
         </div>
             </div>
@@ -221,39 +422,46 @@ const PokemonBattle = ({playerPokemonTeam, opponentPokemonTeam, stageType, isTra
                             {/*MoveOne*/}
                             <button id={'top-left'} onClick={async () => {
                                 console.log("Move One")
-                                let results = await startPokeBattleRound("fight", playerPokemon.moves[0], playerPokemon, opponentPokemon)
+                                let results = await startPokeBattleRound("fight", playerPokemon.moves[0], playerPokemon, opponentPokemon, playerPokemonTeam,opponentPokemonTeam)
                                 updateDetails(results.playerPokemon, results.opponentPokemon)
-                                setShowGameText(`${playerPokemon.name} used ${playerPokemon.moves[0]}`)
+                                hideFightOptions()
+                                await displayGameText(results.playerPokemon, results.opponentPokemon, results.turnOrder,)
                                 checkForWinner()
                             }}>
                                 {playerPokemon.moves[0]}
                             </button>
 
                             {/*MoveTwo*/}
-                            <button id={'top-right'} onClick={() => {
+                            <button id={'top-right'} onClick={async () => {
                                 console.log("Move Two")
-                                let results = startPokeBattleRound("fight", playerPokemon.moves[1], playerPokemon, opponentPokemon)
+                                let results = await startPokeBattleRound("fight", playerPokemon.moves[1], playerPokemon, opponentPokemon, playerPokemonTeam,opponentPokemonTeam)
                                 updateDetails(results.playerPokemon, results.opponentPokemon)
+                                setShowGameText(`${playerPokemon.name} used ${playerPokemon.moves[0]}`)
+                                checkForWinner()
                             }
                             }>
                                 {playerPokemon.moves[1]}
                             </button>
 
                             {/*MoveThree*/}
-                            <button id={'bot-left'} onClick={() => {
+                            <button id={'bot-left'} onClick={async () => {
                                 console.log("Move Three")
-                                let results = startPokeBattleRound("fight", playerPokemon.moves[2], playerPokemon, opponentPokemon)
+                                let results = await startPokeBattleRound("fight", playerPokemon.moves[2], playerPokemon, opponentPokemon, playerPokemonTeam,opponentPokemonTeam)
                                 updateDetails(results.playerPokemon, results.opponentPokemon)
+                                setShowGameText(`${playerPokemon.name} used ${playerPokemon.moves[0]}`)
+                                checkForWinner()
                             }
                             }>
                                 {playerPokemon.moves[2]}
                             </button>
 
                             {/*MoveFour*/}
-                            <button id={'bot-right'} onClick={ () => {
+                            <button id={'bot-right'} onClick={ async () => {
                                 console.log("fight selected")
-                                let results = startPokeBattleRound("fight", playerPokemon.moves[3], playerPokemon, opponentPokemon)
+                                let results = await startPokeBattleRound("fight", playerPokemon.moves[3], playerPokemon, opponentPokemon, playerPokemonTeam,opponentPokemonTeam)
                                 updateDetails(results.playerPokemon, results.opponentPokemon)
+                                setShowGameText(`${playerPokemon.name} used ${playerPokemon.moves[0]}`)
+                                checkForWinner()
                             }
                             }>
                                 {playerPokemon.moves[3]}
@@ -277,19 +485,7 @@ const PokemonBattle = ({playerPokemonTeam, opponentPokemonTeam, stageType, isTra
                             <p id="display-text" style={{ whiteSpace: 'pre-line' }}>{showGameText}</p>
                             <button id={'continue-btn'} onClick={() =>{
                                 console.log("Okay Pressed!")
-                                setShowGameText(null)
-                                if (isGameOverState) {
-                                    console.log("refreshing page")
-                                    refreshPage()
-                                }
-                                else if (!isBattleState){
-                                    console.log("battle Ended continue on with story")
-                                    hideDetailsBox()
-                                }
-                                else {
-                                    showPokeBattleOptions()
-                                    showDetailsBox()
-                                }
+                                setContinuePressed(true)
                             }}>
                             Continue...
                             </button>

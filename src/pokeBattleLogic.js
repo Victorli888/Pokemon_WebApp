@@ -62,12 +62,16 @@ async function startPokeBattleRound(playerAction, selection, playerPokemon, oppo
         opponent: {pokemon: opponentPokemon, team: opponentTeam, action: 'fight', moveSelection: opponentPokemon.moves[0]}
     }
 
+    let actionQueue = []
+
     for(let attacker of turnOrder){
         let defender = turnOrder[1-turnOrder.indexOf(attacker)]
         console.log(`Start of ${attacker}'s turn.`)
         if (battleData[attacker].action === 'fight'){
             await handleFightAction(attacker, battleData[attacker], battleData[defender]);
+            actionQueue.push({action: 'fight', actor: attacker, target: defender})
             await updateBattleData(battleData[attacker], battleData[defender])
+
 
         }
 
@@ -87,7 +91,11 @@ async function startPokeBattleRound(playerAction, selection, playerPokemon, oppo
     }
     console.log(` ${attacker}'s turn end.`);
     }
-    return {playerPokemon: battleData["player"].pokemon, opponentPokemon: battleData["opponent"].pokemon}
+    return {
+        playerPokemon: battleData["player"].pokemon,
+        opponentPokemon: battleData["opponent"].pokemon,
+        turnOrder: actionQueue
+    }
 }
 
 
@@ -127,6 +135,7 @@ async function handleFightAction(trainer, attacker, defender) {
 
     let fightResult = await startFightMove(attacker.moveSelection, attacker.pokemon, defender.pokemon);
 
+
     // Updating pokemon objects with changes that have occurred as a result of the fight move
     // attacker.pokemon = fightResult.attackingPokemon;
     // defender.pokemon = fightResult.defendingPokemon;
@@ -160,3 +169,5 @@ export {
     performPokemonSwap,
 };
 
+export default class PokeBattleLogic {
+}
