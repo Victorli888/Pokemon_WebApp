@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import './playerPoke.css';
 import {playerPokemonTeam} from "./gamePokeTeams";
 
-const PlayerPoke = () => {
+const PlayerPoke = ({onSelectPokemon}) => {
     const [pokemonTeam, setPokemonTeam] = useState(playerPokemonTeam);
+    const handlePokemonSelect = (selectedPokemon) =>{
+        onSelectPokemon(selectedPokemon)
+    }
 
     // Fetch and set the Pokemon data for each slot
     useEffect(() => {
@@ -33,7 +36,7 @@ const PlayerPoke = () => {
                 {pokemonTeam.slice(0, 2).map((pokemon, index) => (
                     <div key={index} className="player-pokemon-slot">
                         <div className="image-level-container">
-                            <div id="pokeImg"> <img src={pokemon.spriteUrl} alt={pokemon.name} /></div>
+                            <div id="pokeImg"> <img src={pokemon.spriteUrl} alt={pokemon.name} onClick={() => handlePokemonSelect(pokemon)} /></div>
                             <div id="level"> <p >Level: {pokemon.level}</p> </div>
                         </div>
                         <div className="name-hp-container">
@@ -48,7 +51,7 @@ const PlayerPoke = () => {
                 {pokemonTeam.slice(2, 4).map((pokemon, index) => (
                     <div key={index} className="player-pokemon-slot">
                         <div className="image-level-container">
-                            <div id="pokeImg"> <img src={pokemon.spriteUrl} alt={pokemon.name} /></div>
+                            <div id="pokeImg"> <img src={pokemon.spriteUrl} alt={pokemon.name} onClick={() => handlePokemonSelect(pokemon)} /></div>
                             <div id="level"> <p >Level: {pokemon.level}</p> </div>
                         </div>
                         <div className="name-hp-container">
@@ -63,7 +66,7 @@ const PlayerPoke = () => {
                 {pokemonTeam.slice(4, 6).map((pokemon, index) => (
                     <div key={index} className="player-pokemon-slot">
                         <div className="image-level-container">
-                            <div id="pokeImg"> <img src={pokemon.spriteUrl} alt={pokemon.name} /></div>
+                            <div id="pokeImg"> <img src={pokemon.spriteUrl} alt={pokemon.name} onClick={() => handlePokemonSelect(pokemon)} /></div>
                             <div id="level"> <p >Level: {pokemon.level}</p> </div>
                         </div>
                         <div className="name-hp-container">

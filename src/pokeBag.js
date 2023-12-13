@@ -1,38 +1,100 @@
-import React, { useState, useEffect } from 'react';
-import './pokeBag.css';
+import React, {useEffect, useState} from 'react';
+import { playerBag as playerBagOriginal } from "./gamePokeInventory";
+import PlayerPoke from "./playerPokeSelectable";
+
+const Item = ({ item, handleItemUse }) => (
+    <li>
+        {item.name} - {item.quantity} in Bag
+        <button
+            onClick={() =>
+                handleItemUse(item.name)}
+            disabled={item.quantity === 0 || item.type !== 'healing'}
+        >
+            Use
+        </button>
+    </li>
+);
+
+const ItemList = ({ pokeBag, handleItemUse }) => (
+    <ul>
+        {pokeBag.map((item, index) => (
+            <Item key={index} item={item} handleItemUse={handleItemUse} />
+        ))}
+    </ul>
+);
+
+
 
 const PokeBag = () => {
-    const [pokeBag, setPokeBag] = useState([
-        { name: "Potion", type: "healing", quantity: 5 },
-        { name: "Super Potion", type: "healing", quantity: 3 },
-        { name: "Poké Ball", type: "capture", quantity: 10 }
-    ]);
+    const playerBag = Object.keys(playerBagOriginal).map(key => ({
+        name: key,
+        ...playerBagOriginal[key]
+    }));
 
-    // const useItem = (itemName) => {
-    //     const updatedBag = [...pokeBag];
-    //     const itemIndex = updatedBag.findIndex(item => item.name === itemName);
-    //
-    //     if (itemIndex !== -1 && updatedBag[itemIndex].quantity > 0) {
-    //         // Implement the effects of the item, such as healing or capturing
-    //         // ... Perform healing logic ...
-    //
-    //         updatedBag[itemIndex].quantity -= 1;
-    //         setPokeBag(updatedBag);
-    //     }
-    // };
+    const [pokeBag, setPokeBag] = useState(playerBag);
+    const [isShowingItems, setIsShowingItems] = useState(true);
+    const [isShowingPokemonSelector, setIsShowPokemonSelector] = useState(false);
+    const [selectedPokemon, setSelectedPokemon] = useState(null);
+    const [selectedItem, setSelectedItem] = useState(null)
+
+
+    function selectAndApplyOnPokemon(pokemon, item) {
+        if (pokemon === null || item === null) {
+            throw new Error('Pokemon or item is null');
+        }
+
+        console.log(`Healing Pokemon ${pokemon.name} for ${item.potency} Points.`)
+        console.log(`${pokemon.name} now has ${pokemon.hp} HP`)
+        pokemon.hp += item.potency;
+    }
+
+    const handleItemUse = (itemName) => {
+        let updatedBag = pokeBag.map(item => {
+            if (item.name === itemName && item.quantity > 0) {
+                // Open Selector here
+                setIsShowPokemonSelector(true)
+                setSelectedItem(item)
+                if ( selectedItem != null){
+                    console.log(`Item Selected: ${selectedItem.name}`)
+                }
+
+                return { ...item, quantity: item.quantity - 1 };
+
+            }
+            return item;
+        });
+        setPokeBag(updatedBag);
+    };
+
+    useEffect(() => {
+        if (selectedItem !== null && selectedPokemon !== null) {
+            try {
+                selectAndApplyOnPokemon(selectedPokemon, selectedItem);
+            } catch (error) {
+                console.log(error);
+            }
+
+            setSelectedItem(null);
+            setSelectedPokemon(null);
+        }
+    }, [selectedItem, selectedPokemon]);
+
+    const handleSelectPokemon = (pokemon) => {
+        setSelectedPokemon(pokemon);
+        setIsShowPokemonSelector(false);
+    };
 
     return (
         <div id="poke-bag">
-            <h3>Poké Bag:</h3>
-            <ul>
-                {pokeBag.map((item, index) => (
-                    <li key={index}>
-                        {item.name} - {item.quantity} in Bag
-                        {/*<button onClick={() => useItem(item.name)}>Use</button>*/}
-                        <button>Use</button>
-                    </li>
-                ))}
-            </ul>
+            {isShowingItems && (
+                <>
+                    <h3>Poké Bag:</h3>
+                    <ItemList pokeBag={pokeBag} handleItemUse={handleItemUse} />
+                </>
+            )}
+            {isShowingPokemonSelector && (
+                <PlayerPoke onSelectPokemon = {handleSelectPokemon}/>
+            )}
         </div>
     );
 };

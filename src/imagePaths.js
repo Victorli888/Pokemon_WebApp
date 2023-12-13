@@ -75,11 +75,11 @@ const imagePaths = {
     tallGrassBG: tallGrassBG,
     tallGrassFlippedBG: tallGrassFlippedBG,
     ashe: ashe,
-    trainerLocke: trainerLocke,
     oldMan: oldMan,
     proffesorOak: proffesorOak,
-    trainerMark: trainerMark,
     trainerDale: trainerDale,
+    trainerLocke: trainerLocke,
+    trainerMark: trainerMark,
     githubLogo: githubLogo,
 };
 

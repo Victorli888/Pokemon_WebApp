@@ -5,11 +5,12 @@ import Pokedex from "./pokeDex";
 import PokeBag from "./pokeBag";
 import PlayerPoke from "./playerPoke";
 import PokeBattle from "./pokeBattleView";
-import { playerPokemonTeam, opponentPokemonTeam } from './gameData.js';
+import {playerPokemonTeam} from './gamePokeTeams.js';
 import {storyNodes} from './storyNodes'
 import TalkingCharacter from "./characterAnimation";
 import './characterAnimation.css'
 import DisplayDialogue from "./displayDialogue";
+import {pokemonBattles} from "./gamePokeBattles"
 
 function MainGame() {
     const [state, setState] = useState();
@@ -25,25 +26,6 @@ function MainGame() {
         playerPokemon: null
     });
     const [resetDialogue, setResetDialogue] = useState(false);
-
-
-
-    //TODO: fully implement preloading for urls
-    // useEffect(() => {
-    //     // Preload images in useEffect
-    //     const imageUrls = textNodes.flatMap((node) =>
-    //         typeof node.image === 'string' ? [node.image] : []
-    //     );
-    //
-    //     function preloadImages() {
-    //         for (const imageUrl of imageUrls) {
-    //             const img = new Image();
-    //             img.src = imageUrl;
-    //         }
-    //     }
-    //
-    //     preloadImages();
-    // }, []);
 
     function startGame() {
         console.log("STARTING GAME!")
@@ -67,45 +49,15 @@ function MainGame() {
         setCurrentStoryNode(currentNode);
     }
 
-
-    function toggleAppDetails() {
-        setAppDetailsVisible(!appDetailsVisible);
-    }
-    //
-    // function startBattle(playerPokemon, opponentPokemon) {
-    //     setPokeBattleState({
-    //         battleStarted: true,
-    //         playerPokemon: playerPokemon,
-    //         opponentPokemon: opponentPokemon,
-    //     });
-    // }
-    //
-    // function endBattle() {
-    //     setPokeBattleState({
-    //         battleStarted: false,
-    //         playerPokemon: null,
-    //         opponentPokemon: null,
-    //     });
-    // }
-
     return (
         <div>
             <div className="main-game">
                 <div className={`game-image-container`}>
-                    {currentStoryNode.id === "trainerBattleDale" ? ( // Start Wild Pokémon Battle
-
-                        // TODO: Create a way to set new enemies and pokemon states for now hardcode
-                        // <PokemonBattle
-                        //     battleStarted={pokeBattleState.battleStarted}
-                        //     playerPokemon={pokeBattleState.playerPokemon} // Pass the chosen player's Pokemon here
-                        //     opponentPokemon={pokeBattleState.opponentPokemon} // Pass the opponent's Pokemon here
-                        //     stageType={imagePaths.grassyBattleBG}
-                        // />
-
+                    {currentStoryNode.id in pokemonBattles ? (
                         <PokeBattle
                             playerPokemonTeam={playerPokemonTeam}
-                            opponentPokemonTeam={opponentPokemonTeam}
-                            stageType={imagePaths.grassyBattleBG}
+                            opponentPokemonTeam={pokemonBattles[currentStoryNode.id].team}
+                            stageType={pokemonBattles[currentStoryNode.id].stageType}
                             isTrainerBattle={true}
                             />
                     ) : (

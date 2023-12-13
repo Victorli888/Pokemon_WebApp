@@ -1,4 +1,5 @@
 import {pokemonBattles} from "./gamePokeBattles";
+import {playerInventory} from "./gamePokeInventory"
 
 async function startFightMove(fightMove, attackingPokemon, defendingPokemon) {
     console.log(`making Request to PokeAPI for ${fightMove}`)
@@ -71,15 +72,13 @@ async function startPokeBattleRound(playerAction, selection, playerPokemon, oppo
             await handleFightAction(attacker, battleData[attacker], battleData[defender]);
             actionQueue.push({action: 'fight', actor: attacker, target: defender})
             await updateBattleData(battleData[attacker], battleData[defender])
-
-
         }
 
 
-    // else if (battleData[attacker].action === 'bag'){
-    //     await handleBagAction(attacker, battleData[attacker])
-    // }
-    //
+    else if (battleData[attacker].action === 'bag'){
+        await handleBagAction(attacker, battleData[attacker])
+    }
+
     // else if (battleData[attacker.action] === 'pokemon'){
     //     await handlePokemonAction(attacker, battleData[attacker])
     // }
@@ -96,6 +95,64 @@ async function startPokeBattleRound(playerAction, selection, playerPokemon, oppo
         opponentPokemon: battleData["opponent"].pokemon,
         turnOrder: actionQueue
     }
+}
+
+async function handleFightAction(trainer, attacker, defender) {
+    console.log(`${trainer} Selected Fight`);
+
+    await startFightMove(attacker.moveSelection, attacker.pokemon, defender.pokemon);
+
+
+    // Updating pokemon objects with changes that have occurred as a result of the fight move
+    // attacker.pokemon = fightResult.attackingPokemon;
+    // defender.pokemon = fightResult.defendingPokemon;
+
+}
+
+async function handleBagAction(attacker, attackerData, attackerItems){
+    // if (attacker == "player"){
+    //     let selectedItem = openBag(attackerItems)
+    //     selectAndApplyOnPokemon(selectedItem)
+    //
+    //     if (selectedItem.type == "healing"){
+    //         attackerData.pokemon.hp += selectedItem.potency
+    //     }
+    //     else if (selectedItem.type == "boost"){
+    //         //TODO: Make sure that boost effect is temporary
+    //         switch(selectedItem.effectTarget) {
+    //             case 'hp':
+    //                 // handle hp
+    //                 attackerData.pokemon.hp += selectedItem.potency;
+    //                 console.log(`Player Pokémon's health was boosted. New HP: ${attackerData.pokemon.hp}`);
+    //                 break;
+    //             case 'attack':
+    //                 // handle attack
+    //                 attackerData.pokemon.attack += selectedItem.potency;
+    //                 console.log(`Player Pokémon's attack was boosted. New Attack: ${attackerData.pokemon.attack}`);
+    //                 break;
+    //             case 'defense':
+    //                 // handle defense
+    //                 attackerData.pokemon.defense += selectedItem.potency;
+    //                 console.log(`Player Pokémon's defense was boosted. New Defense: ${attackerData.pokemon.defense}`);
+    //                 break;
+    //             case 'speed':
+    //                 // handle speed
+    //                 attackerData.pokemon.speed += selectedItem.potency;
+    //                 console.log(`Player Pokémon's speed was boosted. New Speed: ${attackerData.pokemon.speed}`);
+    //                 break;
+    //             default:
+    //                 console.error(`Unexpected stat for boost: ${selectedItem.effectTarget}`);
+    //         }
+    //     }
+    //     else{
+    //         console.log("itemNotFound")
+    //         throw new Error("ItemNotFound: {")
+    //     }
+    // }
+    // else{
+    //     // Opponent using item logic
+    //
+    // }
 }
 
 
@@ -128,18 +185,6 @@ async function forceSwap(team) {
 async function handlePokemonFainted(pokemon){
     pokemon.isFainted = true
     pokemon.hp = 0
-}
-
-async function handleFightAction(trainer, attacker, defender) {
-    console.log(`${trainer} Selected Fight`);
-
-    let fightResult = await startFightMove(attacker.moveSelection, attacker.pokemon, defender.pokemon);
-
-
-    // Updating pokemon objects with changes that have occurred as a result of the fight move
-    // attacker.pokemon = fightResult.attackingPokemon;
-    // defender.pokemon = fightResult.defendingPokemon;
-
 }
 
 function performBagAction(playerPokemon, opponentPokemon) {
