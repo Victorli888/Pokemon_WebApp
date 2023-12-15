@@ -1,6 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import { playerBag as playerBagOriginal } from "./gamePokeInventory";
 import PlayerPoke from "./playerPokeSelectable";
+
+// Importing Redux logic for using potions to heal pokemon
+import {useDispatch, useSelector} from "react-redux";
+import {updatePokemon} from "./redux/actions/pokemonActions";
+import {REMOVE_FROM_POKEBAG} from "./redux/actionTypes/actionTypes";
 
 const Item = ({ item, handleItemUse }) => (
     <li>
@@ -23,19 +27,25 @@ const ItemList = ({ pokeBag, handleItemUse }) => (
     </ul>
 );
 
-
-
 const PokeBag = () => {
-    const playerBag = Object.keys(playerBagOriginal).map(key => ({
+    const pokeBag = useSelector(state => Object.keys(state.pokeInventory).map(key => ({
         name: key,
-        ...playerBagOriginal[key]
-    }));
+        ...state.pokeInventory[key]
+    })));
+    // Converting from local state to Redux
+    // const playerBag = Object.keys(playerBagOriginal).map(key => ({
+    //     name: key,
+    //     ...playerBagOriginal[key]
+    // }));
 
-    const [pokeBag, setPokeBag] = useState(playerBag);
+    // Converting from local state to Redux, we will no longer be using useState
+    // const [pokeBag, setPokeBag] = useState(playerBag);
+
     const [isShowingItems, setIsShowingItems] = useState(true);
     const [isShowingPokemonSelector, setIsShowPokemonSelector] = useState(false);
     const [selectedPokemon, setSelectedPokemon] = useState(null);
-    const [selectedItem, setSelectedItem] = useState(null)
+    const [selectedItem, setSelectedItem] = useState(null);
+    const dispatch = useDispatch();
 
 
     function selectAndApplyOnPokemon(pokemon, item) {
@@ -44,27 +54,26 @@ const PokeBag = () => {
         }
 
         console.log(`Healing Pokemon ${pokemon.name} for ${item.potency} Points.`)
+        let updatedPokemon = {...pokemon, hp: pokemon.hp + item.potency}
+        dispatch(updatePokemon(updatedPokemon))
         console.log(`${pokemon.name} now has ${pokemon.hp} HP`)
-        pokemon.hp += item.potency;
+        dispatch({type: REMOVE_FROM_POKEBAG, payload:{name: item.name}});
     }
 
+    //// Redux Version of HandleItemUse
     const handleItemUse = (itemName) => {
-        let updatedBag = pokeBag.map(item => {
-            if (item.name === itemName && item.quantity > 0) {
-                // Open Selector here
-                setIsShowPokemonSelector(true)
-                setSelectedItem(item)
-                if ( selectedItem != null){
-                    console.log(`Item Selected: ${selectedItem.name}`)
-                }
+        const itemToUse = pokeBag.find(item => item.name === itemName);
 
-                return { ...item, quantity: item.quantity - 1 };
+        if (itemToUse && itemToUse.quantity > 0) {
+            // Open Pokemon Selector
+            setIsShowPokemonSelector(true)
+            setSelectedItem(itemToUse)
+            if (selectedItem != null){
+                console.log(`Item Selected: ${selectedItem.name}`);
 
             }
-            return item;
-        });
-        setPokeBag(updatedBag);
-    };
+        }
+    }
 
     useEffect(() => {
         if (selectedItem !== null && selectedPokemon !== null) {
