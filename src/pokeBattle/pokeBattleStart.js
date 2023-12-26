@@ -5,7 +5,7 @@ import {
     pickOption,
     determineTurnOrder,
     setOpponentTeam,
-    setPlayerTeam, setOpponentCurrentPokemon, setPlayerCurrentPokemon
+    setPlayerTeam, setOpponentCurrentPokemon, setPlayerCurrentPokemon, setPlayerPokeNames, setOpponentPokeNames
 } from '../redux/actions/pokeBattleActions';
 import PokeBattleText from "./PokeBattleText"
 import DisplayPokemonInBattle from "./displayPokemonInBattle"
@@ -43,6 +43,8 @@ function PokeBattleComponent() {
         dispatch(setPlayerTeam(initialPlayerTeam));
         dispatch(setOpponentCurrentPokemon(initialOpponentTeam[0]));
         dispatch(setPlayerCurrentPokemon(initialPlayerTeam[0]));
+        dispatch(setPlayerPokeNames(pokemonTeams.Player))
+        dispatch(setOpponentPokeNames(pokemonTeams[currentOpponent]))
         setIsDataLoaded(true)
 
     }, []);

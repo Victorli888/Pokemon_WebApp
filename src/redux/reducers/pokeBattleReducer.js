@@ -138,11 +138,20 @@ const pokeBattleReducer = (state = initialBattleState, action) => {
             };
 
         case 'SET_OPPONENT_TEAM':
-                return{
-                ...state,
-                opponentCurrentTeam: action.payload
-                }
+            return{
+            ...state,
+            opponentCurrentTeam: action.payload
+            }
+        case 'SET_PLAYER_POKE_NAMES':
+            return {...state,
+                playerPokeNames: action.payload
+            }
 
+        case 'SET_OPPONENT_POKE_NAMES':
+            return{
+                ...state,
+                opponentPokeNames: action.payload
+            }
         case 'SET_ITEM_TO_USE':
             return{
                 ...state,

@@ -13,6 +13,8 @@ import {
 } from '../actionTypes/actionTypes';
 import {setPokeOptionsState, setPokeSwapState} from "./StateActions";
 import {requestPokemonData, updatePokemon} from "./pokemonActions"
+import {initialTeamsState as pokemonTeams} from "../../redux/data/initialState";
+import {convertToPokemonObjects} from "../../pokeBattle/utility";
 
 
 export function executeMove(pokemon, move) {
@@ -114,15 +116,15 @@ export const setPlayerChoice = (choiceType, choice) => ({
 // };
 
 
-export const updateOpponentTeam = (pokemonTeam) => ({
-    type: 'UPDATE_OPPONENT_TEAM',
-    payload: pokemonTeam
-})
-
-export const updatePlayerTeam = (pokemonTeam) => ({
-    type: 'UPDATE_PLAYER_TEAM',
-    payload: pokemonTeam
-})
+// export const updateOpponentTeam = (pokemonTeam) => ({
+//     type: 'UPDATE_OPPONENT_TEAM',
+//     payload: pokemonTeam
+// })
+//
+// export const updatePlayerTeam = (pokemonTeam) => ({
+//     type: 'UPDATE_PLAYER_TEAM',
+//     payload: pokemonTeam
+// })
 // export const calculateDamage = () => ({
 //     type: 'CALCULATE_DAMAGE'
 // })
@@ -152,6 +154,13 @@ export function setOpponentTeam(team){
 
 export function setPlayerTeam(team){
     return { type: 'SET_PLAYER_TEAM', payload: team }
+}
+export function setPlayerPokeNames(names){
+    return{type: 'SET_PLAYER_POKE_NAMES', payload: names}
+}
+
+export function setOpponentPokeNames(names){
+    return{type: 'SET_OPPONENT_POKE_NAMES', payload: names}
 }
 export const endTurn = () => ({
     type: 'END_TURN'
@@ -210,7 +219,7 @@ const fetchMoveDataAndExecute = async (fightMoveName, attacker, defender, curren
         if (moveDataType === "special" || moveDataType === "physical") {
             const damage = Math.floor((2 * attacker.attack * moveData.power) / defender.defence / 5) + 2;
             const updatedDefender = { ...defender, hp: Math.max(0, defender.hp - damage) };
-            updatePokemon(updatedDefender);
+            dispatch(updatePokemon(updatedDefender));
             if (currentTurn==='player'){
                 // setPlayerCurrentPokemon(attacker)
                 dispatch(setOpponentCurrentPokemon(updatedDefender))
@@ -239,17 +248,6 @@ const fetchMoveDataAndExecute = async (fightMoveName, attacker, defender, curren
         console.error(error);
     }
 };
-
-async function hasTeamFainted(pokemonTeam, dispatch) {
-    const pokeTeamObjects = await Promise.all(pokemonTeam.map(name => dispatch(requestPokemonData(name))));
-
-    for (const pokemon of pokeTeamObjects) {
-        if (pokemon.hp > 0) {
-            return false;
-        }
-    }
-    return true;
-}
 
 
 const handleFaintedPokemon = (dispatch, pokemon, currentTurn, fightLog) => {
@@ -390,8 +388,13 @@ export const startTurn = () => {
 
             // check if the opposing Pokemon has fainted and if whiteout end game
         }
+
+        dispatch(setPlayerTeam(convertToPokemonObjects(getState().battleState.playerPokeNames, getState().pokemon)))
+        dispatch(setOpponentTeam(convertToPokemonObjects(getState().battleState.opponentPokeNames, getState().pokemon)))
         dispatch(setPokeOptionsState())
         dispatch(setRoundCompleted(true));
+        console.log(getState().pokemon)
+        console.log(getState().battleState)
     }
 }
 
