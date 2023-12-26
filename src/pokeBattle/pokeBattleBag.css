@@ -1,0 +1,55 @@
+/* pokeBag.css */
+#pokeBattleBag  {
+    margin-top: 20px;
+    font-family: "PokemonDSFont", serif;
+    color: #e0e0e0;
+}
+
+/* These are shared styles for the children elements of pokeBattleBag */
+#pokeBattleBag h3 {
+    font-size: 24px;
+    margin: 5px;
+    color: #ffffff;
+}
+
+#pokeBattleBag ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    list-style-type: none;
+    padding: 0;
+}
+
+#pokeBattleBag li {
+    margin-bottom: 5px;
+}
+
+#button-style {
+    background-color: #888888;
+    color: #e0e0e0;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-family: "PokemonDSFont", serif;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+#button-style:hover {
+    background-color: #606060;
+}
+
+.pokeBattleBag-container {
+    background-color: rgb(46, 49, 58);
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 20px;
+    width: 800px;
+    height: 500px;
+    bottom: 20%;
+    right: 25%;
+    position: absolute;
+    z-index: 3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

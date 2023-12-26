@@ -26,3 +26,9 @@ export function addPokemonToTrainer(trainerId, pokemonId) {
 export function removePokemonFromTrainer(trainerId, pokemonId) {
     return { type: REMOVE_POKEMON_FROM_TEAM, payload: { trainerId, pokemonId } }
 }
+
+export const requestPokemonData = pokemonName => ({
+    type: 'FETCH_POKEMON_DATA',
+    payload: pokemonName
+});
+

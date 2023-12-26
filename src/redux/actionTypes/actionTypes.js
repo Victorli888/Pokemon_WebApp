@@ -1,3 +1,4 @@
+// Pokemon Actions
 export const ADD_POKEMON = "ADD_POKEMON";
 export const UPDATE_POKEMON = "UPDATE_POKEMON";
 export const REMOVE_POKEMON = "REMOVE_POKEMON";
@@ -6,4 +7,26 @@ export const REMOVE_POKEMON_FROM_TEAM = "REMOVE_POKEMON_FROM_TEAM";
 export const ADD_TO_POKEBAG = "ADD_TO_INVENTORY";
 export const REMOVE_FROM_POKEBAG = "REMOVE_FROM_INVENTORY";
 
+// PokeBattleActions
+export const EXECUTE_MOVE = 'EXECUTE_MOVE';
+export const START_BATTLE = 'START_BATTLE';
+export const PICK_OPTION = 'PICK_OPTION';
+export const PICK_MOVE = 'PICK_MOVE';
+export const OPEN_BAG = 'OPEN_BAG';
+export const PICK_ITEM = 'PICK_ITEM';
+export const OPEN_POKEMON = 'OPEN_POKEMON';
+export const PICK_POKEMON = 'PICK_POKEMON';
+export const RUN_AWAY = 'RUN_AWAY';
+export const SHOW_TEXT = 'SHOW_TEXT';
+export const FETCH_MOVE_DATA = 'FETCH_MOVE_DATA';
+export const SET_PLAYER_CURRENT_POKEMON = 'SET_PLAYER_CURRENT_POKEMON';
 
+
+// SetStates
+export const SET_POKE_OPTIONS_STATE = 'SET_POKE_OPTIONS_STATE';
+export const SET_FIGHT_OPTIONS_STATE = 'SET_FIGHT_OPTIONS_STATE';
+export const SET_POKE_SWAP_STATE = 'SET_POKE_SWAP_STATE';
+export const SET_POKE_BAG_STATE = 'SET_POKE_BAG_STATE';
+export const SET_POKE_RUN_STATE = 'SET_POKE_RUN_STATE';
+export const SET_TURN_ONE_STATE = 'SET_TURN_ONE_STATE';
+export const SET_TURN_TWO_STATE = 'SET_TURN_TWO_STATE';

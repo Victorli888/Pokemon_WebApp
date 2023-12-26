@@ -1,4 +1,5 @@
 // initialState.js
+import imagePaths from "../../imagePaths";
 export const initialPokemonState = {
     "pikachu": {
         name: "pikachu",
@@ -126,9 +127,9 @@ export const initialPokemonState = {
 export const initialTeamsState = {
     "Player": ["pikachu", "charizard", "typhlosion"],
     "Opponent": ["charizard", "typhlosion"],
-    "TrainerDale": ["bellsprout", "wigglytuff"],
+    "trainerBattleDale": ["bellsprout", "wigglytuff"],
     "TrainerLocke": ["rhydon", "omastar"],
-    "TrainerMark": ["aerodactyl", "golem"],
+    "trainerBattleMark": ["aerodactyl", "golem"],
     "GymLeaderBrock": ["onix", "geodude"],
 };
 
@@ -137,3 +138,35 @@ export const initialPlayerBagState =     {
     "superPotion": { type: "healing", quantity: 2, potency: 50 },
     "pokeBall": {type: "capture", quantity: 10, catchRate: 50 }
 }
+
+export const initialBattleState = {
+    playerCurrentPokemon: null,
+    opponentCurrentPokemon: null,
+    playerCurrentTeam: [],
+    opponentCurrentTeam: [],
+    currentTextList: ["Example Text 1", "Example Text 2"],
+    currentOpponent: 'trainerBattleDale',
+    currentStageType: imagePaths.grassyBattleBG,
+    currentPhase: "PokeOptionsState",
+    isTrainerBattle: true,
+    isGameTextShown: false,
+    turnOrder: [],
+    opponentChoiceType: 'fight',
+    playerChoiceType: '',
+    playerChoice:'',
+    opponentChoice:'',
+    waitForContinue: true,
+    itemToUse: null,
+
+};
+
+
+// // Phases of Game
+// isTopOfTheRound: false,
+// PokeOptionsState: false,
+// FightOptionsState: false,
+// PokeSwapState: false,
+// PokeBagState: false,
+// PokeRunState: false,
+// TurnOneState: false,
+// TurnTwoState:false
