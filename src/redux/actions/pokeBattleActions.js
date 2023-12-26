@@ -291,10 +291,11 @@ export const startTurn = () => {
     return async (dispatch, getState) => {
         dispatch(setRoundCompleted(false));
         let fightLog = [];
-        const { turnOrder, playerChoiceType, opponentChoiceType, playerChoice, opponentChoice, playerCurrentPokemon, opponentCurrentPokemon, isTrainerBattle } = getState().battleState;
+        const { turnOrder, playerChoiceType, opponentChoiceType, playerChoice, opponentChoice, isTrainerBattle } = getState().battleState;
         console.log(`${playerChoice} and ${playerChoiceType}`)
         console.log(`Turn Order for starting turn: ${turnOrder}`)
         for (let i = 0; i < turnOrder.length; i++) {
+            const {playerCurrentPokemon, opponentCurrentPokemon} = getState().battleState
 
             const currentTurn = turnOrder[i];
             console.log(`CURRENT TURN: ${currentTurn}`)
@@ -322,6 +323,9 @@ export const startTurn = () => {
                 let updatedPokemon = {...playerChoice, hp: playerChoice.hp + itemToUse.potency}
                 fightLog.push(`Player used ${itemToUse.name} to Heal  ${playerChoice.name} for ${itemToUse.potency} Points.`)
                 dispatch(updatePokemon(updatedPokemon))
+                if (getState().battleState.playerCurrentPokemon.name === playerChoice.name){
+                    dispatch(setPlayerCurrentPokemon(updatedPokemon))
+                }
 
                 dispatch(showText(fightLog))
                 dispatch({type: REMOVE_FROM_POKEBAG, payload: {name: itemToUse.name}});
