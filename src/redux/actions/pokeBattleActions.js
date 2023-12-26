@@ -11,7 +11,7 @@ import {
     START_BATTLE, SWAP_PLAYER_POKEMON,
     SWAP_PLAYER_POKEMONPOKEMON
 } from '../actionTypes/actionTypes';
-import {setPokeOptionsState} from "./StateActions";
+import {setPokeOptionsState, setPokeSwapState} from "./StateActions";
 import {requestPokemonData, updatePokemon} from "./pokemonActions"
 
 
@@ -101,6 +101,10 @@ export const setPlayerChoice = (choiceType, choice) => ({
     type: 'SET_PLAYER_CHOICE',
     payload: {choiceType, choice}
 })
+// export const setPlayerChoiceType = (choiceType) => ({
+//     type: 'SET_PLAYER_CHOICE_TYPE',
+//     payload: choiceType
+// })
 
 // export const setPlayerCurrentPokemon = (pokemon) => {
 //     return {
@@ -207,19 +211,29 @@ const fetchMoveDataAndExecute = async (fightMoveName, attacker, defender, curren
             const damage = Math.floor((2 * attacker.attack * moveData.power) / defender.defence / 5) + 2;
             const updatedDefender = { ...defender, hp: Math.max(0, defender.hp - damage) };
             updatePokemon(updatedDefender);
+            if (currentTurn==='player'){
+                // setPlayerCurrentPokemon(attacker)
+                dispatch(setOpponentCurrentPokemon(updatedDefender))
+            }
+            else{
+                dispatch(setPlayerCurrentPokemon(updatedDefender))
+                // setOpponentCurrentPokemon(attacker)
+            }
             console.log(`${attacker.name} did ${damage} to ${updatedDefender.name}, Health is now at: ${updatedDefender.hp}`);
             fightLog.push(`${attacker.name} used ${fightMoveName}`);
-            dispatch(showText(fightLog));
+
 
             if (updatedDefender.hp === 0) {
-                updatedDefender.isFainted = true;
-                // checkFaintedAndForceAction(fightLog)
+                console.log(`${updatedDefender.name} has fainted`)
+                handleFaintedPokemon(dispatch, updatedDefender, currentTurn, fightLog)
+
             }
-            if (updatedDefender.hp === 0) {
-                updatedDefender.isFainted = true;
+            if (attacker.hp === 0) {
+                handleFaintedPokemon(attacker)
                 // checkFaintedAndForceAction(fightLog)
             }
         }
+        dispatch(showText(fightLog));
 
     } catch (error) {
         console.error(error);
@@ -238,40 +252,19 @@ async function hasTeamFainted(pokemonTeam, dispatch) {
 }
 
 
-const checkFaintedAndForceAction = (dispatch, pokemon, currentTurn, fightLog) => {
+const handleFaintedPokemon = (dispatch, pokemon, currentTurn, fightLog) => {
     // Implement logic to check if the Pokemon has fainted here
-    const isPlayerTeamFainted = hasTeamFainted()
-    const isOpponentTeamFainted = hasTeamFainted()
     // if(hasFainted) {
-        if(currentTurn === 'player'){
-            // Check if the player has any Pokemon left to swap
-            // Suppose we have a hasPokemonLeft selector to fetch this kind of information
-            // const hasPokemonLeft = hasPokemonLeftSelector(getState());
-            const hasPokemonLeft = true // Temp Remove
-            if (isPlayerTeamFainted) {
-                // If not, end the battle
-                // dispatch(endBattle());
-
-                console.log("Force Game End YOU LOSE")
-
-            } else {
-                // force the action to be 'swapPokemon'
-                // dispatch(forcePlayerAction('swapPokemon'));
-                console.log("force Swap Pokemon")
-            }
+        if(currentTurn === 'opponent'){
+           const updatedPokemon = {...pokemon, isFainted: true}
+            dispatch(updatePokemon(updatedPokemon))
+            fightLog.push(`Player's ${pokemon.name} has fainted...`)
+            dispatch(setPokeSwapState())
         }
         else{
-            if (isOpponentTeamFainted) {
-                // If not, end the battle
-                // dispatch(endBattle());
-
-                console.log("Force Game End YOU WIN")
-
-            } else {
-                // force the action to be 'swapPokemon'
-                // dispatch(forcePlayerAction('swapPokemon'));
-                console.log("force Swap Pokemon")
-            }
+            const updatedPokemon = {...pokemon, isFainted: true}
+            // dispatch(setOpponentCurrentPokemon(SOMETHINGELSE)) // Need to set players poke to something else
+            console.log("opponentSwapPoke")
         }
 }
 
@@ -286,6 +279,10 @@ export const setWaitForContinue = (status) => {
     return { type: 'SET_WAIT_FOR_CONTINUE', payload: status };
 }
 
+export const setRoundCompleted = (status) =>{
+    return {type: 'SET_ROUND_COMPLETED', payload: status}
+}
+
 function chooseOpponentFightMove(pokemon ,dispatch){
     const randomMoveIndex = Math.floor(Math.random() * pokemon.moves.length);
     const randomMove = pokemon.moves[randomMoveIndex];
@@ -294,7 +291,7 @@ function chooseOpponentFightMove(pokemon ,dispatch){
 
 export const startTurn = () => {
     return async (dispatch, getState) => {
-        dispatch({ type: 'START_TURN' });
+        dispatch(setRoundCompleted(false));
         let fightLog = [];
         const { turnOrder, playerChoiceType, opponentChoiceType, playerChoice, opponentChoice, playerCurrentPokemon, opponentCurrentPokemon, isTrainerBattle } = getState().battleState;
         console.log(`${playerChoice} and ${playerChoiceType}`)
@@ -394,7 +391,7 @@ export const startTurn = () => {
             // check if the opposing Pokemon has fainted and if whiteout end game
         }
         dispatch(setPokeOptionsState())
-        dispatch({ type: 'END_TURN' });console.log(getState().battleState);
+        dispatch(setRoundCompleted(true));
     }
 }
 

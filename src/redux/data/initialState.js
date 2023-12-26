@@ -3,7 +3,7 @@ import imagePaths from "../../imagePaths";
 export const initialPokemonState = {
     "pikachu": {
         name: "pikachu",
-        hp: 402,
+        hp: 4,
         maxHP: 405,
         attack: 520,
         defence: 35,
@@ -157,6 +157,7 @@ export const initialBattleState = {
     opponentChoice:'',
     waitForContinue: true,
     itemToUse: null,
+    roundCompleted: true
 
 };
 

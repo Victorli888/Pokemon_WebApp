@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {useSelector, useDispatch} from "react-redux"; // STEP 1
 import {updatePokemon} from "../redux/actions/pokemonActions"; //STEP 1
 import './selectPokemon.css';
+import {showText} from "../redux/actions/pokeBattleActions";
 // import {playerPokemonTeam} from "./gamePokeTeams";
 
 const SelectPokemon = ({onSelectPokemon}) => {
@@ -9,12 +10,21 @@ const SelectPokemon = ({onSelectPokemon}) => {
     const [displayTeam, setDisplayTeam] = useState([]);
     const pokemonTeam = useSelector(state => state.teams.Player);
     const pokemonDataState = useSelector(state => state.pokemon);
+    const [isValidSelection, setIsValidSelection] = useState(false)
     const dispatch = useDispatch(); // STEP 3: using useDispatch
 
     const handlePokemonSelect = (selectedPokemon) =>{
-        // onSelectPokemon(selectedPokemon)
-        console.log(`${selectedPokemon.name} was selected!`)
-        onSelectPokemon(selectedPokemon)
+        if (!isValidSelection) {
+            if (selectedPokemon.isFainted){
+                dispatch(showText([`Unable to swap to fainted Pokemon`]))
+            }
+            else{
+                setIsValidSelection(true)
+                console.log(`${selectedPokemon.name} was selected!`)
+                onSelectPokemon(selectedPokemon)
+            }
+        }
+
     }
 
     useEffect(() => {

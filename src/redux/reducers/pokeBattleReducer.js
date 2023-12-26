@@ -165,6 +165,12 @@ const pokeBattleReducer = (state = initialBattleState, action) => {
                 playerChoice: action.payload.choice
             }
 
+        case 'SET_ROUND_COMPLETED':
+            return{
+                ...state,
+                roundCompleted: action.payload
+            }
+
         case 'DETERMINE_TURN_ORDER':
             return {
                 ...state,
