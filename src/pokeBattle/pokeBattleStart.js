@@ -19,6 +19,8 @@ import {setPokeOptionsState} from "../redux/actions/StateActions";
 import {initialTeamsState as pokemonTeams} from "../redux/data/initialState";
 import {convertToPokemonObjects} from "./utility";
 import {pokemonBattles} from "../gamePokeBattles";
+import PokeBattleWinner from "./pokeBattleWinner";
+import PokeBattleGameOver from "./pokeBattleGameOver";
 
 function PokeBattleComponent() {
     const dispatch = useDispatch();
@@ -80,6 +82,8 @@ function PokeBattleComponent() {
             {currentPhase === "PokeBagState" && <PokeBattleBag/>}
             {currentPhase === "PokeSwapState" && <PokeBattleSwap/>}
             {currentPhase === "PokeRunState" && <PokeBattleRun/>}
+            {currentPhase === "WinnerState" && <PokeBattleWinner/>}
+            {currentPhase === "GameOverState" && <PokeBattleGameOver/>}
             {isDataLoaded === true && <DisplayPokemonInBattle/>}
             <div className={'go-back'}>
                 <button onClick={handleBackClick}> Go Back</button>

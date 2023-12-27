@@ -11,7 +11,7 @@ import {
     START_BATTLE, SWAP_PLAYER_POKEMON,
     SWAP_PLAYER_POKEMONPOKEMON
 } from '../actionTypes/actionTypes';
-import {setPokeOptionsState, setPokeSwapState} from "./StateActions";
+import {setGameOverState, setPokeOptionsState, setPokeSwapState, setWinnerState} from "./StateActions";
 import {requestPokemonData, updatePokemon} from "./pokemonActions"
 import {initialTeamsState as pokemonTeams} from "../../redux/data/initialState";
 import {convertToPokemonObjects} from "../../pokeBattle/utility";
@@ -208,7 +208,7 @@ export const fetchMoveData = async moveName => {
     }
 };
 
-const fetchMoveDataAndExecute = async (fightMoveName, attacker, defender, currentTurn, dispatch) => {
+const fetchMoveDataAndExecute = async (fightMoveName, attacker, defender, playerTeam, opponentTeam, currentTurn, dispatch) => {
     try {
         let fightLog = [];
         const moveData = await fetchMoveData(fightMoveName);
@@ -234,11 +234,11 @@ const fetchMoveDataAndExecute = async (fightMoveName, attacker, defender, curren
 
             if (updatedDefender.hp === 0) {
                 console.log(`${updatedDefender.name} has fainted`)
-                handleFaintedPokemon(dispatch, updatedDefender, currentTurn, fightLog)
+                handleFaintedPokemon(dispatch, updatedDefender, playerTeam, opponentTeam, currentTurn, fightLog)
 
             }
             if (attacker.hp === 0) {
-                handleFaintedPokemon(attacker)
+                // handleFaintedPokemon(attacker)
                 // checkFaintedAndForceAction(fightLog)
             }
         }
@@ -250,7 +250,20 @@ const fetchMoveDataAndExecute = async (fightMoveName, attacker, defender, curren
 };
 
 
-const handleFaintedPokemon = (dispatch, pokemon, currentTurn, fightLog) => {
+function areAllPokemonFainted(pokemonList) {
+    // Check if every Pokémon in the list has isFainted set to true
+    return pokemonList.every(pokemon => pokemon.isFainted);
+}
+
+function findNonFaintedPokemon(pokemonList, currentPokemon) {
+    // Find the first Pokémon that is not fainted
+    const newPokemon = pokemonList.find(pokemon => !pokemon.isFainted && pokemon.name !== currentPokemon.name) || null;
+    console.log(`THIS IS THE NEW POKEMON: ${newPokemon.name}`)
+    return pokemonList.find(pokemon => !pokemon.isFainted && pokemon.name !== currentPokemon.name) || null;
+
+}
+
+const handleFaintedPokemon = (dispatch, pokemon, playerTeam, opponentTeam, currentTurn, fightLog) => {
     // Implement logic to check if the Pokemon has fainted here
     // if(hasFainted) {
         if(currentTurn === 'opponent'){
@@ -261,8 +274,12 @@ const handleFaintedPokemon = (dispatch, pokemon, currentTurn, fightLog) => {
         }
         else{
             const updatedPokemon = {...pokemon, isFainted: true}
-            // dispatch(setOpponentCurrentPokemon(SOMETHINGELSE)) // Need to set players poke to something else
-            console.log("opponentSwapPoke")
+            console.log(`THEY HAVE ALL FAINTED: ${areAllPokemonFainted(opponentTeam)}`)
+            dispatch(updatePokemon(updatedPokemon))
+            if(!areAllPokemonFainted(opponentTeam)){
+                dispatch(setOpponentCurrentPokemon(findNonFaintedPokemon(opponentTeam, updatedPokemon.name)))
+            }
+            console.log("OPPONENT MUST SWAP POKEMON")
         }
 }
 
@@ -296,12 +313,12 @@ export const startTurn = () => {
         console.log(`Turn Order for starting turn: ${turnOrder}`)
         for (let i = 0; i < turnOrder.length; i++) {
             const {playerCurrentPokemon, opponentCurrentPokemon} = getState().battleState
-
             const currentTurn = turnOrder[i];
             console.log(`CURRENT TURN: ${currentTurn}`)
 
             if(currentTurn === 'player' &&  playerChoiceType ==='fight'){
-                await fetchMoveDataAndExecute(playerChoice, playerCurrentPokemon, opponentCurrentPokemon,currentTurn, dispatch)
+                const {playerCurrentTeam, opponentCurrentTeam} = getState().battleState
+                await fetchMoveDataAndExecute(playerChoice, playerCurrentPokemon, opponentCurrentPokemon, playerCurrentPokemon, opponentCurrentTeam, currentTurn, dispatch)
                 while (getState().battleState.waitForContinue) {
                     await new Promise(resolve => setTimeout(resolve, 500));
                 }
@@ -363,7 +380,7 @@ export const startTurn = () => {
                 chooseOpponentFightMove(opponentCurrentPokemon, dispatch)
                 const {opponentChoice} = getState().battleState
 
-                await fetchMoveDataAndExecute(opponentChoice, opponentCurrentPokemon, playerCurrentPokemon, currentTurn, dispatch)
+                await fetchMoveDataAndExecute(opponentChoice, opponentCurrentPokemon, playerCurrentPokemon, playerCurrentPokemon, opponentCurrentPokemon, currentTurn, dispatch)
                 // while (!getState().battleState.continueStatus) {
                 //     await new Promise(resolve => setTimeout(resolve, 500));
                 // }
@@ -397,6 +414,16 @@ export const startTurn = () => {
         dispatch(setOpponentTeam(convertToPokemonObjects(getState().battleState.opponentPokeNames, getState().pokemon)))
         dispatch(setPokeOptionsState())
         dispatch(setRoundCompleted(true));
+
+        const {playerCurrentTeam, opponentCurrentTeam} = getState().battleState
+
+        if(areAllPokemonFainted(playerCurrentTeam)){
+            dispatch(setGameOverState())
+        }
+        else if(areAllPokemonFainted(opponentCurrentTeam)){
+            dispatch(setWinnerState())
+        }
+
         console.log(getState().pokemon)
         console.log(getState().battleState)
     }

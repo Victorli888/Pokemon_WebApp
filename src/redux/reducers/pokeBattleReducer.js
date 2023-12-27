@@ -95,16 +95,16 @@ const pokeBattleReducer = (state = initialBattleState, action) => {
                 currentPhase: 'PokeRunState'
             };
         }
-        case 'SET_TURN_ONE_STATE': {
+        case 'SET_GAME_OVER_STATE': {
             return {
                 ...state,
-                currentPhase: 'TurnOneState'
+                currentPhase: 'GameOverState'
             };
         }
-        case 'SET_TURN_TWO_STATE': {
+        case 'SET_WINNER_STATE': {
             return {
                 ...state,
-                currentPhase: 'TurnTwoState'
+                currentPhase: 'WinnerState'
             };
         }
 

@@ -38,14 +38,15 @@ export const setPokeRunState = () => {
     };
 };
 
-export const setTurnOneState = () => {
+export const setGameOverState = () => {
     return {
-        type: SET_TURN_ONE_STATE
+        type: 'SET_GAME_OVER_STATE'
     };
 };
 
-export const setTurnTwoState = () => {
+export const setWinnerState = () => {
     return {
-        type: SET_TURN_TWO_STATE
+        type: 'SET_WINNER_STATE'
     };
 };
+
