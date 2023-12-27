@@ -1,0 +1,89 @@
+.pokeBattleFight-container {
+    /* Styles for the battle details container */
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 20px;
+    width: 400px;
+    height: 150px;
+    bottom: 10%;
+    left: 55%;
+    position: absolute;
+    z-index: 2;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+@font-face {
+    font-family: "PokemonDSFont";
+    src: url("/src/fonts/pokemon-ds-font.ttf") format("truetype");
+}
+
+body {
+    font-family: "PokemonDSFont", serif;
+    font-size: 22px;
+}
+
+.pokeOptions button:hover {
+    /* Button styles on hover */
+    background-color: rgba(0, 80, 160, 0.7); /* Adjust hover opacity if needed */
+}
+
+.pokeBattleFight-options {
+    /* Existing styles for battle buttons */
+    position: absolute;
+    bottom: 50%;
+    left: 50%; /* Adjust the left position to align the buttons with the details box */
+    width: auto; /* Make the buttons fill up 50% of the container width */
+    /*transform: translateY(0%);*/
+    z-index: 2;
+    display: flex;
+    /*justify-content: space-around; !* Distribute buttons evenly within the container *!*/
+    flex-direction: column;
+    gap: 10px;
+}
+
+.pokeBattleFight-options button {
+    /* Styles for the buttons inside the battle details container */
+    background-color: rgba(0, 112, 192, 0.7); /* Reduce opacity to match the details box */
+    color: #fff;
+    border: none;
+    padding: 20px 20px; /* Increase padding for larger buttons */
+    border-radius: 5px;
+    cursor: pointer;
+    width: 200px; /* Set a fixed width for the buttons */
+    height: 70px;
+    text-align: center; /* Center the button text */
+    font-size: 32px; /* Adjust font size */
+    font-weight: bold; /* Add bold font weight */
+    text-transform: uppercase; /* Convert text to uppercase */
+    font-family: "PokemonDSFont", serif;
+}
+
+
+.pokeBattleFight-options #top-left {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.pokeBattleFight-options #top-right {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+.pokeBattleFight-options #bot-left {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.pokeBattleFight-options #bot-right {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.pokeBattleFight-options button:hover {
+    /* Button styles on hover */
+    background-color: rgba(0, 80, 160, 0.7);
+}

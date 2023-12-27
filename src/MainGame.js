@@ -5,11 +5,20 @@ import Pokedex from "./pokeDex";
 import PokeBag from "./pokeBag";
 import PlayerPoke from "./playerPoke";
 import PokeBattle from "./pokeBattleView";
-import { playerPokemonTeam, opponentPokemonTeam } from './gameData.js';
+// import {playerPokemonTeam} from './gamePokeTeams.js';
 import {storyNodes} from './storyNodes'
 import TalkingCharacter from "./characterAnimation";
 import './characterAnimation.css'
 import DisplayDialogue from "./displayDialogue";
+import {pokemonBattles} from "./gamePokeBattles"
+import { useSelector } from 'react-redux';
+import PokemonBattle from "./pokeBattleView";
+import DisplayPokemonInBattle from "./pokeBattle/displayPokemonInBattle";
+import PokeBattleText from "./pokeBattle/PokeBattleText";
+import pokeBattleOptions from "./pokeBattle/pokeBattleOptions";
+import PokeBattleOptions from "./pokeBattle/pokeBattleOptions";
+import {START_BATTLE} from "./redux/actionTypes/actionTypes";
+import PokeBattleStart from "./pokeBattle/pokeBattleStart";
 
 function MainGame() {
     const [state, setState] = useState();
@@ -25,25 +34,13 @@ function MainGame() {
         playerPokemon: null
     });
     const [resetDialogue, setResetDialogue] = useState(false);
+    const pokemonTeams = useSelector(state => state.teams)
+    const pokemonData = useSelector(state => state.pokemon)
 
-
-
-    //TODO: fully implement preloading for urls
-    // useEffect(() => {
-    //     // Preload images in useEffect
-    //     const imageUrls = textNodes.flatMap((node) =>
-    //         typeof node.image === 'string' ? [node.image] : []
-    //     );
-    //
-    //     function preloadImages() {
-    //         for (const imageUrl of imageUrls) {
-    //             const img = new Image();
-    //             img.src = imageUrl;
-    //         }
-    //     }
-    //
-    //     preloadImages();
-    // }, []);
+    function convertToPokemonObjects(trainerPokemonTeam) {
+        console.log(`This is the team we are converting: ${trainerPokemonTeam}`)
+        return trainerPokemonTeam.map(name => pokemonData[name]);
+    }
 
     function startGame() {
         console.log("STARTING GAME!")
@@ -67,47 +64,18 @@ function MainGame() {
         setCurrentStoryNode(currentNode);
     }
 
-
-    function toggleAppDetails() {
-        setAppDetailsVisible(!appDetailsVisible);
-    }
-    //
-    // function startBattle(playerPokemon, opponentPokemon) {
-    //     setPokeBattleState({
-    //         battleStarted: true,
-    //         playerPokemon: playerPokemon,
-    //         opponentPokemon: opponentPokemon,
-    //     });
-    // }
-    //
-    // function endBattle() {
-    //     setPokeBattleState({
-    //         battleStarted: false,
-    //         playerPokemon: null,
-    //         opponentPokemon: null,
-    //     });
-    // }
-
     return (
         <div>
             <div className="main-game">
                 <div className={`game-image-container`}>
-                    {currentStoryNode.id === "trainerBattleDale" ? ( // Start Wild Pokémon Battle
-
-                        // TODO: Create a way to set new enemies and pokemon states for now hardcode
-                        // <PokemonBattle
-                        //     battleStarted={pokeBattleState.battleStarted}
-                        //     playerPokemon={pokeBattleState.playerPokemon} // Pass the chosen player's Pokemon here
-                        //     opponentPokemon={pokeBattleState.opponentPokemon} // Pass the opponent's Pokemon here
-                        //     stageType={imagePaths.grassyBattleBG}
-                        // />
-
-                        <PokeBattle
-                            playerPokemonTeam={playerPokemonTeam}
-                            opponentPokemonTeam={opponentPokemonTeam}
-                            stageType={imagePaths.grassyBattleBG}
-                            isTrainerBattle={true}
-                            />
+                    {currentStoryNode.id in pokemonTeams ? (
+                        // <PokeBattle
+                        //     playerPokemonTeam={convertToPokemonObjects(pokemonTeams.Player)}
+                        //     opponentPokemonTeam={convertToPokemonObjects(pokemonTeams[currentStoryNode.id])}
+                        //     stageType={pokemonBattles[currentStoryNode.id].stageType}
+                        //     isTrainerBattle={true}
+                        //     />
+                        <PokeBattleStart/>
                     ) : (
                         // Not pokeBattle continue story images
                         <div className="story-container">
@@ -140,9 +108,6 @@ function MainGame() {
                         </div>
 
                     )}
-                    <div className="cover-layer">
-                        {/*Intentionally left blank*/}
-                    </div>
                 </div>
                 <div id="option-buttons">
                     {currentStoryNode.options &&

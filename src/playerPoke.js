@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './playerPoke.css';
-import {playerPokemonTeam} from "./gameData";
+import {playerPokemonTeam} from "./gamePokeTeams";
 
 const PlayerPoke = () => {
     const [pokemonTeam, setPokemonTeam] = useState(playerPokemonTeam);

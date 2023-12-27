@@ -57,9 +57,9 @@ export var opponentPokemonTeam = [
 
     }
 ];
-export var gymLeaderBrockPokemonTeam = [
+export var pokeTrainerDaleTeam = [
     {
-        name: "onyx",
+        name: "bellsprout",
         hp: 120,
         attack: 80,
         defence: 80,
@@ -70,32 +70,7 @@ export var gymLeaderBrockPokemonTeam = [
 
     },
     {
-        name: "geodude",
-        hp: 120,
-        attack: 80,
-        defence: 80,
-        speed: 55,
-        moves: ["rollout","tackle","fly","flamethrower"],
-        isFainted: false,
-        willWhiteOut: false
-
-    }
-    ]
-
-export var pokeTrainerOnePokemonTeam = [
-    {
-        name: "onyx",
-        hp: 120,
-        attack: 80,
-        defence: 80,
-        speed: 55,
-        moves: ["rollout","tackle","fly","flamethrower"],
-        isFainted: false,
-        willWhiteOut: false
-
-    },
-    {
-        name: "geodude",
+        name: "wigglytuff",
         hp: 120,
         attack: 80,
         defence: 80,
@@ -107,9 +82,59 @@ export var pokeTrainerOnePokemonTeam = [
     }
 ]
 
-export var pokeTrainerTwoPokemonTeam = [
+export var pokeTrainerLockeTeam = [
     {
-        name: "onyx",
+        name: "rhydon",
+        hp: 120,
+        attack: 80,
+        defence: 80,
+        speed: 55,
+        moves: ["rollout","tackle","fly","flamethrower"],
+        isFainted: false,
+        willWhiteOut: false
+
+    },
+    {
+        name: "omastar",
+        hp: 120,
+        attack: 80,
+        defence: 80,
+        speed: 55,
+        moves: ["rollout","tackle","fly","flamethrower"],
+        isFainted: false,
+        willWhiteOut: false
+
+    }
+]
+
+export var pokeTrainerMarkTeam = [
+    {
+        name: "aerodactyl",
+        hp: 120,
+        attack: 80,
+        defence: 80,
+        speed: 55,
+        moves: ["rollout","tackle","fly","flamethrower"],
+        isFainted: false,
+        willWhiteOut: false
+
+    },
+    {
+        name: "golem",
+        hp: 120,
+        attack: 80,
+        defence: 80,
+        speed: 55,
+        moves: ["rollout","tackle","fly","flamethrower"],
+        isFainted: false,
+        willWhiteOut: false
+
+    }
+]
+
+export var gymLeaderBrockTeam = [
+    {
+        name: "onix",
         hp: 120,
         attack: 80,
         defence: 80,

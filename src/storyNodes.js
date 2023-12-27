@@ -13,7 +13,7 @@ export const storyNodes = [
             {
                 text: 'Next',
                 setState: { blueGoo: true },
-                nextText: 2
+                nextText: 'pewterCityGym'
             },
         ]
     },
@@ -752,7 +752,7 @@ export const storyNodes = [
         options: [
             {
                 text: `Challenge the first trainer.`,
-                nextText: `pewterCityGymTrainer1Battle`
+                nextText: `pewterCityGymTrainerMark`
             },
             {
                 text: `Leave the gym for now.`,
@@ -761,7 +761,36 @@ export const storyNodes = [
         ]
     },
     {
-        id: `pewterCityGymTrainer1Battle`,
+        id: `pewterCityGymTrainerMark`,
+        image: imagePaths.pewterCityGymBG,
+        left_char: imagePaths.ashe,
+        text: [
+            "Hey I was here first!",
+            "If you want to battle Brock you're going to have to go through me first"
+        ],
+        options: [
+            {
+                text: `Challenge the first trainer.`,
+                nextText: `trainerBattleMark`
+            },
+            {
+                text: `Leave the gym for now.`,
+                nextText: `pewterCity`
+            }
+        ]
+    },
+    {
+        id: `trainerBattleMark`,
+        image: imagePaths.tallGrassBG,
+        options: [
+            {
+                text: `StartBattle!`,
+                nextText:`pewterCityGymTrainerMarkResult`
+            }
+        ]
+    },
+    {
+        id: `pewterCityGymTrainerMarkResult`,
         image: imagePaths.pewterCityGymBG,
         left_char: imagePaths.ashe,
         right_char: imagePaths.trainerMark,
@@ -774,12 +803,39 @@ export const storyNodes = [
         options: [
             {
                 text: `Challenge the second trainer.`,
-                nextText: `pewterCityGymTrainer2Battle`
+                nextText: `pewterCityGymTrainerLocke`
             }
         ]
     },
     {
-        id: `pewterCityGymTrainer2Battle`,
+        id: `pewterCityGymTrainerLocke`,
+        image: imagePaths.pewterCityGymBG,
+        left_char: imagePaths.ashe,
+        right_char: imagePaths.trainerLocke,
+        text: [
+            "Locke: Oh ho ho ho, You're looking to obtain the Pewter City Badge from Brock?",
+            "Lets see if you even got what it takes to beat me first."
+        ],
+        options: [
+            {
+                text: `Battle with trainer Locke`,
+                nextText: `trainerBattleLocke`
+            }
+        ]
+    },
+
+    {
+        id: `trainerBattleLocke`,
+        image: imagePaths.tallGrassBG,
+        options: [
+            {
+                text: `StartBattle!`,
+                nextText:`pewterCityGymTrainerLockeResult`
+            }
+        ]
+    },
+    {
+        id: `pewterCityGymTrainerLockeResult`,
         image: imagePaths.pewterCityGymBG,
         left_char: imagePaths.ashe,
         right_char: imagePaths.trainerLocke,
@@ -810,7 +866,17 @@ export const storyNodes = [
         options: [
             {
                 text: `Battle Gym Leader Brock.`,
-                nextText: `pewterCityGymLeaderResult`
+                nextText: `gymLeaderBrock`
+            }
+        ]
+    },
+    {
+        id: `gymLeaderBrock`,
+        image: imagePaths.tallGrassBG,
+        options: [
+            {
+                text: `StartBattle!`,
+                nextText:`pewterCityGymLeaderResult`
             }
         ]
     },
