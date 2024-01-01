@@ -126,11 +126,10 @@ export const initialPokemonState = {
 
 export const initialTeamsState = {
     "Player": ["pikachu", "charizard", "typhlosion"],
-    "Opponent": ["charizard", "typhlosion"],
-    "trainerBattleDale": ["bellsprout", "wigglytuff"],
-    "TrainerLocke": ["rhydon", "omastar"],
-    "trainerBattleMark": ["aerodactyl", "golem"],
-    "GymLeaderBrock": ["onix", "geodude"],
+    "pokeTrainerDale": ["bellsprout", "wigglytuff"],
+    "gymTrainerMark": ["rhydon", "omastar"],
+    "gymTrainerLocke": ["aerodactyl", "golem"],
+    "gymLeaderBrock": ["onix", "geodude"],
 };
 
 export const initialPlayerBagState =     {
@@ -147,10 +146,10 @@ export const initialBattleState = {
     playerPokeNames:[],
     opponentPokeNames:[],
     currentTextList: ["Example Text 1", "Example Text 2"],
-    currentOpponent: 'trainerBattleDale',
-    currentStageType: imagePaths.grassyBattleBG,
+    currentOpponent: '',
+    currentStageType: null,
     currentPhase: "PokeOptionsState",
-    isTrainerBattle: true,
+    isTrainerBattle: false,
     isGameTextShown: false,
     turnOrder: [],
     opponentChoiceType: 'fight',
@@ -162,14 +161,3 @@ export const initialBattleState = {
     roundCompleted: true
 
 };
-
-
-// // Phases of Game
-// isTopOfTheRound: false,
-// PokeOptionsState: false,
-// FightOptionsState: false,
-// PokeSwapState: false,
-// PokeBagState: false,
-// PokeRunState: false,
-// TurnOneState: false,
-// TurnTwoState:false

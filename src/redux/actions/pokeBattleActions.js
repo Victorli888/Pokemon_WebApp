@@ -15,6 +15,7 @@ import {setGameOverState, setPokeOptionsState, setPokeSwapState, setWinnerState}
 import {requestPokemonData, updatePokemon} from "./pokemonActions"
 import {initialTeamsState as pokemonTeams} from "../../redux/data/initialState";
 import {convertToPokemonObjects} from "../../pokeBattle/utility";
+import store from "../store/store";
 
 
 export function executeMove(pokemon, move) {
@@ -103,6 +104,17 @@ export const setPlayerChoice = (choiceType, choice) => ({
     type: 'SET_PLAYER_CHOICE',
     payload: {choiceType, choice}
 })
+
+export const setIsTrainerBattle = (status) => ({
+    type: 'SET_IS_TRAINER_BATTLE',
+    payload: status
+
+})
+
+export const setStageType = (stage) => ({
+    type: 'SET_STAGE_TYPE',
+    payload: stage
+})
 // export const setPlayerChoiceType = (choiceType) => ({
 //     type: 'SET_PLAYER_CHOICE_TYPE',
 //     payload: choiceType
@@ -166,6 +178,10 @@ export const endTurn = () => ({
     type: 'END_TURN'
 });
 
+export const setCurrentPhase = () => ({
+    type: 'SET_CURRENT_PHASE'
+})
+
 // all your existing imports and action creators
 
 // ... some code ...
@@ -214,7 +230,7 @@ const fetchMoveDataAndExecute = async (fightMoveName, attacker, defender, player
         const moveData = await fetchMoveData(fightMoveName);
         console.log(`move Data ${moveData}`);
         const moveDataType = moveData.damage_class.name;
-        console.log(`Damage Type: ${moveDataType}, Defender: ${defender}, attacker: ${attacker}`);
+        console.log(`Damage Type: ${moveDataType}, Defender: ${defender.name}, attacker: ${attacker.name}`);
 
         if (moveDataType === "special" || moveDataType === "physical") {
             const damage = Math.floor((2 * attacker.attack * moveData.power) / defender.defence / 5) + 2;
@@ -231,7 +247,6 @@ const fetchMoveDataAndExecute = async (fightMoveName, attacker, defender, player
             console.log(`${attacker.name} did ${damage} to ${updatedDefender.name}, Health is now at: ${updatedDefender.hp}`);
             fightLog.push(`${attacker.name} used ${fightMoveName}`);
 
-
             if (updatedDefender.hp === 0) {
                 console.log(`${updatedDefender.name} has fainted`)
                 handleFaintedPokemon(dispatch, updatedDefender, playerTeam, opponentTeam, currentTurn, fightLog)
@@ -242,6 +257,7 @@ const fetchMoveDataAndExecute = async (fightMoveName, attacker, defender, player
                 // checkFaintedAndForceAction(fightLog)
             }
         }
+        console.log("IM HERE MASON")
         dispatch(showText(fightLog));
 
     } catch (error) {
@@ -304,6 +320,35 @@ function chooseOpponentFightMove(pokemon ,dispatch){
     dispatch(setOpponentFightMove(randomMove));
 }
 
+// async function waitForResponse(dispatch, getState) {
+//     const state = getState();
+//     if (state.battleState.waitForContinue) {
+//         // continue waiting and recall the function after 500ms
+//         console.log("I'm stuck")
+//         return new Promise((resolve) =>
+//             setTimeout(() => resolve(waitForResponse(dispatch, getState)), 500)
+//         );
+//     } else {
+//         //waitForContinue is now false,
+//         //you can proceed with whatever should happen after waitForContinue turns to false
+//     }
+// }
+
+function waitForResponse(dispatch, getState) {
+    return new Promise(resolve => {
+        const unsubscribe = store.subscribe(() => {
+            if (!getState().battleState.waitForContinue) {
+                console.log("Why")
+                unsubscribe();
+                resolve();
+            }
+            console.log('Please')
+        });
+    });
+}
+
+
+
 export const startTurn = () => {
     return async (dispatch, getState) => {
         dispatch(setRoundCompleted(false));
@@ -318,10 +363,13 @@ export const startTurn = () => {
 
             if(currentTurn === 'player' &&  playerChoiceType ==='fight'){
                 const {playerCurrentTeam, opponentCurrentTeam} = getState().battleState
+                console.log(getState().battleState)
                 await fetchMoveDataAndExecute(playerChoice, playerCurrentPokemon, opponentCurrentPokemon, playerCurrentPokemon, opponentCurrentTeam, currentTurn, dispatch)
-                while (getState().battleState.waitForContinue) {
-                    await new Promise(resolve => setTimeout(resolve, 500));
-                }
+                // while (getState().battleState.waitForContinue) {
+                //     console.log("I'm stuck")
+                //     await new Promise(resolve => setTimeout(resolve, 500));
+                // }
+                await waitForResponse(dispatch, getState)
                 dispatch(setWaitForContinue(false))
                 console.log(getState().battleState); // this will log the complete state of pokeBattle
             }
@@ -381,12 +429,12 @@ export const startTurn = () => {
                 const {opponentChoice} = getState().battleState
 
                 await fetchMoveDataAndExecute(opponentChoice, opponentCurrentPokemon, playerCurrentPokemon, playerCurrentPokemon, opponentCurrentPokemon, currentTurn, dispatch)
-                // while (!getState().battleState.continueStatus) {
+
+                // while (getState().battleState.waitForContinue) {
+                //     console.log("I'm stuck")
                 //     await new Promise(resolve => setTimeout(resolve, 500));
                 // }
-                while (getState().battleState.waitForContinue) {
-                    await new Promise(resolve => setTimeout(resolve, 500));
-                }
+                await waitForResponse(dispatch, getState)
                 dispatch(setWaitForContinue(false))
             }
             // const pokemon = role === 'player' ? playerCurrentPokemon : opponentCurrentPokemon;

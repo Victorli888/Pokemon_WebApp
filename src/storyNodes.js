@@ -12,8 +12,7 @@ export const storyNodes = [
         ,options: [
             {
                 text: 'Next',
-                setState: { blueGoo: true },
-                nextText: 'pewterCityGym'
+                nextText: 'pokeTrainerDale'
             },
         ]
     },
@@ -29,7 +28,6 @@ export const storyNodes = [
         ,options: [
             {
                 text: 'Next',
-                setState: { blueGoo: true },
                 nextText: 3
             },
         ]
@@ -49,7 +47,6 @@ export const storyNodes = [
         options: [
             {
                 text: 'Next',
-                setState: { blueGoo: true },
                 nextText: 4
             },
         ]
@@ -70,8 +67,6 @@ export const storyNodes = [
         options: [
             {
                 text: 'Next',
-                requiredState: (currentState) => currentState.blueGoo,
-                setState: { blueGoo: false, sword: true },
                 nextText: 5
             }
         ]
@@ -290,11 +285,11 @@ export const storyNodes = [
         options: [
             {
                 text: `check it out`,
-                nextText:`trainerDale`
+                nextText:`trainerDaleIntro`
             },
             {
                 text: 'ignore it',
-                nextText: `trainerDale`
+                nextText: `trainerDaleIntro`
             }
         ]
     },
@@ -340,7 +335,7 @@ export const storyNodes = [
         ]
     },
     {
-        id: `trainerDale`,
+        id: `trainerDaleIntro`,
         image: imagePaths.tallGrassBG,
         left_char: imagePaths.ashe,
         right_char: imagePaths.trainerDale,
@@ -350,16 +345,16 @@ export const storyNodes = [
         options: [
             {
                 text: `StartBattle`,
-                nextText:`trainerBattleDale`
+                nextText:`pokeTrainerDale`
             }
         ]
     },
     {
-        id: `trainerBattleDale`,
+        id: `pokeTrainerDale`,
         image: imagePaths.tallGrassBG,
         options: [
             {
-                text: `StartBattle!`,
+                text: `Skip Battle.`,
                 nextText:`splitPath`
             }
         ]
@@ -771,7 +766,7 @@ export const storyNodes = [
         options: [
             {
                 text: `Challenge the first trainer.`,
-                nextText: `trainerBattleMark`
+                nextText: `gymTrainerMark`
             },
             {
                 text: `Leave the gym for now.`,
@@ -780,11 +775,11 @@ export const storyNodes = [
         ]
     },
     {
-        id: `trainerBattleMark`,
+        id: `gymTrainerMark`,
         image: imagePaths.tallGrassBG,
         options: [
             {
-                text: `StartBattle!`,
+                text: `Skip Battle.`,
                 nextText:`pewterCityGymTrainerMarkResult`
             }
         ]
@@ -819,13 +814,13 @@ export const storyNodes = [
         options: [
             {
                 text: `Battle with trainer Locke`,
-                nextText: `trainerBattleLocke`
+                nextText: `gymTrainerLocke`
             }
         ]
     },
 
     {
-        id: `trainerBattleLocke`,
+        id: `gymTrainerLocke`,
         image: imagePaths.tallGrassBG,
         options: [
             {

@@ -75,7 +75,11 @@ function MainGame() {
                         //     stageType={pokemonBattles[currentStoryNode.id].stageType}
                         //     isTrainerBattle={true}
                         //     />
-                        <PokeBattleStart/>
+                        <PokeBattleStart
+                            opponent= {currentStoryNode.id}
+                            stage={pokemonBattles[currentStoryNode.id].stageType}
+                            isTrainerBattle={true}
+                            />
                     ) : (
                         // Not pokeBattle continue story images
                         <div className="story-container">

@@ -5,7 +5,12 @@ import {
     pickOption,
     determineTurnOrder,
     setOpponentTeam,
-    setPlayerTeam, setOpponentCurrentPokemon, setPlayerCurrentPokemon, setPlayerPokeNames, setOpponentPokeNames
+    setPlayerTeam,
+    setOpponentCurrentPokemon,
+    setPlayerCurrentPokemon,
+    setPlayerPokeNames,
+    setOpponentPokeNames,
+    setStageType, setIsTrainerBattle
 } from '../redux/actions/pokeBattleActions';
 import PokeBattleText from "./PokeBattleText"
 import DisplayPokemonInBattle from "./displayPokemonInBattle"
@@ -22,11 +27,13 @@ import {pokemonBattles} from "../gamePokeBattles";
 import PokeBattleWinner from "./pokeBattleWinner";
 import PokeBattleGameOver from "./pokeBattleGameOver";
 
-function PokeBattleComponent() {
+function PokeBattleComponent({opponent, stage, isTrainerBattle}) {
     const dispatch = useDispatch();
     const [isDataLoaded, setIsDataLoaded] = useState(false);
     const pokemonData = useSelector(state => state.pokemon)
-    const currentOpponent = useSelector(state => state.battleState.currentOpponent)
+    const currentOpponent = opponent
+    const currentStageType = stage
+    const currentTrainerBattleFlag = isTrainerBattle;
     const currentPlayerPokemon = useSelector(state => state.playerCurrentPokemon);
     const currentPhase = useSelector(state => state.battleState.currentPhase)
     // const opponentTeam = useSelector(state => state.battleState.opponentCurrentTeam)
@@ -36,8 +43,12 @@ function PokeBattleComponent() {
     // const [showPokeBattleOptions, setShowPokeBattleOptions] = useState(false)
 
     // Create Initial PokemonTeam Objects and set Initial State for pokeBattle
+    console.log(`currentOpponent: ${currentOpponent}`)
+    console.log(`stageType: ${currentStageType}`)
+    console.log(`CURRENT PHASE: ${currentPhase}`)
     const initialOpponentTeam = convertToPokemonObjects(pokemonTeams[currentOpponent], pokemonData)
     const initialPlayerTeam = convertToPokemonObjects(pokemonTeams.Player, pokemonData)
+    const currentOpponentPokemon = useSelector(state => state.opponentCurrentPokemon)
 
     useEffect(() => {
         // This will run once when the component mounts
@@ -47,9 +58,15 @@ function PokeBattleComponent() {
         dispatch(setPlayerCurrentPokemon(initialPlayerTeam[0]));
         dispatch(setPlayerPokeNames(pokemonTeams.Player))
         dispatch(setOpponentPokeNames(pokemonTeams[currentOpponent]))
+        dispatch(setStageType(currentStageType))
+        dispatch(setIsTrainerBattle(currentTrainerBattleFlag))
         setIsDataLoaded(true)
 
     }, []);
+
+    useEffect(() => {
+        dispatch(determineTurnOrder(currentPlayerPokemon, currentOpponentPokemon));
+    }, [currentPlayerPokemon, currentOpponentPokemon]);
 
     // useEffect(() => {
     //     dispatch(setPlayerTeam(playerTeam))
@@ -57,8 +74,8 @@ function PokeBattleComponent() {
     //
     // }, [playerTeam, opponentTeam]);
 
-    const currentOpponentPokemon = useSelector(state => state.opponentCurrentPokemon)
-    dispatch(determineTurnOrder(currentPlayerPokemon, currentOpponentPokemon))
+
+    // dispatch(determineTurnOrder(currentPlayerPokemon, currentOpponentPokemon))
 
     // function convertToPokemonObjects(trainerPokemonTeam) {
     //     console.log(`This is the team we are converting: ${trainerPokemonTeam}`)
@@ -76,7 +93,6 @@ function PokeBattleComponent() {
 
     return (
         <div>
-            <PokeBattleText/>
             {currentPhase === 'PokeOptionsState' && <PokeBattleOptions/>}
             {currentPhase === 'FightOptionsState' && <PokemonFight/>}
             {currentPhase === "PokeBagState" && <PokeBattleBag/>}

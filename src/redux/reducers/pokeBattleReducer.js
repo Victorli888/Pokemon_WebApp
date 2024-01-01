@@ -158,6 +158,24 @@ const pokeBattleReducer = (state = initialBattleState, action) => {
                 itemToUse: action.payload
             }
 
+        case 'SET_IS_TRAINER_BATTLE':
+            return {
+                ...state,
+                isTrainerBattle: action.payload
+            }
+
+        case 'SET_STAGE_TYPE':
+            return {
+                ...state,
+                currentStageType: action.payload
+            }
+
+        case 'SET_CURRENT_PHASE':
+            return{
+                ...state,
+                currentPhase: action.payload
+            }
+
         case 'USER_CONTINUED':
             return {...state, waitForUserContinue: false };
 
