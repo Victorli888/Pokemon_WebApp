@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import PlayerPoke from "./playerPokeSelectable";
+import SelectPlayerPoke from "./selectPlayerPoke";
 
 // Importing Redux logic for using potions to heal pokemon
 import {useDispatch, useSelector} from "react-redux";
@@ -102,7 +102,7 @@ const PokeBag = () => {
                 </>
             )}
             {isShowingPokemonSelector && (
-                <PlayerPoke onSelectPokemon = {handleSelectPokemon}/>
+                <SelectPlayerPoke onSelectPokemon = {handleSelectPokemon}/>
             )}
         </div>
     );

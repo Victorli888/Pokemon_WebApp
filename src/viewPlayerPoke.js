@@ -4,7 +4,7 @@ import {updatePokemon} from "./redux/actions/pokemonActions"; //STEP 1
 import './playerPoke.css';
 // import {playerPokemonTeam} from "./gamePokeTeams";
 
-const PlayerPoke = ({onSelectPokemon}) => {
+const ViewPlayerPoke = ({onSelectPokemon}) => {
     // Remove for Step 2: replacing useState with useDispatch
     const [displayTeam, setDisplayTeam] = useState([]);
     const pokemonTeam = useSelector(state => state.teams.Player);
@@ -51,7 +51,7 @@ const PlayerPoke = ({onSelectPokemon}) => {
                 {displayTeam.slice(0, 2).map((pokemon, index) => (
                     <div key={index} className="player-pokemon-slot">
                         <div className="image-level-container">
-                            <div id="pokeImg"> <img src={pokemon.spriteUrl} alt={pokemon.name} onClick={() => handlePokemonSelect(pokemon)} /></div>
+                            <div id="pokeImg"> <img src={pokemon.spriteUrl} alt={pokemon.name}/></div>
                             <div id="level"> <p >Level: {pokemon.level}</p> </div>
                         </div>
                         <div className="name-hp-container">
@@ -66,7 +66,7 @@ const PlayerPoke = ({onSelectPokemon}) => {
                 {displayTeam.slice(2, 4).map((pokemon, index) => (
                     <div key={index} className="player-pokemon-slot">
                         <div className="image-level-container">
-                            <div id="pokeImg"> <img src={pokemon.spriteUrl} alt={pokemon.name} onClick={() => handlePokemonSelect(pokemon)} /></div>
+                            <div id="pokeImg"> <img src={pokemon.spriteUrl} alt={pokemon.name}/></div>
                             <div id="level"> <p >Level: {pokemon.level}</p> </div>
                         </div>
                         <div className="name-hp-container">
@@ -81,7 +81,7 @@ const PlayerPoke = ({onSelectPokemon}) => {
                 {displayTeam.slice(4, 6).map((pokemon, index) => (
                     <div key={index} className="player-pokemon-slot">
                         <div className="image-level-container">
-                            <div id="pokeImg"> <img src={pokemon.spriteUrl} alt={pokemon.name} onClick={() => handlePokemonSelect(pokemon)} /></div>
+                            <div id="pokeImg"> <img src={pokemon.spriteUrl} alt={pokemon.name}/></div>
                             <div id="level"> <p >Level: {pokemon.level}</p> </div>
                         </div>
                         <div className="name-hp-container">
@@ -96,4 +96,4 @@ const PlayerPoke = ({onSelectPokemon}) => {
     );
 };
 
-export default PlayerPoke;
+export default ViewPlayerPoke;

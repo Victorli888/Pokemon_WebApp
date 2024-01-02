@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import './displayDialogue.css';
-import {gameTexts} from "./gameTexts";
-import {startPokeBattleRound} from "./pokeBattleLogic";
+
+
 
 
 const DisplayDialogue = ({dialogue, resetDialogue}) => {

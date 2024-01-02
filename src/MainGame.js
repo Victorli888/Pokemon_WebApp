@@ -1,24 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import imagePaths from "./imagePaths";
+
 import './index.css';
 import Pokedex from "./pokeDex";
 import PokeBag from "./pokeBag";
-import PlayerPoke from "./playerPoke";
-import PokeBattle from "./pokeBattleView";
-// import {playerPokemonTeam} from './gamePokeTeams.js';
 import {storyNodes} from './storyNodes'
 import TalkingCharacter from "./characterAnimation";
 import './characterAnimation.css'
 import DisplayDialogue from "./displayDialogue";
 import {pokemonBattles} from "./gamePokeBattles"
 import { useSelector } from 'react-redux';
-import PokemonBattle from "./pokeBattleView";
-import DisplayPokemonInBattle from "./pokeBattle/displayPokemonInBattle";
-import PokeBattleText from "./pokeBattle/PokeBattleText";
-import pokeBattleOptions from "./pokeBattle/pokeBattleOptions";
-import PokeBattleOptions from "./pokeBattle/pokeBattleOptions";
-import {START_BATTLE} from "./redux/actionTypes/actionTypes";
+
+
 import PokeBattleStart from "./pokeBattle/pokeBattleStart";
+import ViewPlayerPoke from "./viewPlayerPoke";
 
 function MainGame() {
     const [state, setState] = useState();
@@ -149,7 +143,7 @@ function MainGame() {
                 {showPokeBag && <PokeBag/>}
             </div>
             <div className={`pokeUtilities-container ${showPlayerPokemon ? 'open' : ''}`}>
-                {showPlayerPokemon && <PlayerPoke/>}
+                {showPlayerPokemon && <ViewPlayerPoke/>}
             </div>
             </div>
         </div>

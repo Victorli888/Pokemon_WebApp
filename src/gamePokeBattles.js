@@ -1,9 +1,3 @@
-
-import {
-    gymLeaderBrockTeam, pokeTrainerDaleTeam,
-    pokeTrainerLockeTeam,
-    pokeTrainerMarkTeam
-} from "./gamePokeTeams";
 import imagePaths from "./imagePaths";
 
 export const pokemonBattles = {
