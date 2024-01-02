@@ -80,6 +80,7 @@ function MainGame() {
                             stage={pokemonBattles[currentStoryNode.id].stageType}
                             isTrainerBattle={true}
                             />
+
                     ) : (
                         // Not pokeBattle continue story images
                         <div className="story-container">
@@ -133,10 +134,10 @@ function MainGame() {
                 <button className={'btn pokedex-open'} onClick={() => setShowPokeDex((prev) => !prev)}>
                     {showPokeDex ? 'Close Pokédex' : 'Open Pokédex'}
                 </button>
-                <button className={'btn pokebag-open'} onClick={() =>setShowPokeBag((prev)=>!prev)}>
+                <button className={'btn pokebag-open'} onClick={() => setShowPokeBag((prev)=> !prev)}>
                     {showPokeBag ? 'Close PokeBag' : `Open PokeBag`}
                 </button>
-                <button className={'btn playerPokemon-open'} onClick={()=>setShowPlayerPokemon((prev)=>!prev)}>
+                <button className={'btn playerPokemon-open'} onClick={()=> setShowPlayerPokemon((prev)=> !prev)}>
                     {showPlayerPokemon ? 'Hide Pokemon': 'View Pokemon'}
                 </button>
 
