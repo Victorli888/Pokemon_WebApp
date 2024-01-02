@@ -895,7 +895,7 @@ export const storyNodes = [
     {
         id: `pewterCityGymLeaderResult1`,
         image: imagePaths.pewterCityGymBG,
-        right_char: imagePaths.boulderBadge,
+        center_char: imagePaths.boulderBadge,
         text: [`The Boulder Badge glimmers in the sunlight and is a testament to your first step to becoming a Pokemon Master.`],
         options: [
             {
