@@ -93,6 +93,7 @@ function PokeBattleComponent({opponent, stage, isTrainerBattle}) {
 
     return (
         <div>
+            <PokeBattleText/>
             {currentPhase === 'PokeOptionsState' && <PokeBattleOptions/>}
             {currentPhase === 'FightOptionsState' && <PokemonFight/>}
             {currentPhase === "PokeBagState" && <PokeBattleBag/>}

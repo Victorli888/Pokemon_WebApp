@@ -4,22 +4,12 @@ import React, {useEffect, useState} from "react";
 import './pokeBattleText.css';
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 // import {getUserResponse, setContinue, userContinued} from "../redux/actions/pokeBattleActions";
-import {setContinue, userContinued} from "../redux/actions/pokeBattleActions";
+import {userContinued} from "../redux/actions/pokeBattleActions";
 const PokeBattleText = () => {
     const showGameText = useSelector(state => state.battleState.isGameTextShown, shallowEqual)
     const [currentIndex, setCurrentIndex] = useState(0);
     const textList = useSelector(state => state.battleState.currentTextList, shallowEqual)
     const dispatch = useDispatch();
-
-    // const continueToNext = () => {
-    //     if (currentIndex + 1 >= textList.length) {
-    //         console.log("Finish reading text list Done!")
-    //         dispatch(getUserResponse(currentIndex, textList))
-    //     } else {
-    //         setCurrentIndex(currentIndex + 1);
-    //         console.log(`THIS IS THE TEXT BEING DISPLAYED: ${textList}`)
-    //     }
-    // };
 
     const continueToNext = () => {
         if (currentIndex + 1 < textList.length) {

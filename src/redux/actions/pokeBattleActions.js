@@ -320,32 +320,30 @@ function chooseOpponentFightMove(pokemon ,dispatch){
     dispatch(setOpponentFightMove(randomMove));
 }
 
-// async function waitForResponse(dispatch, getState) {
-//     const state = getState();
-//     if (state.battleState.waitForContinue) {
-//         // continue waiting and recall the function after 500ms
-//         console.log("I'm stuck")
-//         return new Promise((resolve) =>
-//             setTimeout(() => resolve(waitForResponse(dispatch, getState)), 500)
-//         );
-//     } else {
-//         //waitForContinue is now false,
-//         //you can proceed with whatever should happen after waitForContinue turns to false
-//     }
-// }
-
-function waitForResponse(dispatch, getState) {
-    return new Promise(resolve => {
-        const unsubscribe = store.subscribe(() => {
-            if (!getState().battleState.waitForContinue) {
-                console.log("Why")
-                unsubscribe();
-                resolve();
-            }
-            console.log('Please')
-        });
-    });
+async function waitForResponse(dispatch, getState) {
+    const state = getState();
+    if (state.battleState.waitForContinue) {
+        return new Promise((resolve) =>
+            setTimeout(() => resolve(waitForResponse(dispatch, getState)), 500)
+        );
+    } else {
+        //waitForContinue is now false,
+        //you can proceed with whatever should happen after waitForContinue turns to false
+    }
 }
+
+// function waitForResponse(dispatch, getState) {
+//     return new Promise(resolve => {
+//         const unsubscribe = store.subscribe(() => {
+//             if (!getState().battleState.waitForContinue) {
+
+//                 unsubscribe();
+//                 resolve();
+//             }
+//             console.log('Please')
+//         });
+//     });
+// }
 
 
 
