@@ -11,7 +11,7 @@ export const pokemonBattles = {
         // team: pokeTrainerDaleTeam,
         stageType: imagePaths.grassyBattleBG
     },
-    "trainerBattleLocke": {
+    "gymTrainerLocke": {
         // team: pokeTrainerLockeTeam,
         stageType: imagePaths.grassyBattleBG
     },
