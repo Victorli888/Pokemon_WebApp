@@ -1,6 +1,5 @@
 import imagePaths from "./imagePaths";
-import {gameTexts} from "./gameTexts";
-import pokeDex from "./pokeDex";
+
 
 export const storyNodes = [
     {
@@ -12,7 +11,7 @@ export const storyNodes = [
         ,options: [
             {
                 text: 'Next',
-                nextText: 'pokeTrainerDale'
+                nextText: 2
             },
         ]
     },
@@ -824,7 +823,7 @@ export const storyNodes = [
         image: imagePaths.tallGrassBG,
         options: [
             {
-                text: `StartBattle!`,
+                text: `Skip Battle.`,
                 nextText:`pewterCityGymTrainerLockeResult`
             }
         ]
@@ -870,7 +869,7 @@ export const storyNodes = [
         image: imagePaths.tallGrassBG,
         options: [
             {
-                text: `StartBattle!`,
+                text: `Skip Battle.`,
                 nextText:`pewterCityGymLeaderResult`
             }
         ]
