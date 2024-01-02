@@ -182,6 +182,10 @@ export const setCurrentPhase = () => ({
     type: 'SET_CURRENT_PHASE'
 })
 
+export const resetBattleState = () => ({
+    type: 'RESET_BATTLE_STATE'
+})
+
 // all your existing imports and action creators
 
 // ... some code ...

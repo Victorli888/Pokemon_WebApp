@@ -209,6 +209,10 @@ const pokeBattleReducer = (state = initialBattleState, action) => {
                 ...state,
                 turnOrder: action.payload
             }
+
+        case 'RESET_BATTLE_DATA':
+            return initialBattleState
+
         default:
             return state;
     }

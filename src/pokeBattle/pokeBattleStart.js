@@ -10,7 +10,7 @@ import {
     setPlayerCurrentPokemon,
     setPlayerPokeNames,
     setOpponentPokeNames,
-    setStageType, setIsTrainerBattle
+    setStageType, setIsTrainerBattle, resetBattleState
 } from '../redux/actions/pokeBattleActions';
 import PokeBattleText from "./PokeBattleText"
 import DisplayPokemonInBattle from "./displayPokemonInBattle"
@@ -52,6 +52,7 @@ function PokeBattleComponent({opponent, stage, isTrainerBattle}) {
 
     useEffect(() => {
         // This will run once when the component mounts
+        dispatch(resetBattleState())
         dispatch(setOpponentTeam(initialOpponentTeam));
         dispatch(setPlayerTeam(initialPlayerTeam));
         dispatch(setOpponentCurrentPokemon(initialOpponentTeam[0]));
