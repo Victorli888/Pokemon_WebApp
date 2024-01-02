@@ -526,6 +526,7 @@ export const storyNodes = [
         id: `abandonedHouse`,
         image: imagePaths.abandonedHouseBG,
         left_char: imagePaths.ashe,
+        right_char: imagePaths.wickerBasket,
         text: [
             "You enter the abandoned house and you see an empty living room with rotting floorboards,",
             "and in the corner of the house you see a tattered old wicker basket"
@@ -544,6 +545,7 @@ export const storyNodes = [
     {
         id: `wickerBasket`,
         image: imagePaths.abandonedHouseBG,
+        right_char: imagePaths.wickerBasket,
         text: [
             "As you cautiously approach the ominous basket, your mind races with dark possibilities lurking within.",
             "With each step, the anticipation builds, conjuring vivid images of potential horrors concealed within its confines.",
@@ -567,7 +569,7 @@ export const storyNodes = [
         options: [
             {
                 text: `Open the Door `,
-                nextText: `fancyHouseDoor`  // You can replace this with the next story node after reaching Pewter City.
+                nextText: `fancyHouseDoor`
             },
             {
                 text: `Turn around.`,
@@ -590,6 +592,8 @@ export const storyNodes = [
     {
         id: `strangeOldMan0`,
         image: imagePaths.pewterCityBG,
+        left_char: imagePaths.ashe,
+        right_char: imagePaths.oldMan,
         text: [
             "You catch the attention of an elderly figure who addresses you warmly.",
             "Hello There!",
@@ -678,7 +682,7 @@ export const storyNodes = [
     },
     {
         id: `strangeOldMan4`,
-        image: imagePaths.grassyBattleBG,
+        image: imagePaths.pewterCityBG,
         left_char: imagePaths.ashe,
         right_char: imagePaths.oldMan,
         text: [`Impressive, you're a kind-hearted trainer!`,
@@ -721,7 +725,7 @@ export const storyNodes = [
     },
     {
         id: `strangeOldManFailed`,
-        image: imagePaths.grassyBattleBG,
+        image: imagePaths.pewterCityBG,
         left_char: imagePaths.ashe,
         right_char: imagePaths.oldMan,
         text: [`Oh, it seems like you're still learning how to be a compassionate trainer.`,
@@ -758,6 +762,7 @@ export const storyNodes = [
         id: `pewterCityGymTrainerMark`,
         image: imagePaths.pewterCityGymBG,
         left_char: imagePaths.ashe,
+        right_char: imagePaths.trainerMark,
         text: [
             "Hey I was here first!",
             "If you want to battle Brock you're going to have to go through me first"

@@ -35,9 +35,13 @@ import charmander from './media/pokemon/charmander.png'
 import bulbasaur from './media/pokemon/bulbasaur.png'
 import flyingPikachu from './media/pokemon/flying-pikachu.png'
 
+// Non-Character Media
+import boulderBadge from './media/gameAssets/boulderBadge.png'
+import wickerBasket from './media/gameAssets/wickerBasket.png'
+
 // Other Media
 import aboutIcon from './media/gameAssets/aboutIcon.png'
-import boulderBadge from './media/gameAssets/boulderBadge.png'
+
 import githubLogo from './media/github-mark/github-mark-white.png';
 import pokeDex from "./media/gameAssets/pokeDex.png";
 import pokeLogo from "./media/gameAssets/International-Pokemon-logo.png"
@@ -81,6 +85,7 @@ const imagePaths = {
     trainerLocke: trainerLocke,
     trainerMark: trainerMark,
     githubLogo: githubLogo,
+    wickerBasket: wickerBasket
 };
 
 export default imagePaths;
